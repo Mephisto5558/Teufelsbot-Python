@@ -5,7 +5,7 @@ from random import random
 def coin_flip():
   random_number = random()
   if random_number < 1 / 3000: return 'Side!'
-  elif random_number < 0.5: return 'Heads'
+  if random_number < 0.5: return 'Heads'
   return 'Tail'
 
 
