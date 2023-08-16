@@ -3,7 +3,7 @@
 
 def find_all_entries(obj, key):
   if not obj or not key: return {}
-  
+
   counter = 0
   entry_list = {}
 
@@ -23,14 +23,15 @@ def find_all_entries(obj, key):
   find_entries(obj)
   return entry_list
 
+
 if __name__ == '__main__':
   obj = {
-    'a': 1,
-    'b': {
-      'a': 2,
-      'b': { 'c': { 'a': 3 } }
-    },
-    'c': None
+      'a': 1,
+      'b': {
+          'a': 2,
+          'b': {'c': {'a': 3}}
+      },
+      'c': None
   }
-  
+
   print(find_all_entries(obj, 'a'))

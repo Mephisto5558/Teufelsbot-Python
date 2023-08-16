@@ -1,0 +1,15 @@
+[MESSAGES CONTROL]
+disable=locally-disabled,
+  multiple-statements,
+  line-too-long,
+  missing-function-docstring,
+  missing-module-docstring,
+  missing-final-newline,
+  redefined-outer-name,
+  redefined-builtin
+
+indent-string='  '
+
+[FORMAT]
+variable-rgx=^[a-z_][a-z0-9_]{0,30}$
+argument-rgx=^[a-z_][a-z0-9_]{0,30}$

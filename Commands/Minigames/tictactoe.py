@@ -2,14 +2,14 @@
 
 from random import choice
 
-def printBoard(board: list[list[str]]):
+def print_board(board: list[list[str]]):
   print("\033[1m")
   for row in board:
     print(" | ".join(row))
     print("-" * 9)
   print("\033[0m")
 
-def checkWinner(board: list[list[str]]):
+def check_winner(board: list[list[str]]):
   for row in board:
     if row[0] == row[1] == row[2] != ' ':
       return row[0]
@@ -20,20 +20,22 @@ def checkWinner(board: list[list[str]]):
 
   if board[0][0] == board[1][1] == board[2][2] != ' ':
     return board[0][0]
-  
+
   if board[0][2] == board[1][1] == board[2][0] != ' ':
     return board[0][2]
 
+  return None
+
 def play():
   board = [[' ', ' ', ' '], [' ', ' ', ' '], [' ', ' ', ' ']]
-  currentPlayer = choice(['X', 'O'])
+  current_player = choice(['X', 'O'])
   winner = None
   moves = 0
 
   while True:
-    printBoard(board)
-    print(f'Currently playing: \033[1m\033[94m{currentPlayer}\033[0m')
-  
+    print_board(board)
+    print(f'Currently playing: \033[1m\033[94m{current_player}\033[0m')
+
     try:
       row = int(input('Input row number (1-3):    ')) - 1
       col = int(input('Input column number (1-3): ')) - 1
@@ -43,22 +45,23 @@ def play():
 
     if 0 <= row <= 2 and 0 <= col <= 2:
       if board[row][col] == ' ':
-        board[row][col] = currentPlayer
-        currentPlayer = 'O' if currentPlayer == 'X' else 'X'
+        board[row][col] = current_player
+        current_player = 'O' if current_player == 'X' else 'X'
         moves += 1
       else:
         print('\033[91mInvalid move! The cell is already occupied.\033[0m')
     else:
       print('\033[91mInvalid move! Please enter a valid row and column number.\033[0m')
 
-    winner = checkWinner(board)
+    winner = check_winner(board)
     if winner:
-      printBoard(board)
+      print_board(board)
       print(f'The winner is: \033[92m{winner}\033[0m')
       break
-    elif moves == 9:
-      printBoard(board)
+    if moves == 9:
+      print_board(board)
       print('\033[93mIt\'s a tie!\033[0m')
       break
+
 
 if __name__ == '__main__': play()
