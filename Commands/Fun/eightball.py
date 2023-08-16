@@ -2,7 +2,8 @@
 
 from datetime import datetime
 from os import getcwd
-import hashlib
+from sys import exit
+from hashlib import sha256
 from random import seed, choice
 
 # https://github.com/Mephisto5558/Teufelsbot/blob/main/Locales/en/commands/fun.json#L11-L46
@@ -48,7 +49,7 @@ def eight_ball(ask: bool = True):
   now = datetime.now()
   seed_str = f'{input_str.lower()}_{getcwd()}_{now.year}-{now.month}-{now.day}'
 
-  seed(int(hashlib.sha256(seed_str.encode()).hexdigest(), 16))
+  seed(int(sha256(seed_str.encode()).hexdigest(), 16))
 
   return choice(responseList)
 
@@ -56,4 +57,4 @@ def eight_ball(ask: bool = True):
 if __name__ == '__main__':
   try:
     while True: print(eight_ball())
-  except KeyboardInterrupt: exit(0)
+  except KeyboardInterrupt: exit()
