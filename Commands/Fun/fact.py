@@ -1,4 +1,3 @@
-# pip install requests
 # https://github.com/Mephisto5558/Teufelsbot/blob/main/Commands/Fun/fact.js
 
 from requests import get

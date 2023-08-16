@@ -1,6 +1,5 @@
 # https://github.com/Mephisto5558/Teufelsbot/blob/main/Utils/uptime.js
 
-# pip install psutil
 from psutil import Process
 from math import floor
 from time import time
