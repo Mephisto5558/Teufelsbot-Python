@@ -1,3 +1,5 @@
+# https://github.com/Mephisto5558/Teufelsbot/blob/main/Utils/db.js
+
 import oracledb
 import logging
 import json
