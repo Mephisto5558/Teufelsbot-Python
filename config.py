@@ -1,5 +1,5 @@
 import logging
-from typing import Self, TypeVar
+from typing import Self, TypeVar # pylint: disable = no-name-in-module # false positive or smth
 _V = TypeVar('_V')
 
 ############# LOGGER #############
