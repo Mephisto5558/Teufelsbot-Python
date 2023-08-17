@@ -7,7 +7,7 @@ from hashlib import sha256
 from random import seed, choice
 
 # https://github.com/Mephisto5558/Teufelsbot/blob/main/Locales/en/commands/fun.json#L11-L46
-responseList = [
+response_list = [
     'As I see it, yes.',
     'It is certain.',
     'It is decidedly so.',
@@ -51,7 +51,7 @@ def eight_ball(ask: bool = True):
 
   seed(int(sha256(seed_str.encode()).hexdigest(), 16))
 
-  return choice(responseList)
+  return choice(response_list)
 
 
 if __name__ == '__main__':
