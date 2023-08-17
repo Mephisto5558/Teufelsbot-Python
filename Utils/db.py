@@ -1,9 +1,10 @@
 # https://github.com/Mephisto5558/Teufelsbot/blob/main/Utils/db.js
 
 import json
+from typing import overload
 import oracledb
 
-from config import logger
+from config import logger, FlatDict
 
 class DB:
   """
@@ -63,7 +64,12 @@ class DB:
     self._cache[table] = {}
     return self
 
-  def get(self, table: str, key: str | None = None):
+  @overload
+  def get(self, table: str) -> FlatDict: ...
+  @overload
+  def get(self, table: str, key: None) -> FlatDict: ...  # type: ignore
+
+  def get(self, table: str, key: str | None = None) -> str | int | bool | float | FlatDict | None:
     data = self._cache.get(table)
     if not key or not data: return data
 
@@ -118,7 +124,7 @@ class DB:
 
       if isinstance(v, dict): items.extend(self._flatten_dict(v, new_key).items())
       else: items.append((new_key, v))
-    return dict(items)
+    return FlatDict(items)
 
   def _save_log(self, msg: str, value=None):
     json_value = json.dumps(value) if value else None
