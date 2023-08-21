@@ -13,4 +13,4 @@
 [![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=Mephisto5558_Teufelsbot-Python&metric=code_smells)](https://sonarcloud.io/summary/new_code?id=Mephisto5558_Teufelsbot-Python)
 [![Duplicated Lines (%)](https://sonarcloud.io/api/project_badges/measure?project=Mephisto5558_Teufelsbot-Python&metric=duplicated_lines_density)](https://sonarcloud.io/summary/new_code?id=Mephisto5558_Teufelsbot-Python)
 
-[Teufelsbot-Python](https://github.com/Mephisto5558/Teufelsbot-Python) but in Python! For my python practice
+[Teufelsbot](https://github.com/Mephisto5558/Teufelsbot) but in Python! For my python practice
