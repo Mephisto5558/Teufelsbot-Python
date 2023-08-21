@@ -10,7 +10,7 @@ def get_age(date_param: tuple[int, int, int]):
   birth_date = today.replace(year=date_param[0], month=date_param[1], day=date_param[2])
   age = today.year - birth_date.year
 
-  if date.today() < birth_date.replace(year=date.today().year): age -= 1
+  if today < birth_date.replace(year=today.year): age -= 1
 
   return age
 
