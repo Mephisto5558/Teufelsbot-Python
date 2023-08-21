@@ -45,7 +45,7 @@ def get_joke(api_list=None, joke_type='', max_length=2000) -> tuple[str, dict[st
   if isinstance(response, str):
     return response.replace('`', "'"), api
 
-  api_list = [api for api in api_list if api['name'] != api['name']]
+  api_list = [api_ for api_ in api_list if api_['name'] != api['name']]
   if api_list:
     return get_joke(api_list, joke_type, max_length)
   return '', {}
