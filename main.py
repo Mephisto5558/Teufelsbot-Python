@@ -1,13 +1,14 @@
+# https://github.com/Mephisto5558/Teufelsbot/blob/main/index.js
+
 from time import process_time_ns
 from json import load
 from os import environ, listdir
 from importlib import import_module
 
-from config import logger, FlatDict
-from Utils.db import DB
+from utils import FlatDict, DB, log
 
 init_time = process_time_ns() / 1e6
-logger.info('Initializing time: %fms', init_time)
+log.info('Initializing time: %fms', init_time)
 
 # git_pull()
 
@@ -21,15 +22,16 @@ class Client(dict):
     except FileNotFoundError:
       self.env = FlatDict()
 
-    self.db = DB(self.env.get('dbConnectionStr', environ['dbConnectionStr'], ''))
+    self.db = DB(self.env.get('dbConnectionStr', environ.get('dbConnectionStr', '')))
 
     if not self.env: self.env = self.settings.get('env', FlatDict())
 
     self.bot_type = self.env.get('environment', 'main')
 
   @property
-  def settings(self):  # pylint: disable=unsubscriptable-object
-    return self.db.get('botSettings')
+  def settings(self):
+    data = self.db.get('botSettings')
+    return data if isinstance(data, FlatDict) else FlatDict()
 
 client = Client()
 
@@ -38,7 +40,7 @@ for handler in listdir('./Handlers'):
     module = import_module(f'Handlers.{handler[:-3]}')
     module.main(client)
 
+# client.login()
+log.info('Logged into %s', client.bot_type)
+
 client.db.set('botSettings', f'startCount.{client.bot_type}', client.settings.get(f'startCount.{client.bot_type}', 0) + 1)
-
-
-breakpoint()

@@ -1,10 +1,10 @@
 # https://github.com/Mephisto5558/Teufelsbot/blob/main/Utils/db.js
 
 import json
-from typing import overload
 import oracledb
 
-from config import logger, FlatDict
+from .flat_dict import FlatDict
+from .logger import log
 
 class DB:
   """
@@ -63,11 +63,6 @@ class DB:
     self._execute_query(f'CREATE TABLE {table}(key VARCHAR2(200) NOT NULL, value VARCHAR2(2000))')
     self._cache[table] = {}
     return self
-
-  @overload
-  def get(self, table: str) -> FlatDict: ...
-  @overload
-  def get(self, table: str, key: None) -> FlatDict: ...  # type: ignore
 
   def get(self, table: str, key: str | None = None) -> str | int | bool | float | FlatDict | None:
     data = self._cache.get(table)
@@ -128,6 +123,6 @@ class DB:
 
   def _save_log(self, msg: str, value=None):
     json_value = json.dumps(value) if value else None
-    logger.debug(msg + (f', value: {json_value}' if json_value and self.value_logging_max_json_length >= len(json_value) else ''))
+    log.debug(msg + (f', value: {json_value}' if json_value and self.value_logging_max_json_length >= len(json_value) else ''))
 
     return self._save_log

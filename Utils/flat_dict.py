@@ -1,39 +1,13 @@
-import logging
-from typing import Self, TypeVar # pylint: disable = no-name-in-module # false positive or smth
+from typing import Self, TypeVar  # pylint: disable = no-name-in-module # false positive in git action
 _V = TypeVar('_V')
-
-############# LOGGER #############
-logging.basicConfig(level=logging.DEBUG, datefmt='%Y-%m-%dZ%z %H:%M:%S')
-
-class CustomFormatter(logging.Formatter):
-  format_ = '%(asctime)s %(module)s#%(lineno)d: %(message)s'
-
-  FORMATS = {
-      logging.DEBUG: '\033[38;5;33m' + format_ + '\033[0m',
-      logging.INFO: '\033[38;5;240m' + format_ + '\033[0m',
-      logging.WARNING: '\033[38;5;226m' + format_ + '\033[0m',
-      logging.ERROR: '\033[38;5;196m' + format_ + '\033[0m',
-      logging.CRITICAL: '\033[1;31m' + format_ + '\033[0m'
-  }
-
-  def format(self, record):
-    formatter = logging.Formatter(self.FORMATS.get(record.levelno))
-    return formatter.format(record)
-
-logger = logging.getLogger()
-
-console_handler = logging.StreamHandler()
-console_handler.setFormatter(CustomFormatter())
-logger.handlers = [console_handler]
-
-
-############# UN-FLATTENER #############
 
 class FlatDict(dict):
   def __init__(self, *args, **kwargs):
     super().__init__(*args, **kwargs)
 
   def get(self, key: str, *default_values):
+    """Return the value for key if key is in the dictionary, else the first not-None default."""
+
     for default_value in default_values:
       value = super().get(key, default_value)
       if value is not None: return value
