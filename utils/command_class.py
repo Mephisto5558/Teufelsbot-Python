@@ -1,5 +1,6 @@
 from typing import DefaultDict, NotRequired, TypedDict, Callable
-from utils import log, i18n_provider
+from .logger import log
+from .i18n_provider import i18n_provider
 
 MIN_NAME_LENGTH = 2
 MAX_NAME_LENGTH = 32
