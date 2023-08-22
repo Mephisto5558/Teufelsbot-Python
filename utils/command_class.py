@@ -85,7 +85,7 @@ class Command:
   @staticmethod
   def _description_formatter(description: str, path: str):
     if not description:
-      description = i18nProvider.__(f'{path}.description', error_not_found=True)
+      description = i18n_provider.__(f'{path}.description', error_not_found=True)
     if not description or not isinstance(description, str):
       raise TypeError(f'description ({path}.description) must be a string with at least {MIN_DESC_LENGTH} chars!')
     if len(description) > MAX_DESC_LENGTH:
@@ -97,8 +97,8 @@ class Command:
   @staticmethod
   def _description_localizer(path: str):
     locale_texts = {}
-    for locale, in filter(lambda e, : e != i18nProvider.config.default_locale, i18nProvider.available_locales):
-      locale_text = i18nProvider.__(f'{path}.description', locale=locale, none_not_found=True)
+    for locale, in filter(lambda e, : e != i18n_provider.config['default_locale'], i18n_provider.available_locales):
+      locale_text = i18n_provider.__(f'{path}.description', locale=locale, none_not_found=True)
 
       if not locale_text:
         log.warning('Missing "%s" description localization for option %s.description', locale, path)
@@ -112,8 +112,8 @@ class Command:
   def _choice_formatter(choices, path):
     for i, choice in enumerate(choices):
       locale_texts = {}
-      for locale in filter(lambda e, : e != i18nProvider.config.default_locale, i18nProvider.available_locales):
-        locale_text = i18nProvider.__(f'{path}.{i}', locale=locale, none_not_found=True)
+      for locale in filter(lambda e, : e != i18n_provider.config['default_locale'], i18n_provider.available_locales):
+        locale_text = i18n_provider.__(f'{path}.{i}', locale=locale, none_not_found=True)
         if not locale_text:
           log.warning('Missing "%s" choice localization for option %s.%i', locale, path, i)
         else:
@@ -125,7 +125,7 @@ class Command:
           locale_texts[locale] = locale_text[:MAX_CHOICE_NAME_LENGTH]
 
       if isinstance(choice, dict): choices[i] = Choice(*choice, name_localizations=locale_texts)
-      else: choices[i] = Choice(key=choice, value=i18nProvider.__(f'{path}.{i}', none_not_found=True) or choice, name_localizations=locale_texts)
+      else: choices[i] = Choice(key=choice, value=i18n_provider.__(f'{path}.{i}', none_not_found=True) or choice, name_localizations=locale_texts)
     return choices
 
   @staticmethod
