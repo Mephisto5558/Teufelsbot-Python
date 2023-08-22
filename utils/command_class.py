@@ -1,4 +1,4 @@
-from typing import DefaultDict, NotRequired, TypedDict, Callable
+from typing import DefaultDict, NotRequired, TypedDict, Callable  # pylint: disable = no-name-in-module # false positive in git action
 from .logger import log
 from .i18n_provider import i18n_provider
 
