@@ -14,12 +14,12 @@ lang_data = {
     's': '{s} Sekunden'
 }
 
-def lang(id: str, **keyword_params):
-  str = lang_data[id]
+def lang(id_: str, **keyword_params):
+  str_ = lang_data[id_]
 
-  if str is None: return None
-  if keyword_params is None: return str
-  return str.format(**keyword_params)
+  if str_ is None: return None
+  if keyword_params is None: return str_
+  return str_.format(**keyword_params)
 
 def uptime(as_message):
   up = time() - process.create_time()
@@ -28,16 +28,16 @@ def uptime(as_message):
   m = floor((up / 60) % 60)
   s = floor(up % 60)
 
-  id = None
+  id_ = None
   if as_message:
-    if d: id = 'dhms'
-    elif h: id = 'hms'
-    elif m: id = 'ms'
-    else: id = 's'
+    if d: id_ = 'dhms'
+    elif h: id_ = 'hms'
+    elif m: id_ = 'ms'
+    else: id_ = 's'
 
   return {
       'total': up * 1000,
-      'formatted': lang(id, d=d, h=h, m=m, s=s) if id else f'{d:02}:{h:02}:{m:02}:{s:02}'
+      'formatted': lang(id_, d=d, h=h, m=m, s=s) if id_ else f'{d:02}:{h:02}:{m:02}:{s:02}'
   }
 
 

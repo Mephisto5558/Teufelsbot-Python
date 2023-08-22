@@ -96,7 +96,7 @@ class DB:
     """
 
     if key:
-      self._save_log(f'Deleting {table}{self.__key_sep}{key}'if key else f'Deleting {table}')
+      self._save_log(f'Deleting {table}{self.__key_sep}{key}')
 
       data = self._cache.get(table)
       if data and key in data:
