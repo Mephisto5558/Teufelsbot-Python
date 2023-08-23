@@ -35,9 +35,9 @@ class Client(dict):
 
 client = Client()
 
-for handler in listdir('./Handlers'):
-  if client.bot_type != 'dev' or 'website' not in handler:
-    module = import_module(f'Handlers.{handler[:-3]}')
+for loader in listdir('./loaders'):
+  if client.bot_type != 'dev' or 'website' not in loader:
+    module = import_module(f'loaders.{loader[:-3]}')
     module.main(client)
 
 # client.login()

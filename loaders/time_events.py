@@ -3,7 +3,7 @@ from time import sleep
 from importlib import import_module
 import schedule
 
-def time_events_handler(client):
+def main(client):
   if client.botType == 'dev':
     print('Disabled timed events due to dev version.')
     return
