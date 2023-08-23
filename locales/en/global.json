@@ -1,0 +1,19 @@
+{
+  "languageName": "English",
+  "messageSent": "Message sent!",
+  "loading": "<a:loading:1063091916683612160> Loading...",
+  "channel": "Channel",
+  "guild": "Guild",
+  "user": "User",
+  "cancel": "Cancel",
+  "playAgain": "Play Again",
+  "anotherone": "Another One",
+  "enabled": "Enabled",
+  "disabled": "Disabled",
+  "none": "none",
+  "noPermUser": "You don't have the permission to do that!",
+  "noPermBot": "I don't have the permission to do that!",
+  "true": "Yes",
+  "false": "No",
+  "modReason": "{command} command, moderator {user}"
+}

@@ -1,0 +1,259 @@
+{
+  "addemoji": {
+    "description": "ajoute un emoji à cette guilde",
+    "options": {
+      "emoji_or_url": {
+        "description": "fournir un emoji ou une url à une image."
+      },
+      "name": {
+        "description": "le nom du nouvel émoji"
+      },
+      "limit_to_roles": {
+        "description": "les rôles qui sont autorisés à utiliser les émoji. Séparez-les par des espaces."
+      }
+    },
+    "embedTitle": "Ajouter une émoticône",
+    "isGuildEmoji": "Cet émoji est déjà sur cette guilde!",
+    "invalidUrl": "L'argument fourni n'est pas une url valide ou un emoji!\nL'url doit se terminer par `jpg`, `jpeg`, `png`, `webp`, `svg` ou `gif`.\nExemple : https://www.google.com/images/branding/googlelogo/1x/googlelogo_dark_color_272x92dp.png",
+    "notFound": "L'url fournie n'a pas été trouvée.",
+    "success": "Ajouté avec succès **{name}** {emoji}!\n",
+    "limitedToRoles": "Les émojis ont été limités aux rôles suivants :\n<@&{roles}>.",
+    "error": "Impossible de créer l'émoji pour la raison :\n```\n{err}\n```",
+    "timedOut": "La requête a expiré. Peut-être que l'image est trop grande."
+  },
+  "autopublish": {
+    "description": "publie automatiquement tout ce que n'importe qui dans n'importe quel canal d'annonce dit",
+    "usage": "Cette commande publie automatiquement tous les messages envoyés dans les canaux d'annonce.\nC'est un commutateur.",
+    "success": "Autopublising {toggle}."
+  },
+  "button": {
+    "description": "Créer un bouton.",
+    "options": {
+      "json": {
+        "description": "créer un bouton à partir de données JSON brutes",
+        "options": {
+          "json": {
+            "description": "Données JSON pour créer un bouton à partir de"
+          }
+        }
+      },
+      "custom": {
+        "description": "créez votre propre bouton avec un tas d'options",
+        "options": {
+          "style": {
+            "description": "Quel style devrait avoir votre bouton?",
+            "choices": {
+              "1": "Flou",
+              "2": "Gris",
+              "3": "Vert",
+              "4": "Rouge",
+              "5": "Lien (Nécessite l'option \"url\")"
+            }
+          },
+          "emoji": {
+            "description": "L'emoji que vous voulez afficher sur le bouton. Obtient écrasé par l'option \"label\"."
+          },
+          "label": {
+            "description": "Le texte que vous voulez afficher sur le bouton. Écrase l'option \"emoji\"."
+          },
+          "url": {
+            "description": "L'url vers laquelle pointe le bouton. Fonctionne uniquement avec l'option de style \"Lien\"."
+          },
+          "new_row": {
+            "description": "Utilisez une nouvelle ligne pour le bouton."
+          },
+          "content": {
+            "description": "Définit un message sur le bouton."
+          },
+          "message_id": {
+            "description": "Le message auquel vous voulez ajouter un bouton. Doit être dans le même salon que la commande."
+          }
+        }
+      }
+    },
+    "invalidURL": "L'URL fournie est invalide !",
+    "msgNotFound": "L'identifiant du message que vous avez fourni n'a pas été trouvé dans ce salon !",
+    "botIsNotAuthor": "Je ne peux modifier que mes propres messages!",
+    "buttonLimit": "Un message ne peut pas avoir plus de 5 lignes ou 25 boutons !",
+    "invalidOption": "**Une de vos options est invalide !**\n\n```{err}```",
+    "invalidJSON": "**Votre JSON est invalide !**\n\n```{err}```",
+    "successJSON": "Votre bouton a été envoyé !",
+    "success": "Ton bouton a été envoyé ! Ci-dessous est le code du bouton.\nSi tu veux l'envoyer à nouveau, utilise la sous-commande `json`.\n\n```json\n{json}\n```"
+  },
+  "embed": {
+    "description": "envoie un embed; vous pouvez faire des nouvelles lignes avec \"/n\".",
+    "options": {
+      "custom": {
+        "description": "créez votre propre intégration avec un tas d'options",
+        "options": {
+          "description": {
+            "description": "définir le texte intégré, utiliser \"/n\" pour les nouvelles lignes"
+          },
+          "content": {
+            "description": "définir un message en dehors de l'embed"
+          },
+          "title": {
+            "description": "définir le titre de l'intégration"
+          },
+          "predefined_color": {
+            "description": "définir la couleur d'embed à partir de codes discord prédéfinis"
+          },
+          "custom_color": {
+            "description": "définir un code HEX à 6 caractères personnalisé comme couleur intégrée (par exemple #ffffff)"
+          },
+          "footer_text": {
+            "description": "définir le texte du pied de page"
+          },
+          "footer_icon": {
+            "description": "définir l'URL de l'icône du pied de page"
+          },
+          "image": {
+            "description": "définir l'URL de l'image intégrée"
+          },
+          "thumbnail": {
+            "description": "Réserver l'URL de la vignette"
+          },
+          "timestamp": {
+            "description": "définir l'horodatage"
+          },
+          "author_name": {
+            "description": "définir le nom de l'auteur"
+          },
+          "author_url": {
+            "description": "définir l'URL de l'auteur"
+          },
+          "author_icon": {
+            "description": "définir l'URL de l'icône de l'auteur"
+          }
+        }
+      },
+      "json": {
+        "description": "créer un embed à partir de données JSON brutes",
+        "options": {
+          "json": {
+            "description": "Données JSON à partir desquelles créer un embed"
+          }
+        }
+      }
+    },
+    "invalidOption": "**Une de vos options est invalide !**\n\n```{err}```",
+    "invalidJSON": "**Votre JSON est invalide !**\n\n```{err}```",
+    "successJSON": "Votre intégration a été envoyée !",
+    "success": "Votre intégration a été envoyée ! Ci-dessous le code embed.\nSi vous voulez l'envoyer à nouveau, utilisez la sous-commande `json`.\n\n```json\n{json}\n```"
+  },
+  "hash": {
+    "description": "chiffre ou décrypte votre texte avec différentes méthodes",
+    "usage": "Commande SLASH : Vous n'avez besoin que de fournir une seule option.",
+    "options": {
+      "input": {
+        "description": "le texte que vous voulez chiffrer ou déchiffrer"
+      },
+      "method": {
+        "description": "avec quelle méthode votre texte doit être chiffré"
+      }
+    },
+    "embedTitle": "Fonction Hash",
+    "embedDescription": "Votre entrée : `{input}`\nMéthode de hachage : `{method}`",
+    "text": "Votre chaîne hachée :\n`{hash}`"
+  },
+  "lastping": {
+    "description": "Te montre où tu as été mentionné.",
+    "usage": "PREFIX Command: lastping [#channel]\nSi l'option `channel` est utilisée, un maximum de 200 messages seront recherchés.",
+    "options": {
+      "channel": {
+        "description": "Le canal dans lequel vous voulez chercher des mentions par défaut. Par défaut pour toute la guilde."
+      },
+      "member": {
+        "description": "Search only for mentions by a specific member? (Only in combination with the \"channel\" option)"
+      }
+    },
+    "memberRequiresChannel": "L'option \"member\" ne fonctionne qu'en combinaison avec l'option \"channel\" !",
+    "invalid": "Le salon sélectionné n'est pas un salon textuel !",
+    "noneFound": "Je n'ai trouvé aucune mention.",
+    "unknown": "inconnue",
+    "embedTitle": "Dernier Ping",
+    "embedDescription": "La dernière fois que vous avez été mentionné était [here]({url}) de <@{author}>.\n>>> {content}"
+  },
+  "math": {
+    "description": "Exécute des mathématiques",
+    "usage": "mathématiques [expression]",
+    "options": {
+      "expression": {
+        "description": "Que voulez-vous que je résolve ?"
+      }
+    },
+    "embedTitle": "Calculatrice",
+    "noInput": "Vous n'avez donné aucune entrée!",
+    "help": "Aide et Informations\n\nCette calculatrice prend en charge de nombreuses opérations mathématiques, pas seulement les opérations de base.\nVous pouvez utiliser des variables comme ceci : `x=10`.\nVous pouvez utiliser des instructions multiples en utilisant une nouvelle ligne ou un `;`. `x=10;x+10` retourne `20`.\nVous devez utiliser `*` pour le multiplicateur.\nLa calculatrice suppose l'affichage de plusieurs résultats.\nParfois, des espaces inutiles font erreur d'expression.",
+    "error": "Une erreur est survenue en essayant de résoudre votre expression :\n```{err}```",
+    "separated": "Résultats séparés par \"|\" :\n{results}",
+    "success": "Expression :\n```{expression}```\nRésultat:\n```{result}```"
+  },
+  "passwordgenerator": {
+    "description": "génère un mot de passe cryptographiquement fort",
+    "options": {
+      "length": {
+        "description": "la longueur de votre mot de passe"
+      },
+      "count": {
+        "description": "Combien de mots de passe voulez-vous générer ?"
+      },
+      "exclude_chars": {
+        "description": "caractères que vous n'aurez pas dans votre mot de passe"
+      },
+      "include_chars": {
+        "description": "que vous voulez avoir dans votre mot de passe, en plus du jeu de caractères par défaut."
+      }
+    },
+    "charsetEmpty": "vous avez exclu tous les caractères du jeu de caractères...",
+    "success": "Votre mot de passe sécurisé(s):\n{passwords}\n\n||Créé avec le jeu de caractères suivant:\n```{charset}```\nUtilisez les options de commande pour ajouter ou supprimer des caractères.||"
+  },
+  "record": {
+    "description": "Enregistrez un salon vocal. Nécessite l'approbation des utilisateurs.",
+    "options": {
+      "target": {
+        "description": "Enregistrez seulement un utilisateur spécifique."
+      },
+      "channel": {
+        "description": "Quel salon vocal voulez-vous enregistrer ?"
+      },
+      "public": {
+        "description": "Rendre l’enregistrement public, afin que tout membre de la guilde puisse l’entendre."
+      }
+    },
+    "noTarget": "Il n'y a personne à enregistrer ! Soit toutes les cibles sont des bots, soit elles ne sont pas dans un salon vocal ! Si vous avez fourni un canal, assurez-vous qu'il est celui dans lequel la cible est dans !",
+    "needVoiceChannel": "Vous devez fournir un salon vocal ou être en un !",
+    "cannotJoin": "Je ne peux pas rejoindre ce canal vocal ! Assurez-vous que le canal n'est pas complet et que j'ai les autorisations nécessaires.",
+    "deaf": "Je suis actuellement sourd et je ne peux pas être sourd moi-même!",
+    "embedTitle": "Enregistreur vocal",
+    "embedDescription": "<@{user}> veut vous enregistrer dans le salon vocal <#{channel}>.\n**{publicOrPrivate}**\nVeuillez appuyer sur un bouton pour autoriser ou refuser l'enregistrement de votre voix.",
+    "isPublic": "Cet enregistrement sera disponible pour chaque membre de la guilde.",
+    "isPrivate": "Cet enregistrement ne sera disponible que pour les membres actuels du salon vocal qui ont autorisé l'enregistrement.",
+    "cantConnect": "Je n'ai pas pu me connecter au salon vocal ! Veuillez réessayer.",
+    "denied": "Personne ne veut être enregistré.",
+    "allow": "Autoriser l'enregistrement",
+    "deny": "Refuser l'enregistrement",
+    "pause": "Mettre l'enregistrement en pause",
+    "resume": "Reprendre l'enregistrement",
+    "stop": "Arrêter l'enregistrement",
+    "get": "Obtenir l'enregistrement",
+    "updated": "Votre réponse a été définie à `{permission}`. J'attends que les autres membres y répondent.",
+    "paused": "🔇 J'ai mis en pause l'enregistrement {channel}.",
+    "recording": "🎙️ Je suis en train d'enregistrer {channel} ({users} ) !",
+    "notFound": "Votre enregistrement n'a pas été trouvé !",
+    "privateReady": "Appuyez sur le bouton pour obtenir l'enregistrement.",
+    "success": "🔉 Voici votre enregistrement!"
+  },
+  "timestamp": {
+    "description": "Obtenir un horodatage pour le futur (ou passé en mettant un \"-\" en avant)",
+    "usage": "Commande PREFIX : horodatage [time]",
+    "options": {
+      "time": {
+        "description": "The time from now (eg. 1w3d2h5min): 3min returns now+3min, -3min returns now-3min"
+      }
+    },
+    "invalid": "L'heure que vous avez fournie n'est pas valide ! Utilisez {command} et recherchez `timestamp` pour obtenir des informations sur la mor.",
+    "outOfRange": "Le temps que vous avez fourni est supérieur à 200 000 ans!",
+    "success": "C'est <t:{time}:R> (`<t:{time}:R>`)."
+  }
+}

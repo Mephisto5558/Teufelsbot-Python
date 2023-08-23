@@ -1,0 +1,104 @@
+{
+  "coinflip": {
+    "description": "Retourner une pièce!",
+    "response": [
+      "Têtes!",
+      "Tailles!"
+    ],
+    "side": "Woah! La pièce a atterri de son côté!"
+  },
+  "counting": {
+    "description": "Set up a counting channel where members can show their math skills!",
+    "usage": "Commande PREFIX : comptant [#canal]",
+    "options": {
+      "channel": {
+        "description": "Le canal que vous voulez ajouter (ou supprimer, si déjà ajouté) en tant que canal compteur."
+      }
+    },
+    "added": {
+      "embedTitle": "Ce salon est maintenant un canal de comptage !",
+      "embedDescription": "Les règles sont simples :\n> Commencer par **1**.\n> Ajouter **1** au dernier numéro\n> Vous ne pouvez pas compter deux nombres dans une ligne\nAmusez-vous !",
+      "by": "Ajouté en tant que canal comptant par {user}",
+      "success": "J'ai ajouté avec succès <#{channel}> en tant que canal de comptage"
+    },
+    "removed": {
+      "embedDescription": "Ce salon n'est plus un canal de comptage !",
+      "by": "Supprimé par {user}",
+      "success": "J'ai supprimé avec succès <#{channel}> en tant que canal de comptage"
+    }
+  },
+  "mgstats": {
+    "description": "obtenir des statistiques sur l'un des mini-jeux du bot",
+    "usage": "Commande PREFIX : stats <game> [user]",
+    "options": {
+      "user": {
+        "description": "obtenir des statistiques sur vous-même ou sur un utilisateur spécifique",
+        "options": {
+          "game": {
+            "description": "Quel jeu voulez-vous obtenir des statistiques?",
+            "choices": {
+              "tictactoe": "format@@0 TicTacToe"
+            }
+          },
+          "target": {
+            "description": "De quel utilisateur voulez-vous obtenir des statistiques?"
+          }
+        }
+      },
+      "leaderboard": {
+        "description": "obtenir les 10 meilleurs joueurs d'une partie",
+        "options": {
+          "game": {
+            "description": "Quel jeu voulez-vous obtenir des statistiques?",
+            "choices": {
+              "tictactoe": "format@@0 TicTacToe"
+            }
+          },
+          "settings": {
+            "description": "Appliquer/Interdire les filtres au classement",
+            "choices": {
+              "all_users": "All Users globally"
+            }
+          }
+        }
+      }
+    },
+    "games": "Jeux : `{games}`\n\n",
+    "wins": "Victoires : {wins}\n",
+    "loses": "Pertes : {loses}\n",
+    "draws": "Tirages : {draws}\n\n",
+    "noOne": "personne\n",
+    "missingGameArg": "Tu dois me donner un `jeu` comme premier argument!",
+    "notFound": "Ce n'est pas une entrée de jeu valide. Les jeux valides sont:\n`{list}`",
+    "wonAgainst": "Gagné contre :\n",
+    "lostAgainst": "Perdu contre :\n",
+    "drewAgainst": "Faire piquer contre :\n",
+    "embedTitle": "`{user}`a {game} stats",
+    "embedTitleTop10": "Top 10 des joueurs {game}",
+    "noPlayers": "On dirait que personne n'a encore gagné...",
+    "youNoGamesPlayed": "Vous n'avez encore joué aucune partie de {game}.",
+    "userNoGamesPlayed": "{user} n'a encore joué aucune partie de {game}."
+  },
+  "rps": {
+    "description": "Jouer des ciseaux de papier pierre contre le bot ou (bientôt disponible) contre vos amis",
+    "embedTitle": "format@@0 Rock Paper Scissors",
+    "embedDescription": "Choisissez un panneau tactile !",
+    "rock": "Roche",
+    "paper": "Papier",
+    "scissors": "Scissors",
+    "win": "Vous avez gagné!",
+    "tie": "Nous sommes liés!",
+    "lose": "Vous avez perdu !",
+    "chose": "J'ai choisi {chose}! {win} ({you} {symbol} {i})",
+    "timedOut": "Vous avez perdu parce que vous avez choisi de ne rien choisir!"
+  },
+  "tictactoe": {
+    "description": "jouer au TicTacToe contre un ami ou le bot",
+    "options": {
+      "opponent": {
+        "description": "À qui voulez-vous jouer ?"
+      }
+    },
+    "newChallenge": "<@{user}> :crossed_swords: Nouveau défi duel"
+  }
+}

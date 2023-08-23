@@ -1,0 +1,92 @@
+{
+  "categoryDescription": "Befehle, die eine Premium-Mitgliedschaft erfordern (werden)",
+  "chatgpt": {
+    "description": "Sprich mit ChatGPT!",
+    "usage": {
+      "usage": "{prefix}chatgpt <Nachricht>",
+      "examples": "{prefix}chatgpt Hallo"
+    },
+    "options": {
+      "message": {
+        "description": "Was möchtest du ChatGPT sagen?"
+      },
+      "model": {
+        "description": "Welches Modell möchtest du nutzen?"
+      }
+    },
+    "hello": "Hallo!",
+    "rateLimit": "Das Ratelimit wurde erreicht. Bitte versuche es in einigen Sekunden erneut.",
+    "notAvailable": "Die API ist momentan nicht verfügbar. Bitte versuche es später erneut.",
+    "error": "Die API hat mit einem Fehler geantwortet.",
+    "regenerate": "Regeneriere Antwort"
+  },
+  "customname": {
+    "description": "Lege einen benutzerdefinierten Spitznamen fest und ich werde dich so nennen.",
+    "options": {
+      "set": {
+        "description": "Ändere, wie ich dich nenne",
+        "options": {
+          "name": {
+            "description": "Wie soll ich dich nennen?"
+          },
+          "global": {
+            "description": "Soll ich dich auf jedem Server so nennen?"
+          }
+        }
+      },
+      "get": {
+        "description": "Erfahre deinen Spitznamen.",
+        "options": {
+          "target": {
+            "description": "Wessen benutzerdefinierten Spitznamen möchtest du wissen?"
+          },
+          "global": {
+            "description": "Soll ich dir deinen globalen oder serverspezifischen Spitznamen nennen?"
+          }
+        }
+      },
+      "clear": {
+        "description": "Entferne deinen Spitznamen.",
+        "options": {
+          "global": {
+            "description": "Soll ich deinen globalen oder serverspezifischen Spitznamen entfernen?"
+          }
+        }
+      }
+    },
+    "set": {
+      "success": "Ich werde dich ab jetzt \"{name}\" nennen."
+    },
+    "get": {
+      "successYou": "Du bist \"{name}\".",
+      "successOther": "Das ist \"{name}\"."
+    },
+    "clear": {
+      "success": "Ich habe deinen Namen entfernt."
+    }
+  },
+  "editmessage": {
+    "description": "Bearbeite eine beliebige Nachricht, welche vom Bot gesendet wurde",
+    "options": {
+      "channel": {
+        "description": "Der Kanal, in dem sich die Nachricht befindet."
+      },
+      "message_id": {
+        "description": "Die ID der Nachricht, die ich bearbeiten soll."
+      },
+      "remove_attachments": {
+        "description": "Lösche alles aus dieser Nachricht. z. B. Embeds und Anhänge"
+      }
+    },
+    "modalTitle": "EditMessage Befehl",
+    "textInputLabel": "Schreibe den neuen Inhalt dieser Nachricht.",
+    "textInputPlaceholder": "Du kannst auch JSON verwenden!",
+    "notFound": "Es gibt keine Nachricht mit dieser ID im angegebenen Kanal!",
+    "notBotMessage": "Ich kann nur meine eigenen Nachrichten bearbeiten!",
+    "cannotEdit": "Ich kann diese Nachricht nicht bearbeiten!",
+    "timedout": "Du hast zu lange gebraucht, um zu antworten!",
+    "emptyJson": "Das von dir angegebene JSON ist leer!",
+    "error": "Beim Senden deines benutzerdefinierten JSON ist ein Fehler aufgetreten:\n```{err}```\n",
+    "success": "Die Nachricht wurde bearbeitet. [Link]({url})"
+  }
+}

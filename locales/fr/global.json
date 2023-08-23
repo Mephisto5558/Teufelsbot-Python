@@ -1,0 +1,16 @@
+{
+  "languageName": "Français",
+  "messageSent": "Message envoyé !",
+  "loading": "<a:loading:1063091916683612160> Chargement en cours...",
+  "guild": "Guilde",
+  "user": "Utilisateur",
+  "cancel": "Abandonner",
+  "playAgain": "Rejouer",
+  "enabled": "Activé",
+  "disabled": "Désactivé",
+  "none": "aucun",
+  "noPermUser": "Vous n'avez pas la permission de le faire !",
+  "noPermBot": "Je n'ai pas la permission de le faire !",
+  "true": "Oui",
+  "false": "Non"
+}

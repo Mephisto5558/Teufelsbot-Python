@@ -1,0 +1,289 @@
+{
+  "categoryDescription": "Comandi informativi",
+  "avatar": {
+    "description": "mostra l'avatar dell'utente",
+    "options": {
+      "target": {
+        "description": "l'utente che si desidera ottenere l'avatar di"
+      },
+      "size": {
+        "description": "la dimensione che si desidera ottenere"
+      }
+    },
+    "embedDescription": "**Avatar di {user}**",
+    "downloadButton": "Scarica immagine"
+  },
+  "cmdstats": {
+    "description": "Vedere quanto spesso è stato eseguito un comando specifico o ottenere la top 10.",
+    "usage": {
+      "usage": "{prefix}cmdstats [command]",
+      "examples": "{prefix}cmdstats joke"
+    },
+    "options": {
+      "command": {
+        "description": "Il comando per cui si desidera ottenere le statistiche."
+      }
+    },
+    "embedTitle": "Statistiche Dei Comandi",
+    "embedDescriptionOne": "Il comando {command} è stato eseguito **{count}** volte.",
+    "embedDescriptionMany": "Questi sono 10 comandi più usati:\n"
+  },
+  "dashboard": {
+    "description": "ottieni il link alla dashboard del bot",
+    "embedTitle": "Dashboard",
+    "embedDescriptionDashboard": "Fare clic su [here]({url}) per aprire la dashboard.",
+    "embedDescriptionVote": "Clicca su [here]({url}) per aprire la pagina web per la votazione e la richiesta di funzionalità."
+  },
+  "emojiinfo": {
+    "description": "Ottieni informazioni su un'emoji",
+    "usage": {
+      "usage": "{prefix}emojiinfo [emoji | emoji id]",
+      "examples": "{prefix}emojiinfo :derp:"
+    },
+    "options": {
+      "emoji": {
+        "description": "L'emoji o il suo id che si desidera ottenere informazioni su"
+      }
+    },
+    "notFound": "Nessuna informazione trovata per questa emoji.",
+    "embedTitle": "Informazioni su \"{emoji}\"",
+    "unknown": "sconosciuto",
+    "name": "Nome",
+    "id": "ID",
+    "guild": "Gilda",
+    "animated": "Animato",
+    "creator": "Creatore",
+    "available": "Disponibile",
+    "createdAt": "Creato Il",
+    "requiresColons": "Richiede Coloni",
+    "allowedRoles": "Ruoli Consentiti",
+    "download": "Scarica Emoji",
+    "delete": "Elimina Emoji"
+  },
+  "help": {
+    "description": "Mostra tutti i miei comandi o cerca uno specifico",
+    "usage": {
+      "usage": "{prefix}aiuto [command]",
+      "examples": "{prefix}aiuto barzelletta"
+    },
+    "options": {
+      "category": {
+        "description": "Wich categoria si desidera ottenere informazioni su?",
+        "choices": {
+          "administration": "Amministrazione",
+          "fun": "Divertimento",
+          "information": "Informazioni",
+          "minigames": "Minigames",
+          "moderation": "Moderazione",
+          "nsfw": "NSFW",
+          "useful": "Utile",
+          "premium": "Premium",
+          "others": "Altri",
+          "owner-only": "Solo Proprietario"
+        }
+      },
+      "command": {
+        "description": "Comando Wich vuoi ottenere informazioni su?"
+      }
+    },
+    "categoryListPlaceholder": "Quale categoria di comando vuoi vedere?",
+    "commandListPlaceholder": "Quale comando vuoi vedere?",
+    "one": {
+      "notFound": "Nessuna informazione trovata per il comando `{command}`.",
+      "embedTitle": "Informazioni dettagliate su: `{command}`",
+      "embedFooterText": "Sintassi: <> = obbligatorio, [] = opzionale <unk> Prefisso: \"{prefix}\"",
+      "prefixAlias": "Prefisso Alias Comandi",
+      "slashAlias": "Slash Command Aliases",
+      "aliasOf": "Alias di",
+      "botPerms": "Permessi Bot Richiesti",
+      "userPerms": "Permessi Utente Richiesti",
+      "cooldowns": "Cooldown Dei Comandi",
+      "usage": "Utilizzo",
+      "examples": "Esempi"
+    },
+    "all": {
+      "embedTitle": "🔰Tutti i miei comandi",
+      "embedDescription": "Queste sono le diverse categorie di comando. Selezionane una dal menu a discesa.",
+      "notFound": "Nessun comando trovato...",
+      "embedFooterText": "Utilizzare l'opzione 'comando' per ottenere maggiori informazioni su un comando specifico."
+    }
+  },
+  "info": {
+    "description": "mostra alcune statistiche e informazioni sul bot.",
+    "dev": "Sviluppatore",
+    "shard": "Frammento",
+    "guild": "Id Della Gilda Interna",
+    "guilds": "Gilde",
+    "commands": "Comandi",
+    "starts": "Inizia",
+    "lastStart": "Ultimo avvio",
+    "translation": "Traduzioni:\n> Inglese: {en}\n> Tedesco: {de}\n",
+    "links": "**[Invite]({Invite})** <unk> **[Dashboard]({Dashboard})** <unk> **[Informativa sulla privacy]({PrivacyPolicy})**",
+    "embedTitle": "Statistiche",
+    "embedFooterText": "Altre statistiche stanno arrivando presto!"
+  },
+  "invite": {
+    "description": "Invia un link per aggiungere il bot alla tua gilda.",
+    "embedTitle": "Invita",
+    "embedDescription": "Grazie per il tuo interesse! Clicca [here]({url}) per aggiungermi alla tua gilda. ^^"
+  },
+  "ping": {
+    "description": "Ottieni il ping del bot",
+    "options": {
+      "average": {
+        "description": "Ottenere il ping medio su 60 ping ."
+      }
+    },
+    "average": {
+      "loading": "Pinging... `{current}`/`{target}`",
+      "embedDescription": "Pings: `{pings}`\nPing più basso: `{lowest}ms`\nPing più alto: `{heightest}ms`\nPing medio: `{average}ms`"
+    },
+    "api": "API",
+    "bot": "Bot",
+    "embedTitle": "Ping",
+    "messageSend": "Invia Messaggio"
+  },
+  "prefix": {
+    "description": "mostra o cambia il prefisso del bot della gilda",
+    "usage": {
+      "usage": "{prefix}prefisso [nuovo prefisso]",
+      "examples": "{prefix}prefisso &"
+    },
+    "options": {
+      "new_prefix": {
+        "description": "il nuovo prefisso del bot per questa gilda"
+      },
+      "case_insensitive": {
+        "description": "Il caso del prefisso va ignorato?"
+      }
+    },
+    "saved": "Il mio prefisso è stato cambiato in `{prefix}`.",
+    "currentPrefix": "Il mio prefisso attuale è `{prefix}`.",
+    "caseInsensitive": " (case insensitive)"
+  },
+  "roleinfo": {
+    "description": "Ottieni informazioni su un ruolo",
+    "usage": {
+      "usage": "{prefix}roleinfo [@role <unk> role name <unk> role id]",
+      "examples": "{prefix}roleinfo @User1"
+    },
+    "options": {
+      "role": {
+        "description": "il ruolo che si desidera ottenere informazioni su"
+      }
+    },
+    "notFound": "Impossibile trovare questo ruolo. Prova ad usare il suo ID.",
+    "mention": "Menzione",
+    "members": "Membri",
+    "color": "Colore",
+    "mentionable": "Mentionable",
+    "hoist": "Hoist",
+    "managed": "Gestito",
+    "position": "Posizione",
+    "createdAt": "Creato Il",
+    "permissions": "Permessi",
+    "admin": "Amministratore",
+    "delete": "Elimina Ruolo"
+  },
+  "serverinfo": {
+    "description": "Ottieni informazioni su una gilda",
+    "options": {
+      "guild_id": {
+        "description": "L'ID del server su cui vuoi ottenere informazioni. Funziona solo per i server in cui mi trovo."
+      }
+    },
+    "memberStats": "`{all}` (Humans: `{humans}`, Bots: `{bots}`)",
+    "members": "Membri",
+    "verificationLevel": {
+      "name": "Livello Di Verifica",
+      "0": "Nessuno",
+      "1": "Basso",
+      "2": "Medio",
+      "3": "Alto",
+      "4": "Molto Alto"
+    },
+    "id": "ID",
+    "createdAt": "Creato Il",
+    "defaultNotifications": {
+      "name": "Notifiche Predefinite",
+      "0": "Tutti I Messaggi",
+      "1": "Solo Menzioni"
+    },
+    "owner": "Proprietario",
+    "locale": "Localizzazione",
+    "partnered": "Collaborato",
+    "emojis": "Emojis",
+    "boosts": {
+      "name": "Potenziamenti",
+      "1": "Livello 1",
+      "2": "Livello 2",
+      "3": "Livello 3"
+    },
+    "roles": "Ruoli",
+    "channels": "Canali",
+    "vanityUrl": "Url Vanità",
+    "uses": " Usi",
+    "downloadIcon": "Scarica Icona",
+    "downloadBanner": "Scarica Banner"
+  },
+  "uptime": {
+    "description": "Ottieni tempo di funzionamento del bot",
+    "embedDescription": "Il bot è stato [online]({Domain}/uptime) esattamente per {time}.",
+    "dhms": "{d} giorni, {h} ore, {m} minuti e {s} secondi",
+    "hms": "{h} ore, {m} minuti e {s} secondi",
+    "ms": "{m} minuti e {s} secondi",
+    "s": "{s} secondi"
+  },
+  "userinfo": {
+    "description": "Ottieni informazioni su un membro",
+    "usage": {
+      "usage": "{prefix}roleinfo [@user <unk> user <unk> user tag <unk> user nickname <unk> user id]",
+      "examples": "{prefix}userinfo @User1"
+    },
+    "options": {
+      "target": {
+        "description": "l'utente che si desidera ottenere informazioni su"
+      }
+    },
+    "guildOwner": "Proprietario Della Gilda",
+    "guildAdmin": "Amministratore Gilda",
+    "admin": "`Administrator`",
+    "guildMod": "Moderatore Di Gilda",
+    "guildMember": "Membro Della Gilda",
+    "mention": "Menzione",
+    "type": "Tipo",
+    "roles": "Ruoli",
+    "position": "Posizione",
+    "color": "Colore",
+    "createdAt": "Creato Il",
+    "joinedAt": "Entrato A",
+    "birthday": "Compleanno (Età)",
+    "timedOutUntil": "Timed Out Fino A",
+    "rolesWithPerms": "Ruoli con permessi",
+    "flags": {
+      "name": "Bandiere",
+      "ActiveDeveloper": "Sviluppatore Attiva",
+      "BotHTTPInteractions": "HTTP Bot",
+      "BugHunterLevel1": "Bug Hunter Livello 1",
+      "BugHunterLevel2": "Bug Hunter Livello 2",
+      "CertifiedModerator": "Moderatore Certificato Discord",
+      "HypeSquadOnlineHouse1": "Membro Della Casa Coraggio",
+      "HypeSquadOnlineHouse2": "Membro Della Casa Brillantezza",
+      "HypeSquadOnlineHouse3": "Membro Del Saldo Della Casa",
+      "Hypesquad": "Eventi HypeSquad Membro",
+      "Partner": "Proprietario Del Server Partner",
+      "PremiumEarlySupporter": "Sostenitore Nitro Precoce",
+      "Quarantined": "Quarantenato",
+      "Spammer": "Spammer",
+      "Staff": "Dipendente Discord",
+      "TeamPseudoUser": "Utente Team Pseudo",
+      "VerifiedBot": "Bot Verificato",
+      "VerifiedDeveloper": "Sviluppatore Di Bot Verificato Anticipato"
+    },
+    "perms": "Permessi",
+    "downloadAvatar": "Scarica Avatar",
+    "downloadBanner": "Scarica Banner",
+    "kickMember": "Espelli Membro",
+    "banMember": "Divieto Membro"
+  }
+}

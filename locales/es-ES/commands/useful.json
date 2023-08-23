@@ -1,0 +1,310 @@
+{
+  "categoryDescription": "Comandos útiles",
+  "addemoji": {
+    "description": "añade un emoji a este gremio",
+    "options": {
+      "emoji_or_url": {
+        "description": "proporcionar un emoji o una url a una imagen."
+      },
+      "name": {
+        "description": "el nombre del nuevo emoji"
+      },
+      "limit_to_roles": {
+        "description": "los rol(es) que se permiten usar los emoji. Separarlos con espacios."
+      }
+    },
+    "embedTitle": "Añadir Emoji",
+    "isGuildEmoji": "¡Ese emoji ya está en este gremio!",
+    "invalidUrl": "¡El argumento proporcionado no es una url válida o emoji!\nLa url debe terminar con `jpg`, `jpeg`, `png`, `webp`, `svg` o `gif`.\nEjemplo: https://www.google.com/images/branding/googlelogo/1x/googlelogo_dark_color_272x92dp.png",
+    "notFound": "No se encontró la url proporcionada.",
+    "success": "¡Se ha añadido con éxito **{name}** {emoji}!\n",
+    "limitedToRoles": "El emoji se ha limitado a los siguientes roles:\n<@&{roles}>.",
+    "error": "No se puede crear el emoji por la razón:\n```\n{err}\n```",
+    "timedOut": "Se ha agotado el tiempo de espera. Tal vez la imagen es grande."
+  },
+  "button": {
+    "description": "Crear un botón.",
+    "options": {
+      "json": {
+        "description": "crear un botón a partir de datos JSON raw",
+        "options": {
+          "json": {
+            "description": "Datos JSON desde los que crear un botón"
+          }
+        }
+      },
+      "custom": {
+        "description": "crea tu propio botón con un montón de opciones",
+        "options": {
+          "style": {
+            "description": "¿Qué estilo debe tener tu botón?",
+            "choices": {
+              "1": "Desenfocar",
+              "2": "Gris",
+              "3": "Verde",
+              "4": "Rojo",
+              "5": "Link (requiere la opción \"url\")"
+            }
+          },
+          "emoji": {
+            "description": "El emoji que quieres mostrar en el botón. Se sobrescribe por la opción \"etiqueta\"."
+          },
+          "label": {
+            "description": "El texto que quieres mostrar en el botón. Sobrescribe la opción \"emoji\"."
+          },
+          "url": {
+            "description": "La url a la que apunta el botón. Funciona sólo con la opción de estilo \"Enlace\"."
+          },
+          "new_row": {
+            "description": "Utilice una nueva fila para el botón."
+          },
+          "content": {
+            "description": "Establecer un mensaje en el mensaje del botón."
+          },
+          "message_id": {
+            "description": "El mensaje al que quieres añadir un botón. Necesita estar en el mismo canal que el comando."
+          }
+        }
+      }
+    },
+    "invalidURL": "¡La URL proporcionada no es válida!",
+    "msgNotFound": "¡El id de mensaje proporcionado no se encontró en este canal!",
+    "botIsNotAuthor": "Sólo puedo editar mis propios mensajes!",
+    "buttonLimit": "Un mensaje no puede tener más de 5 filas o 25 botones!",
+    "invalidOption": "**¡Una de tus opciones no es válida!**\n\n```{err}```",
+    "invalidJSON": "**¡Tu JSON no es válido!**\n\n```{err}```",
+    "successJSON": "¡Tu botón ha sido enviado!",
+    "success": "¡Tu botón ha sido enviado! Debajo está el código del botón.\nSi quieres enviarlo de nuevo, utiliza el subcomando `json`.\n\n```json\n{json}\n```"
+  },
+  "embed": {
+    "description": "envía un embebido personalizado; puedes hacer nuevas líneas con \"/n\".",
+    "options": {
+      "custom": {
+        "description": "crea tu propio embebido con un montón de opciones",
+        "options": {
+          "description": {
+            "description": "establecer el texto embebido, usar \"/n\" para nuevas líneas"
+          },
+          "content": {
+            "description": "establecer un mensaje fuera del incrustado"
+          },
+          "title": {
+            "description": "establecer el título incrustado"
+          },
+          "predefined_color": {
+            "description": "Establecer el color embebido de códigos de discord predefinidos",
+            "choices": {
+              "Default": "Por defecto",
+              "White": "Blanco",
+              "Aqua": "Aqua",
+              "Green": "Verde",
+              "Blue": "Azul",
+              "Yellow": "Amarillo",
+              "Purple": "Morado",
+              "LuminousVividPink": "Rosa Luminosa Vivid",
+              "Fuchsia": "Fuchsia",
+              "Gold": "Oro",
+              "Orange": "Naranja",
+              "Red": "Rojo",
+              "Grey": "Gris",
+              "Navy": "Naval",
+              "DarkAqua": "Aqua Oscura",
+              "DarkGreen": "Verde Oscuro",
+              "DarkBlue": "Azul Oscuro",
+              "DarkPurple": "Púrpura oscuro",
+              "DarkVividPink": "Rosa Vivid Oscuro",
+              "DarkGold": "Oro Oscuro",
+              "DarkOrange": "Naranja oscuro",
+              "DarkRed": "Rojo Oscuro",
+              "DarkGrey": "Gris Oscuro",
+              "DarkerGrey": "Gris más oscuro",
+              "LightGrey": "Gris claro",
+              "DarkNavy": "Marina Oscura",
+              "Blurple": "Desenfocar",
+              "Greyple": "Gris",
+              "DarkButNotBlack": "Oscuro pero no negro",
+              "NotQuiteBlack": "No Negro"
+            }
+          },
+          "custom_color": {
+            "description": "establecer un código HEX personalizado de 6 caracteres como color incrustado (ej. #ffff)"
+          },
+          "footer_text": {
+            "description": "establecer el texto del pie de página"
+          },
+          "footer_icon": {
+            "description": "establecer el icono del pie de página URL"
+          },
+          "image": {
+            "description": "establecer la URL de la imagen embebida"
+          },
+          "thumbnail": {
+            "description": "URL de la miniatura"
+          },
+          "timestamp": {
+            "description": "establecer fecha y hora"
+          },
+          "author_name": {
+            "description": "establecer el nombre del autor"
+          },
+          "author_url": {
+            "description": "establecer la URL del autor"
+          },
+          "author_icon": {
+            "description": "establecer la URL del icono del autor"
+          }
+        }
+      },
+      "json": {
+        "description": "crear un incrustado a partir de datos JSON raw",
+        "options": {
+          "json": {
+            "description": "Datos JSON desde los que crear un incrustado"
+          }
+        }
+      }
+    },
+    "invalidOption": "**¡Una de tus opciones no es válida!**\n\n```{err}```",
+    "invalidJSON": "**¡Tu JSON no es válido!**\n\n```{err}```",
+    "successJSON": "¡Tu embed ha sido enviado!",
+    "success": "¡Tu incrusto ha sido enviado! Debajo está el código incrustado.\nSi quieres enviarlo de nuevo, utiliza el subcomando `json`.\n\n```json\n{json}\n```"
+  },
+  "hash": {
+    "description": "encripta o desencripta su texto con varios métodos",
+    "options": {
+      "input": {
+        "description": "el texto que desea cifrar o descifrar"
+      },
+      "method": {
+        "description": "con qué método se debe cifrar el texto"
+      }
+    },
+    "embedTitle": "Función Hash",
+    "embedDescription": "Tu entrada: `{input}`\nMétodo Hash: `{method}`",
+    "text": "Tu cadena cifrada:\n`{hash}`"
+  },
+  "lastping": {
+    "description": "Te muestra dónde te mencionaron por última vez.",
+    "usage": {
+      "usage": "{prefix}dura [#canal]\nSi se utiliza la opción `canal`, se buscará un máximo de 200 mensajes.",
+      "examples": "{prefix}dura\n{prefix}dura #chat\n{prefix}dura @User1"
+    },
+    "options": {
+      "channel": {
+        "description": "El canal en el que quieres buscar menciones. Por defecto es todo el gremio."
+      },
+      "member": {
+        "description": "¿Buscar solo menciones por un miembro específico? (Solo en combinación con la opción \"canal\")"
+      }
+    },
+    "memberRequiresChannel": "¡La opción \"miembro\" sólo funciona en combinación con la opción \"canal\"!",
+    "invalid": "¡El canal seleccionado no es un canal de texto!",
+    "noneFound": "No he encontrado ninguna mención.",
+    "unknown": "desconocido",
+    "embedTitle": "Último ping",
+    "embedDescription": "La última vez que te mencionaron fue [here]({url}) de <@{author}>.\n{content}"
+  },
+  "math": {
+    "description": "Ejecuta algunas matemáticas",
+    "usage": {
+      "usage": "{prefix}matemáticas [expression]\n\nEsta calculadora soporta una amplia gama de operaciones matemáticas, no solo las básicas.\nPuede asignar valores a variables, por ejemplo: `x=10`.\nMúltiples sentencias pueden ser evaluadas usando una nueva línea o un punto y coma, por ejemplo: `x=10; x+10` devolverá `20`.\nRecuerda usar un asterisco (`*`) para multiplicación.\nLa calculadora puede producir múltiples resultados. Tenga en cuenta que los espacios innecesarios pueden causar errores en las expresiones.",
+      "examples": "{prefix}matemáticas 1+1"
+    },
+    "options": {
+      "expression": {
+        "description": "¿Qué quieres que resuelve?"
+      }
+    },
+    "embedTitle": "Calculador",
+    "noInput": "¡No has dado ninguna entrada!",
+    "error": "Ocurrió un error mientras se trataba de resolver tu expresión:\n```{err}```",
+    "separated": "Resultados separados con \"|\":\n{results}",
+    "success": "Expresión:\n```{expression}```\nResultado:\n```{result}```"
+  },
+  "passwordgenerator": {
+    "description": "genera una contraseña criptográficamente fuerte",
+    "options": {
+      "length": {
+        "description": "la longitud de su contraseña"
+      },
+      "count": {
+        "description": "¿Cuántas contraseñas quieres generar?"
+      },
+      "exclude_chars": {
+        "description": "caracteres que no tengas en tu contraseña"
+      },
+      "include_chars": {
+        "description": "que desea tener en su contraseña, adicional al conjunto de caracteres predeterminado."
+      }
+    },
+    "charsetEmpty": "ha excluido todos los caracteres del juego de caracteres...",
+    "success": "Su contraseña(s) segura(s):\n{passwords}\n\n||Creada con el siguiente conjunto de caracteres:\n```{charset}```\nUtilice las opciones de comando para agregar o eliminar caracteres.||"
+  },
+  "randomnumber": {
+    "description": "Devuelve un número aleatorio. Utiliza valores por defecto para entradas no válidas.",
+    "usage": {
+      "usage": "{prefix}número aleatorio [min] [max]",
+      "examples": "{prefix}número aleatorio 1 10"
+    },
+    "options": {
+      "minimum": {
+        "description": "El número más pequeño posible. Por defecto es 0."
+      },
+      "maximum": {
+        "description": "El número más grande posible. Por defecto es 100."
+      }
+    },
+    "outOfRange": "Se ha producido un error:\n````\n{err}.\n```"
+  },
+  "record": {
+    "description": "Grabar un canal de voz. Necesita la aprobación de los usuarios.",
+    "options": {
+      "target": {
+        "description": "Grabar sólo un usuario específico."
+      },
+      "channel": {
+        "description": "¿Cuál es el canal de voz que desea grabar?"
+      },
+      "public": {
+        "description": "Haz pública la grabación, así cualquier miembro de la hermandad puede escucharla."
+      }
+    },
+    "noTarget": "¡No hay nadie que grabar! O todos los blancos son bots o no están en un canal de voz! Si usted suministró un canal, ¡asegúrese de que es el que está en el destino!",
+    "needVoiceChannel": "¡Necesitas proporcionar un canal de voz o estar en uno!",
+    "cannotJoin": "¡No puedo unirme a ese canal de voz! Asegúrate de que el canal no está lleno y tengo los permisos necesarios.",
+    "deaf": "¡Estoy ensordecedora y no puedo dejar de matarme!",
+    "embedTitle": "Grabador de voz",
+    "embedDescription": "<@{user}> quiere grabarte en el canal de voz <#{channel}>.\n**{publicOrPrivate}**\nPresione un botón para permitir o denegar la grabación de su voz.",
+    "isPublic": "Esta grabación estará disponible para todos los miembros del gremio.",
+    "isPrivate": "Esta grabación sólo estará disponible para los miembros actuales del canal de voz que permitieron la grabación.",
+    "cantConnect": "¡No pude conectar con el canal de voz! Por favor, inténtalo de nuevo.",
+    "denied": "Nadie quiere ser grabado.",
+    "allow": "Permitir grabación",
+    "deny": "Rechazar grabación",
+    "pause": "Pausar grabación",
+    "resume": "Reanudar grabación",
+    "stop": "Detener grabación",
+    "get": "Obtener la grabación",
+    "updated": "Tu respuesta ha sido establecida a `{permission}`. Estoy esperando a que los otros miembros respondan.",
+    "paused": "🔇 Pusí la grabación {channel}.",
+    "recording": "🎙️ ¡Ahora estoy grabando {channel} ({users})!",
+    "notFound": "¡La grabación no ha sido encontrada!",
+    "privateReady": "Pulse el botón para obtener la grabación.",
+    "success": "🔉 ¡Aquí está su grabación!"
+  },
+  "timestamp": {
+    "description": "Obtén una marca de tiempo para el futuro (o pasado poniendo un \"-\" en frente)",
+    "usage": {
+      "usage": "Marca de tiempo {prefix} [time]",
+      "examples": "`1h` = ahora + 1h\n`-1h` = ahora - 1h\n`1h-1h` = ahora + 1h - 1h"
+    },
+    "options": {
+      "time": {
+        "description": "La hora a partir de ahora (ej. 1w3d2h5min). Use \"/help timestamp\" para más información."
+      }
+    },
+    "invalid": "¡El tiempo que proporcionaste no es válido! Usa {command} y busca `timestamp` para obtener información mor.",
+    "outOfRange": "El tiempo especificado es mayor que 200,000 años!",
+    "success": "Eso es <t:{time}:R> (`<t:{time}:R>`)."
+  }
+}

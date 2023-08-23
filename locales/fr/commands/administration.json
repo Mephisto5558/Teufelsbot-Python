@@ -1,0 +1,223 @@
+{
+  "serverbackup": {
+    "description": "Gérer les sauvegardes de votre serveur.",
+    "options": {
+      "create": {
+        "description": "Create a backup of your server. If the server has 5 or more backups, the oldest one will be deleted."
+      },
+      "load": {
+        "description": "Load a backup. CAUTION: this erases all server data! Use the option \"no_clear\" to avoid that.",
+        "options": {
+          "id": {
+            "description": "The backup ID you want to load. Use the \"get\" subcommand to view a list of IDs."
+          },
+          "no_clear": {
+            "description": "If set to true, will only overwrite existing data (e.g. channels won't get deleted)."
+          }
+        }
+      },
+      "get": {
+        "description": "Obtenir une sauvegarde ou une liste de sauvegardes pour cette guilde.",
+        "options": {
+          "id": {
+            "description": "L'ID de sauvegarde à rechercher."
+          }
+        }
+      },
+      "delete": {
+        "description": "Supprimer une sauvegarde.",
+        "options": {
+          "id": {
+            "description": "La sauvegarde à supprimer."
+          }
+        }
+      }
+    },
+    "embedTitle": "Sauvegarde du serveur",
+    "create": {
+      "settings": "<a:loading:1063091916683612160> Enregistrement des paramètres...",
+      "members": "<a:loading:1063091916683612160> Sauvegarde des membres...",
+      "bans": "<a:loading:1063091916683612160> Sauvegarde des bannis...",
+      "roles": "<a:loading:1063091916683612160> Sauvegarde des rôles...",
+      "emojis": "<a:loading:1063091916683612160> Saving emojis...",
+      "stickers": "<a:loading:1063091916683612160> Enregistrement des autocollants...",
+      "channels": "<a:loading:1063091916683612160> Enregistrement des canaux, des fils et des messages...",
+      "images": "<a:loading:1063091916683612160> Saving icon, splash, and banner...",
+      "success": "La sauvegarde avec l'ID {id} a été créée avec succès !\nUtilisez </serverbackup get:{cmdId}> pour plus d'informations sur la sauvegarde."
+    },
+    "clear": {
+      "items": "<a:loading:1063091916683612160> Suppression des émoticônes, des autocollants et des rôles...",
+      "bans": "<a:loading:1063091916683612160> Suppression des bannis...",
+      "settings": "<a:loading:1063091916683612160> Suppression des paramètres...",
+      "ownWebhooks": "<a:loading:1063091916683612160> Suppression des webhooks temporaires..."
+    },
+    "load": {
+      "overwriteWarningTitle": "SURWRITE DU SERVEUR (IRREVERSIBLE)",
+      "overwriteWarningDescription": "Cette action supprimera la plupart de votre serveur! Cela inclut les rôles, les webhooks, les canaux et les émoticônes.\nSi vous êtes sûr de vouloir faire cela, tapez 'Oui'. Tapez 'Non' pour annuler.\nVous pouvez également créer une sauvegarde avant le chargement, juste pour être sûr.",
+      "noPerm": "Seul le propriétaire du serveur peut charger les sauvegardes !",
+      "notFound": "Aucune sauvegarde avec cet ID n'a été trouvée!",
+      "cancelled": "Le chargement de la sauvegarde a été annulé.",
+      "loadingEmbedDescription": "Application de la sauvegarde sur le serveur.\nCela peut prendre un certain temps, selon la taille de la sauvegarde.",
+      "settings": "<a:loading:1063091916683612160> Chargement des paramètres...",
+      "features": "<a:loading:1063091916683612160> Chargement des fonctionnalités du serveur...",
+      "roles": "<a:loading:1063091916683612160> Chargement des rôles...",
+      "members": "<a:loading:1063091916683612160> Chargement des rôles des membres et des surnoms...",
+      "channels": "<a:loading:1063091916683612160> Chargement des canaux, des fils et des messages...",
+      "emojis": "<a:loading:1063091916683612160> Chargement des émoticônes...",
+      "stickers": "<a:loading:1063091916683612160> Chargement des autocollants...",
+      "bans": "<a:loading:1063091916683612160> Chargement des bannis...",
+      "success": "La sauvegarde avec l'id{id} a été chargée avec succès."
+    },
+    "delete": {
+      "success": "Sauvegarde supprimée avec succès !"
+    },
+    "get": {
+      "oneEmbedDescription": "Informations sur la sauvegarde {id}\n>>> Créée à: <t:{createdAt}>\nTaille : {size}\nMembres : {members}\nCanaux : {channels}\nRôles : {roles}\nÉmojis: {emojis}\nAutocollants : {stickers}",
+      "oneNotFound": "Aucune sauvegarde n'a été trouvée avec cet ID !",
+      "found": "{amount} sauvegardes trouvées.",
+      "infos": "Créé à: <t:{createdAt}>\nTaille : {size}\nMembres : {members}\nChaînes : {channels}\nRôles : {roles}\nÉmoticônes : {emojis}\nAutocollants : {stickers}",
+      "embedDescription": "Les sauvegardes suivantes ont été trouvées, triées par date:",
+      "noneFound": "Aucune sauvegarde n'a été trouvée pour ce serveur."
+    }
+  },
+  "selfrole": {
+    "description": "Gérer les auto-grenouilles."
+  },
+  "setup": {
+    "description": "Définit le bot vers le haut",
+    "options": {
+      "toggle_module": {
+        "description": "toggles a module",
+        "options": {
+          "module": {
+            "description": "Le module que vous voulez activer/désactiver",
+            "choices": {
+              "gatekeeper": "Gatekeeper",
+              "birthday": "Jours d'anniversaire"
+            }
+          }
+        }
+      },
+      "toggle_command": {
+        "description": "Autoriser/Interdire les rôles/canaux/membres de lancer une commande spécifique.",
+        "options": {
+          "command": {
+            "description": "La commande que vous voulez activer."
+          },
+          "get": {
+            "description": "Récupère une liste de rôles/salons/membres interdits pour cette commande à la place."
+          },
+          "role_1": {
+            "description": "Le rôle pour lequel vous voulez basculer la commande"
+          },
+          "role_2": {
+            "description": "Le rôle pour lequel vous voulez basculer la commande"
+          },
+          "role_3": {
+            "description": "Le rôle pour lequel vous voulez basculer la commande"
+          },
+          "role_4": {
+            "description": "Le rôle pour lequel vous voulez basculer la commande"
+          },
+          "role_5": {
+            "description": "Le rôle pour lequel vous voulez basculer la commande"
+          },
+          "role_6": {
+            "description": "Le rôle pour lequel vous voulez basculer la commande"
+          },
+          "channel_1": {
+            "description": "Le canal pour lequel vous voulez basculer la commande"
+          },
+          "channel_2": {
+            "description": "Le canal pour lequel vous voulez basculer la commande"
+          },
+          "channel_3": {
+            "description": "Le canal pour lequel vous voulez basculer la commande"
+          },
+          "channel_4": {
+            "description": "Le canal pour lequel vous voulez basculer la commande"
+          },
+          "channel_5": {
+            "description": "Le canal pour lequel vous voulez basculer la commande"
+          },
+          "channel_6": {
+            "description": "Le canal pour lequel vous voulez basculer la commande"
+          },
+          "member_1": {
+            "description": "Le membre pour lequel vous voulez basculer la commande"
+          },
+          "member_2": {
+            "description": "Le membre pour lequel vous voulez basculer la commande"
+          },
+          "member_3": {
+            "description": "Le membre pour lequel vous voulez basculer la commande"
+          },
+          "member_4": {
+            "description": "Le membre pour lequel vous voulez basculer la commande"
+          },
+          "member_5": {
+            "description": "Le membre pour lequel vous voulez basculer la commande"
+          },
+          "member_6": {
+            "description": "Le membre pour lequel vous voulez basculer la commande"
+          }
+        }
+      },
+      "language": {
+        "description": "Changer la langue du bot.",
+        "options": {
+          "language": {
+            "description": "Dans quelle langue le garçon doit-il répondre?",
+            "choices": {
+              "de": "Allemand",
+              "en": "Anglais",
+              "ru": "Russe"
+            }
+          }
+        }
+      },
+      "serverbackup": {
+        "description": "Gérer les options pour les sauvegardes de votre serveur.",
+        "options": {
+          "allowed_to_load": {
+            "description": "Change who is allowed to load server backups.",
+            "choices": {
+              "creator": "Créateur",
+              "owner": "Server owner",
+              "creator+owner": "Creator and Server owner",
+              "admins": "Current server administrators"
+            }
+          }
+        }
+      }
+    },
+    "toggledModule": "Le module `{name}` a été {state}.",
+    "toggleCmd": {
+      "notFound": "Ce n'est pas une commande valide !",
+      "list": {
+        "all": "Tous les membres",
+        "embedTitle": "Rôles/canaux/membres interdits pour la commande {command}",
+        "embedDescription": "Aucun rôle, salon ou membre n'est actuellement pas autorisé."
+      },
+      "enabled": "La commande `{command}` est maintenant activée.",
+      "disabled": "La commande `{command}` est maintenant désactivée.",
+      "isDisabled": "La commande `{command}` est désactivée pour tous les membres. Vous pouvez la réactiver en exécutant </setup toggle_command:{id}> sans spécifier aucun rôle, salon ou membre.",
+      "roles": "Rôles",
+      "channels": "Canaux",
+      "users": "Membres",
+      "embedTitle": "Paramètres de commande mis à jour pour \"{commandName}\"",
+      "embedDescription": "Le nombre de rôles/canaux/membres suivants ont été changés:\n||Voir tous les rôles/canaux/membres interdits en utilisant </setup toggle_command:{id}> avec l'option `get`.||\n",
+      "embed": {
+        "enabled": "Supprimé (autorisé)",
+        "disabled": "Ajouté (rejeté)"
+      }
+    },
+    "language": {
+      "embedTitle": "Langue du bot modifiée !",
+      "embedDescription": "Les prochains messages seront dans `{lang}`."
+    },
+    "serverbackup": {
+      "success": "Successfully updated the settings!"
+    }
+  }
+}

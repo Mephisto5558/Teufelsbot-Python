@@ -1,0 +1,92 @@
+{
+  "categoryDescription": "Comandi che (saranno) richiedono un abbonamento premium",
+  "chatgpt": {
+    "description": "Parla con ChatGPT!",
+    "usage": {
+      "usage": "{prefix}chatgpt <message>",
+      "examples": "{prefix}chatgpt Ciao"
+    },
+    "options": {
+      "message": {
+        "description": "Cosa vuoi dire a ChatGPT?"
+      },
+      "model": {
+        "description": "Quale modello vuoi usare?"
+      }
+    },
+    "hello": "Ciao!",
+    "rateLimit": "Il ratelimit è stato raggiunto. Riprova tra pochi secondi.",
+    "notAvailable": "L'API non è attualmente disponibile. Riprova più tardi.",
+    "error": "L'API ha risposto con un errore.",
+    "regenerate": "Rigenera la risposta"
+  },
+  "customname": {
+    "description": "Imposta un soprannome personalizzato e ti chiamerò.",
+    "options": {
+      "set": {
+        "description": "Cambia come ti chiamo",
+        "options": {
+          "name": {
+            "description": "Come dovrei chiamarla?"
+          },
+          "global": {
+            "description": "Dovrei chiamarti così su ogni server?"
+          }
+        }
+      },
+      "get": {
+        "description": "Ottieni il tuo soprannome personalizzato.",
+        "options": {
+          "target": {
+            "description": "Chi è il soprannome personalizzato che vuoi sapere?"
+          },
+          "global": {
+            "description": "Dovrei dirti il tuo soprannome globale o quello specifico della tua gilda?"
+          }
+        }
+      },
+      "clear": {
+        "description": "Rimuovi il tuo soprannome personalizzato.",
+        "options": {
+          "global": {
+            "description": "Dovrei rimuovere il tuo soprannome globale o quello specifico della tua gilda?"
+          }
+        }
+      }
+    },
+    "set": {
+      "success": "Da ora in poi ti chiamerò \"{name}\"."
+    },
+    "get": {
+      "successYou": "Sei \"{name}\".",
+      "successOther": "È \"{name}\"."
+    },
+    "clear": {
+      "success": "Ho rimosso il tuo nome personalizzato."
+    }
+  },
+  "editmessage": {
+    "description": "Modifica qualsiasi messaggio inviato dal bot",
+    "options": {
+      "channel": {
+        "description": "Il canale in cui è inserito il messaggio."
+      },
+      "message_id": {
+        "description": "L'id del messaggio che vuoi che io modifichi."
+      },
+      "remove_attachments": {
+        "description": "Cancella tutto su quel messaggio, ad es. incorpora, file"
+      }
+    },
+    "modalTitle": "Comando ModificaMessaggi",
+    "textInputLabel": "Scrivi il nuovo contenuto per quel messaggio.",
+    "textInputPlaceholder": "Puoi anche usare JSON!",
+    "notFound": "Non c'è nessun messaggio con quell'id nel canale specificato!",
+    "notBotMessage": "Posso modificare solo i miei messaggi!",
+    "cannotEdit": "Non posso modificare quel messaggio!",
+    "timedout": "Hai impiegato a lungo per rispondere!",
+    "emptyJson": "Il JSON che hai fornito è vuoto!",
+    "error": "Si è verificato un errore durante il tentativo di inviare il tuo JSON:\n```{err}```\n",
+    "success": "Il messaggio è stato modificato. [Link]({url})"
+  }
+}

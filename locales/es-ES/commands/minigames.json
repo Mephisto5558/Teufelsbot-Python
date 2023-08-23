@@ -1,0 +1,147 @@
+{
+  "categoryDescription": "Minijuegos para jugar con otros miembros",
+  "coinflip": {
+    "description": "¡Invierte una moneda!",
+    "response": [
+      "¡Cabezas!",
+      "¡Gracias!"
+    ],
+    "side": "¡Oya! ¡La moneda aterrizó en su lado!"
+  },
+  "counting": {
+    "description": "¡Configura un canal de conteo donde los miembros puedan mostrar sus habilidades matemáticas!",
+    "usage": {
+      "usage": "{prefix}contando [#canal]",
+      "examples": "{prefix}contando #contador"
+    },
+    "options": {
+      "channel": {
+        "description": "El canal que desea agregar (o eliminar, si ya se ha añadido) como un canal de conteo."
+      }
+    },
+    "added": {
+      "embedTitle": "¡Este canal es ahora un canal de cuenta!",
+      "embedDescription": "Las reglas son simples:\n> Comenzar con **1**.\n> Añade **1** al último número\n> No puedes contar dos números seguidos\n¡Diviértete!",
+      "by": "Añadido como canal de recuento por {user}",
+      "success": "Añadí con éxito <#{channel}> como canal de conteo."
+    },
+    "removed": {
+      "embedDescription": "¡Este canal ya no es un canal de cuento!",
+      "by": "Eliminado por {user}",
+      "success": "He eliminado con éxito <#{channel}> como canal de conteo."
+    }
+  },
+  "mgstats": {
+    "description": "obtener estadísticas acerca de uno de los minijuegos del bot",
+    "usage": {
+      "usage": "{prefix}estadísticas <game> [user]",
+      "examples": "{prefix}mgstats tictactoe @User1"
+    },
+    "options": {
+      "user": {
+        "description": "obtener estadísticas sobre ti o un usuario específico",
+        "options": {
+          "game": {
+            "description": "¿De qué juego quieres obtener estadísticas?",
+            "choices": {
+              "tictactoe": "TicTacToe"
+            }
+          },
+          "target": {
+            "description": "¿De qué usuario quieres obtener estadísticas?"
+          }
+        }
+      },
+      "leaderboard": {
+        "description": "consigue los 10 mejores jugadores de una partida",
+        "options": {
+          "game": {
+            "description": "¿De qué juego quieres obtener estadísticas?",
+            "choices": {
+              "tictactoe": "TicTacToe"
+            }
+          },
+          "sort": {
+            "description": "Ordenar el marcador",
+            "choices": {
+              "m_wins": "Más victorias",
+              "f_wins": "Fewest gana",
+              "m_draws": "Más golpes",
+              "f_draws": "Dibujos del Oeste",
+              "m_loses": "Más pérdidas",
+              "f_loses": "Pérdidas del Oeste",
+              "m_alphabet_user": "Nombres de usuario (Descender)",
+              "f_alphabet_user": "Nombres de usuario (ascendente)",
+              "m_alphabet_nick": "Apodos (Descendente)",
+              "f_alphabet_nick": "Apodos (ascendente)"
+            }
+          },
+          "settings": {
+            "description": "Aplicar/Desaplicar filtros a la tabla de clasificación",
+            "choices": {
+              "all_users": "Todos los usuarios globalmente"
+            }
+          }
+        }
+      }
+    },
+    "games": "Juegos: `{games}`\n\n",
+    "wins": "Victorias: {wins}\n",
+    "loses": "Pérdidas: {loses}\n",
+    "draws": "Dibujos: {draws}\n\n",
+    "noOne": "nadie\n",
+    "missingGameArg": "¡Necesitas darme un `juego` como el primer argumento!",
+    "notFound": "Esta no es una entrada de juego válida. Los juegos válidos son:\n`{list}`",
+    "wonAgainst": "Victorias contra:\n",
+    "lostAgainst": "Perdido contra:\n",
+    "drewAgainst": "En contra:\n",
+    "embedTitle": "` Estadísticas de{user}de {game}",
+    "embedTitleTop10": "Top 10 {game} jugadores",
+    "noPlayers": "Parece que nadie ha ganado aún...",
+    "youNoGamesPlayed": "Aún no has jugado ninguna {game} partidas.",
+    "userNoGamesPlayed": "{user} aún no ha jugado ninguna partida {game}."
+  },
+  "rps": {
+    "description": "Juega tijeras de papel contra tus amigos o el bot",
+    "options": {
+      "opponent": {
+        "description": "¿A quién quieres jugar de nuevo?"
+      }
+    },
+    "r": "Roca",
+    "p": "Papel",
+    "s": "Tijeras",
+    "challenge": {
+      "opponentIsBot": "¡No puedes retar a los bots!",
+      "opponentIsSelf": "¡No puedes desafiarte a ti mismo!",
+      "embedTitle": "Piedra de papel tijeras",
+      "embedDescription": "**{user}** te ha desafiado a un duelo!",
+      "botEmbedDescription": "¡Me has desafiado a un duelo!",
+      "start": "Comenzar",
+      "accept": "Aceptar",
+      "decline": "Rechazar",
+      "newChallenge": "<@{user}> :crossed_swords: Nuevo desafío en duelo"
+    },
+    "memberNotFound": "Al menos uno de los jugadores no ha sido encontrado!",
+    "declined": ":x:{opponent}` no se levanta al reto.",
+    "accept": {
+      "embedTitle": ":game_die: `{player1}` **VS** `{player2}",
+      "embedDescription": "¡Selecciona tu objeto!"
+    },
+    "end": {
+      "alreadyChosen": "¡Ya has seleccionado {move}! Por favor espera a que tu oponente elija.",
+      "saved": "¡Su selección ha sido guardada!",
+      "tie": "Nadie ha ganado el juego, ¡es un empate! {emoji} = {emoji}",
+      "win": ":tada: <@{winner}> ganó el juego! {winEmoji} > {loseEmoji}"
+    }
+  },
+  "tictactoe": {
+    "description": "jugar a TicTacToe contra un amigo o el bot",
+    "options": {
+      "opponent": {
+        "description": "¿A quién quieres jugar de nuevo?"
+      }
+    },
+    "newChallenge": "<@{user}> :crossed_swords: Nuevo desafío en duelo"
+  }
+}

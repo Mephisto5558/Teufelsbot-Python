@@ -1,0 +1,269 @@
+{
+  "categoryDescription": "Comandos usados para administrar el gremio o configurar el bot",
+  "serverbackup": {
+    "description": "Administre las copias de seguridad de su servidor.",
+    "options": {
+      "create": {
+        "description": "Crea una copia de seguridad. Si hay 5+ copias, se eliminará la más antigua."
+      },
+      "load": {
+        "description": "Carga backup. ¡PRECAUCIÓN: borra todo! Usa \"nu_clear\" para evitarlo.",
+        "options": {
+          "id": {
+            "description": "El ID de copia de seguridad que desea cargar. Utilice el subcomando \"get\" para ver una lista de IDs."
+          },
+          "no_clear": {
+            "description": "Si es true, solo sobrescribirá datos existentes (por ej. no se borrarán canales)."
+          }
+        }
+      },
+      "get": {
+        "description": "Obtén una copia de seguridad o una lista de copias de seguridad para este gremio.",
+        "options": {
+          "id": {
+            "description": "El ID de copia de seguridad a buscar."
+          }
+        }
+      },
+      "delete": {
+        "description": "Eliminar una copia de seguridad.",
+        "options": {
+          "id": {
+            "description": "La copia de seguridad a eliminar."
+          }
+        }
+      }
+    },
+    "embedTitle": "Copia de seguridad del servidor",
+    "create": {
+      "cooldown": "¡Creando copias de seguridad está en recarga! Inténtalo de nuevo en `{time}`s.",
+      "settings": "<a:loading:1063091916683612160> Guardando ajustes...",
+      "members": "<a:loading:1063091916683612160> Guardando miembros...",
+      "bans": "<a:loading:1063091916683612160> Guardando prohibiciones...",
+      "roles": "<a:loading:1063091916683612160> Guardando roles...",
+      "emojis": "<a:loading:1063091916683612160> Saving emojis...",
+      "stickers": "<a:loading:1063091916683612160> Guardando stickers...",
+      "channels": "<a:loading:1063091916683612160> Guardando canales, hilos y mensajes...",
+      "images": "<a:loading:1063091916683612160> Saving icon, splash, and banner...",
+      "success": "¡La copia de seguridad con el ID {id} se ha creado correctamente!\nUse </serverbackup get:{cmdId}> para más información sobre la copia de seguridad."
+    },
+    "clear": {
+      "items": "<a:loading:1063091916683612160> Eliminando emojis, estampas y roles...",
+      "bans": "<a:loading:1063091916683612160> Eliminando baneos...",
+      "settings": "<a:loading:1063091916683612160> Eliminando ajustes...",
+      "ownWebhooks": "<a:loading:1063091916683612160> Eliminando webhooks temporales..."
+    },
+    "load": {
+      "cooldown": "¡Cargando copias de seguridad está en recarga! Inténtalo de nuevo en `{time}`s.",
+      "overwriteWarningDescription": "¡Esta acción eliminará la mayoría de su servidor! Esto incluye roles, webhooks, canales y emojis.\nSi estás seguro de que quieres hacer esto, escribe 'Sí'. Escribe 'No' para cancelar.\nTambién puedes crear una copia de seguridad antes de cargar, solo para estar seguro.",
+      "noneFound": "¡No se ha encontrado ningún respaldo para este gremio!",
+      "cancelled": "La carga de la copia de seguridad ha sido cancelada.",
+      "enableDMs": "Por favor, activa el bot para enviarte DMs para que puedas ver el estado de carga.",
+      "loadingEmbedDescription": "Aplicando copia de seguridad al servidor.\nEsto puede tardar un poco, dependiendo del tamaño de la copia de seguridad.",
+      "noPerm": "¡Sólo el propietario del servidor puede cargar copias de seguridad!",
+      "settings": "<a:loading:1063091916683612160> Cargando ajustes...",
+      "features": "<a:loading:1063091916683612160> Cargando características del servidor...",
+      "roles": "<a:loading:1063091916683612160> Cargando roles...",
+      "members": "<a:loading:1063091916683612160> Cargando roles de miembro y apodos...",
+      "channels": "<a:loading:1063091916683612160> Cargando canales, hilos y mensajes...",
+      "emojis": "<a:loading:1063091916683612160> Cargando emojis...",
+      "stickers": "<a:loading:1063091916683612160> Cargando pegatinas...",
+      "bans": "<a:loading:1063091916683612160> Cargando prohibiciones...",
+      "success": "Copia de seguridad cargada con éxito con id `{id}`.",
+      "error": "Ocurrió un error mientras se trataba de cargar la copia de seguridad."
+    },
+    "delete": {
+      "noPerm": "¡Solo el propietario del gremio puede eliminar las copias de seguridad!",
+      "success": "¡Copia de seguridad eliminada con éxito!"
+    },
+    "get": {
+      "oneEmbedDescription": "**Información sobre la copia de seguridad `{id}`**\n>>> Creada en: <t:{createdAt}>\nTamaño: {size}\nMiembros: {members}\nCanales: {channels}\nRoles: {roles}\nEmojis: {emojis}\nStickers: {stickers}",
+      "oneNotFound": "¡No se encontró copia de seguridad con ese ID!",
+      "infos": "Creado en: <t:{createdAt}>\nTamaño: {size}\nMiembros: {members}\nCanales: {channels}\nRoles: {roles}\nEmojis: {emojis}\nStickers: {stickers}",
+      "found": "Se encontraron {amount} copias de seguridad.",
+      "embedDescription": "Se han encontrado las siguientes copias de seguridad, ordenadas por fecha:",
+      "noneFound": "No se encontraron copias de seguridad para este servidor."
+    }
+  },
+  "selfrole": {
+    "description": "Gestionar auto-roles.",
+    "deprecated": "Esta característica ya no es compatible. Por favor, utilice las características de la comunidad de Discord (Onboarding) para la gestión de auto-rol: https://support.discord.com/hc/en-us/sections/360007770572-Community-Tools\nLos autoroles ya configurados seguirán funcionando."
+  },
+  "setup": {
+    "description": "Establece el bot",
+    "options": {
+      "toggle_module": {
+        "description": "toggles a module",
+        "options": {
+          "module": {
+            "description": "El módulo que desea alternar",
+            "choices": {
+              "gatekeeper": "Gatekeeper",
+              "birthday": "Cumpleaños"
+            }
+          }
+        }
+      },
+      "toggle_command": {
+        "description": "Permitir/Rechazar roles/canales/miembros para ejecutar un comando específico.",
+        "options": {
+          "command": {
+            "description": "El comando que desea activar."
+          },
+          "get": {
+            "description": "Obtener en su lugar una lista de roles/canales/miembros no permitidos para ese comando."
+          },
+          "role_1": {
+            "description": "El rol para el cual desea activar el comando"
+          },
+          "role_2": {
+            "description": "El rol para el cual desea activar el comando"
+          },
+          "role_3": {
+            "description": "El rol para el cual desea activar el comando"
+          },
+          "role_4": {
+            "description": "El rol para el cual desea activar el comando"
+          },
+          "role_5": {
+            "description": "El rol para el cual desea activar el comando"
+          },
+          "role_6": {
+            "description": "El rol para el cual desea activar el comando"
+          },
+          "channel_1": {
+            "description": "El canal para el que desea activar el comando"
+          },
+          "channel_2": {
+            "description": "El canal para el que desea activar el comando"
+          },
+          "channel_3": {
+            "description": "El canal para el que desea activar el comando"
+          },
+          "channel_4": {
+            "description": "El canal para el que desea activar el comando"
+          },
+          "channel_5": {
+            "description": "El canal para el que desea activar el comando"
+          },
+          "channel_6": {
+            "description": "El canal para el que desea activar el comando"
+          },
+          "member_1": {
+            "description": "El miembro para el cual desea activar el comando"
+          },
+          "member_2": {
+            "description": "El miembro para el cual desea activar el comando"
+          },
+          "member_3": {
+            "description": "El miembro para el cual desea activar el comando"
+          },
+          "member_4": {
+            "description": "El miembro para el cual desea activar el comando"
+          },
+          "member_5": {
+            "description": "El miembro para el cual desea activar el comando"
+          },
+          "member_6": {
+            "description": "El miembro para el cual desea activar el comando"
+          }
+        }
+      },
+      "language": {
+        "description": "Cambiar el idioma del bot.",
+        "options": {
+          "language": {
+            "description": "¿En qué idioma debe responder el niño?"
+          }
+        }
+      },
+      "serverbackup": {
+        "description": "Administrar opciones para las copias de seguridad de su servidor.",
+        "options": {
+          "allowed_to_load": {
+            "description": "Cambiar quién puede cargar las copias de seguridad del servidor.",
+            "choices": {
+              "creator": "Creador",
+              "owner": "Dueño del servidor",
+              "creator+owner": "Creador y dueño del servidor",
+              "admins": "El Admin de servidores actuales"
+            }
+          }
+        }
+      },
+      "autopublish": {
+        "description": "publica automáticamente todo lo que cualquier persona en cualquier canal de anuncio dice",
+        "options": {
+          "enabled": {
+            "description": "publica automáticamente todo lo que cualquier persona en cualquier canal de anuncio dice"
+          }
+        }
+      },
+      "logger": {
+        "description": "Registrar acciones que el registro de auditoría no puede registrar",
+        "options": {
+          "action": {
+            "description": "La acción que desea registrar",
+            "choices": {
+              "all": "todas las acciones",
+              "messageDelete": "borrar mensaje",
+              "messageUpdate": "editar mensaje",
+              "voiceChannelActivity": "unir/dejar/cambiar canal de voz",
+              "sayCommandUsed": "uso del comando /say (o similar)"
+            }
+          },
+          "channel": {
+            "description": "El canal al que desea enviar el mensaje de registro"
+          },
+          "enabled": {
+            "description": "Habilitar (verdadero) o deshabilitar (falso) el registro de la acción"
+          }
+        }
+      }
+    },
+    "toggledModule": "El módulo `{name}` ha sido {state}.",
+    "toggleCmd": {
+      "notFound": "¡Este comando no es válido!",
+      "list": {
+        "all": "Todos los miembros",
+        "embedTitle": "No se permiten roles/canales/miembros para el comando {command}",
+        "embedDescription": "No hay roles, canales o miembros actualmente no están permitidos."
+      },
+      "enabled": "El comando `{command}está ahora habilitado.",
+      "disabled": "El comando `{command}ahora está deshabilitado.",
+      "isDisabled": "El comando `{command}` está deshabilitado para todos los miembros. Puedes reactivarlo ejecutando </setup toggle_command:{id}> sin especificar ningún rol, canal o miembro.",
+      "roles": "Roles",
+      "channels": "Canales",
+      "users": "Miembros",
+      "embedTitle": "Configuración de comandos actualizada para \"{commandName}\"",
+      "embedDescription": "La siguiente cantidad de roles/canales/miembros han sido cambiados:\n||Ver todos los roles/canales/miembros no permitidos usando </setup toggle_command:{id}> con la opción `get`.||\n",
+      "embed": {
+        "enabled": "Eliminado (Permitido)",
+        "disabled": "Agregado (no permitido)"
+      }
+    },
+    "language": {
+      "embedTitle": "¡Idioma del bot cambiado!",
+      "embedDescription": "Los siguientes mensajes serán en `{lang}`."
+    },
+    "serverbackup": {
+      "success": "¡Actualización exitosa de la configuración!"
+    },
+    "autopublish": {
+      "success": "{toggle} autopublicando."
+    },
+    "logger": {
+      "noChannel": "¡No especificaste un canal de texto para enviar el registro!",
+      "noEnabled": "¡Necesitas usar la opción `enabled` para establecer todas las acciones a la vez!",
+      "enabled": "Los registros para {action} se enviarán a <#{channel}>.",
+      "disabled": "Los registros para {action} ya no se enviarán.",
+      "actions": {
+        "all": "todas las acciones",
+        "messageDelete": "mensajes borrados",
+        "messageUpdate": "mensajes editados",
+        "voiceChannelActivity": "canal de voz unirse/abandonar/interruptores",
+        "sayCommandUsed": "uso del comando /say (o similar)"
+      }
+    }
+  }
+}

@@ -1,0 +1,147 @@
+{
+  "categoryDescription": "Minigiochi per giocare con altri membri",
+  "coinflip": {
+    "description": "Capovolgi una moneta!",
+    "response": [
+      "Tappe!",
+      "Code!"
+    ],
+    "side": "Woah! La moneta è atterrata su di essa!"
+  },
+  "counting": {
+    "description": "Imposta un canale di conteggio dove i membri possono mostrare le loro abilità matematice!",
+    "usage": {
+      "usage": "{prefix}conteggio [#canale]",
+      "examples": "{prefix}conteggio #conteggio"
+    },
+    "options": {
+      "channel": {
+        "description": "Il canale che si desidera aggiungere (o rimuovere, se già aggiunto) come canale di conteggio."
+      }
+    },
+    "added": {
+      "embedTitle": "Questo canale è ora un canale di conteggio!",
+      "embedDescription": "Le regole sono semplici:\n> Inizia con **1**.\n> Aggiungi **1** all'ultimo numero\n> Non puoi contare due numeri di fila\nDivertiti!",
+      "by": "Aggiunto come canale di conteggio da {user}",
+      "success": "Ho aggiunto con successo <#{channel}> come canale di conteggio."
+    },
+    "removed": {
+      "embedDescription": "Questo canale non è più un canale di conteggio!",
+      "by": "Rimosso da {user}",
+      "success": "Ho rimosso con successo <#{channel}> come canale di conteggio."
+    }
+  },
+  "mgstats": {
+    "description": "ottieni statistiche su uno dei minigiochi del bot",
+    "usage": {
+      "usage": "{prefix}statistiche <game> [user]",
+      "examples": "{prefix}mgstats tictactoe @User1"
+    },
+    "options": {
+      "user": {
+        "description": "ottieni statistiche su di te o su un utente specifico",
+        "options": {
+          "game": {
+            "description": "Wich gioco si desidera ottenere statistiche circa?",
+            "choices": {
+              "tictactoe": "TicTacToe"
+            }
+          },
+          "target": {
+            "description": "Wich utente vuoi ottenere statistiche circa?"
+          }
+        }
+      },
+      "leaderboard": {
+        "description": "ottieni i primi 10 giocatori di una partita",
+        "options": {
+          "game": {
+            "description": "Wich gioco si desidera ottenere statistiche circa?",
+            "choices": {
+              "tictactoe": "TicTacToe"
+            }
+          },
+          "sort": {
+            "description": "Ordina la classifica",
+            "choices": {
+              "m_wins": "Più Vittorie",
+              "f_wins": "Meno Vittorie",
+              "m_draws": "Più Disegni",
+              "f_draws": "Meno Disegni",
+              "m_loses": "Maggior Perdite",
+              "f_loses": "Meno Perdite",
+              "m_alphabet_user": "Username (discendente)",
+              "f_alphabet_user": "Username (Ascending)",
+              "m_alphabet_nick": "Nickname (discendente)",
+              "f_alphabet_nick": "Nickname (ascendente)"
+            }
+          },
+          "settings": {
+            "description": "Applica/Disapplica i filtri nella classifica",
+            "choices": {
+              "all_users": "Tutti gli Utenti globalmente"
+            }
+          }
+        }
+      }
+    },
+    "games": "Giochi: `{games}`\n\n",
+    "wins": "Vittorie: {wins}\n",
+    "loses": "Perdite: {loses}\n",
+    "draws": "Disegni: {draws}\n\n",
+    "noOne": "nessuno\n",
+    "missingGameArg": "Devi darmi un `gioco` come primo argomento!",
+    "notFound": "Questo non è un gioco valido. I giochi validi sono:\n`{list}`",
+    "wonAgainst": "Vinto contro:\n",
+    "lostAgainst": "Persi contro:\n",
+    "drewAgainst": "Drew contro:\n",
+    "embedTitle": "` Statistiche di{user}`'s {game}",
+    "embedTitleTop10": "Top 10 {game} giocatori",
+    "noPlayers": "Sembra che nessuno abbia ancora vinto...",
+    "youNoGamesPlayed": "Non hai ancora giocato {game} partite.",
+    "userNoGamesPlayed": "{user} non ha ancora giocato {game} partite."
+  },
+  "rps": {
+    "description": "Gioca forbici di carta rock contro i tuoi amici o il bot",
+    "options": {
+      "opponent": {
+        "description": "A chi vuoi giocare contro?"
+      }
+    },
+    "r": "Roccia",
+    "p": "Carta",
+    "s": "Forbici",
+    "challenge": {
+      "opponentIsBot": "Non puoi sfidare i bot!",
+      "opponentIsSelf": "Non puoi sfidarti!",
+      "embedTitle": "Forbici Di Carta Roccia",
+      "embedDescription": "**{user}** ti ha sfidato in duello!",
+      "botEmbedDescription": "Mi hai sfidato a un duello!",
+      "start": "Inizia",
+      "accept": "Accetta",
+      "decline": "Rifiuta",
+      "newChallenge": "<@{user}> :crossed_swords: Nuova sfida duello"
+    },
+    "memberNotFound": "Almeno uno dei giocatori non è stato trovato!",
+    "declined": ":x: `{opponent}` non è salito alla sfida.",
+    "accept": {
+      "embedTitle": ":game_die: `{player1}` **VS** `{player2}`",
+      "embedDescription": "Seleziona il tuo oggetto!"
+    },
+    "end": {
+      "alreadyChosen": "Hai già selezionato {move}! Attendi che il tuo avversario scelga.",
+      "saved": "La tua selezione è stata salvata!",
+      "tie": "Nessuno ha vinto la partita, è una cravatta! {emoji} = {emoji}",
+      "win": ":tada: <@{winner}> ha vinto la partita! {winEmoji} > {loseEmoji}"
+    }
+  },
+  "tictactoe": {
+    "description": "giocare TicTacToe contro un amico o il bot",
+    "options": {
+      "opponent": {
+        "description": "A chi vuoi giocare contro?"
+      }
+    },
+    "newChallenge": "<@{user}> :crossed_swords: Nuova sfida duello"
+  }
+}

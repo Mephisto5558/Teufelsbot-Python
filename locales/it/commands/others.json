@@ -1,0 +1,8 @@
+{
+  "categoryDescription": "Comandi senza una categoria specifica",
+  "changelog": {
+    "description": "Ottieni l'ultimo changelog.",
+    "embedTitle": "Changelog",
+    "noneFound": "Nessuna informazione trovata."
+  }
+}
