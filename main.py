@@ -5,7 +5,7 @@ from json import load
 from os import environ, listdir
 from importlib import import_module
 
-from utils import FlatDict, DB, log
+from utils import DB, log, box
 
 init_time = process_time_ns() / 1e6
 log.info('Initializing time: %fms', init_time)
@@ -18,20 +18,20 @@ class Client(dict):
   def __init__(self):
     try:
       with open('env.json', 'r', encoding='utf8') as file:
-        self.env = FlatDict(load(file))
+        self.env = box.from_json(load(file))
     except FileNotFoundError:
-      self.env = FlatDict()
+      self.env = box
 
-    self.db = DB(self.env.get('dbConnectionStr', environ.get('dbConnectionStr', '')))
+    self.db = DB(str(self.env.get('dbConnectionStr', environ.get('dbConnectionStr', ''))))
 
-    if not self.env: self.env = self.settings.get('env', FlatDict())
+    if not self.env: self.env = self.settings.get('env', box)
 
     self.bot_type = self.env.get('environment', 'main')
 
   @property
   def settings(self):
     data = self.db.get('botSettings')
-    return data if isinstance(data, FlatDict) else FlatDict()
+    return data if isinstance(data, box.__class__) else box
 
 client = Client()
 

@@ -2,8 +2,7 @@
 
 import json
 import oracledb
-
-from .flat_dict import FlatDict
+from .box import box, Box
 from .logger import log
 
 class DB:
@@ -15,7 +14,7 @@ class DB:
   # pylint: disable-next=too-many-arguments
   def __init__(self, db_connection_str: str, value_logging_max_json_length: int | None = 20, pool_min=1, pool_max=4, key_separator='.'):
     self.value_logging_max_json_length = value_logging_max_json_length or 0
-    self._cache = {}
+    self._cache = box
     self.__key_sep = key_separator
 
     self._pool = oracledb.create_pool(
@@ -49,13 +48,13 @@ class DB:
 
     return self
 
-  def fetch(self, table: str):
+  def fetch(self, table: str) -> Box:
     """Note that there is NO VALIDATION of table names, so don't let the user put an SQL injection there"""
 
     result = self._execute_query(f'SELECT key, value FROM {table}')
-    value = {row[0]: row[1] for row in result}
-    self._cache[table] = value
-    return value
+
+    self._cache[table] = {row[0]: row[1] for row in result} if result else {}
+    return self._cache[table]
 
   def create(self, table: str):
     """Note that there is NO VALIDATION of table names, so don't let the user put an SQL injection there"""
@@ -64,16 +63,9 @@ class DB:
     self._cache[table] = {}
     return self
 
-  def get(self, table: str, key: str | None = None) -> str | int | bool | float | FlatDict | None:
+  def get(self, table: str, key: str | None = None) -> str | int | bool | float | Box | None:
     data = self._cache.get(table)
-    if not key or not data: return data
-
-    for obj_key in key.split(self.__key_sep):
-      if not isinstance(data, dict): return data
-      data = data.get(obj_key)
-      if data is None: return None
-
-    return data
+    return data[key] if isinstance(data, Box) and key else data
 
   def set(self, table: str, key: str | None, value):
     """Note that there is NO VALIDATION of table names, so don't let the user put an SQL injection there"""
@@ -119,7 +111,7 @@ class DB:
 
       if isinstance(v, dict): items.extend(self._flatten_dict(v, new_key).items())
       else: items.append((new_key, v))
-    return FlatDict(items)
+    return Box(items)
 
   def _save_log(self, msg: str, value=None):
     json_value = json.dumps(value) if value else None

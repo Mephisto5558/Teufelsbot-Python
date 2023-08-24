@@ -42,7 +42,7 @@ class Option(DefaultDict):
   required: NotRequired[bool] = False
   autocomplete_options: NotRequired[tuple | Callable] = ()
   strict_autocomplete: NotRequired[bool] = False
-  choices: NotRequired[list[str | int | Choice]] = []
+  choices: NotRequired[list[Choice | dict[str, str | int] | str | int]] = []
 
 class Command:
   name: str
@@ -96,37 +96,44 @@ class Command:
     return description
 
   @staticmethod
-  def _description_localizer(path: str):
+  def _description_localizer(path: str) -> dict[str, str]:
     locale_texts = {}
     for locale, in filter(lambda e, : e != i18n_provider.config['default_locale'], i18n_provider.available_locales):
       locale_text = i18n_provider.__(f'{path}.description', locale=locale, none_not_found=True)
 
       if not locale_text:
         log.warning('Missing "%s" description localization for option %s.description', locale, path)
-      elif len(locale_text) > MAX_DESC_LENGTH:
-        log.warning('"%s" description localization of option %s.description is too long (max length is 100)! Slicing.', locale, path)
+        continue
 
-      locale_texts[locale] = locale_text[:MAX_DESC_LENGTH]
+      if len(locale_text) > MAX_DESC_LENGTH:
+        log.warning('"%s" description localization of option %s.description is too long (max length is 100)! Slicing.', locale, path)
+        locale_texts[locale] = locale_text[:MAX_DESC_LENGTH]
+
     return locale_texts
 
   @staticmethod
-  def _choice_formatter(choices, path):
+  def _choice_formatter(choices: list[Choice | dict[str, str | int] | str | int], path: str):
     for i, choice in enumerate(choices):
       locale_texts = {}
+
       for locale in filter(lambda e, : e != i18n_provider.config['default_locale'], i18n_provider.available_locales):
         locale_text = i18n_provider.__(f'{path}.{i}', locale=locale, none_not_found=True)
         if not locale_text:
           log.warning('Missing "%s" choice localization for option %s.%i', locale, path, i)
-        else:
-          if len(locale_text) > MAX_CHOICE_NAME_LENGTH: log.warning(
-              '"%s" choice localization of option %s.%i is too long (max length is %i)! Slicing.',
-              locale, path, i, MAX_CHOICE_NAME_LENGTH
-          )
+          continue
 
-          locale_texts[locale] = locale_text[:MAX_CHOICE_NAME_LENGTH]
+        if len(locale_text) > MAX_CHOICE_NAME_LENGTH: log.warning(
+            '"%s" choice localization of option %s.%i is too long (max length is %i)! Slicing.',
+            locale, path, i, MAX_CHOICE_NAME_LENGTH
+        )
 
-      if isinstance(choice, dict): choices[i] = Choice(*choice, name_localizations=locale_texts)
-      else: choices[i] = Choice(key=choice, value=i18n_provider.__(f'{path}.{i}', none_not_found=True) or choice, name_localizations=locale_texts)
+        locale_texts[locale] = locale_text[:MAX_CHOICE_NAME_LENGTH]
+
+      if isinstance(choice, Choice): choices[i] = Choice({**choice, 'name_localizations': locale_texts})
+      elif isinstance(choice, dict):
+        key, value = choice
+        choices[i] = Choice(key=key, value=value, name_localizations=locale_texts)
+      else: choices[i] = Choice(key=str(choice), value=i18n_provider.__(f'{path}.{i}', none_not_found=True) or choice, name_localizations=locale_texts)
     return choices
 
   @staticmethod

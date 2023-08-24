@@ -1,7 +1,6 @@
 # https://github.com/Mephisto5558/Teufelsbot/blob/main/Utils/getAge.js
 
 from datetime import date
-from sys import exit
 
 def get_age(date_param: tuple[int, int, int]):
   """param date_param: A tuple representing the birth date in the format (year, month, day)."""
@@ -20,8 +19,7 @@ if __name__ == '__main__':
     year = int(input('Year:  '))
     month = int(input('Month: '))
     day = int(input('Day:   '))
+
+    print('\nAge:   ' + str(get_age((year, month, day))))
   except ValueError:
     print('Invalid Input')
-    exit()
-
-  print('\nAge:   ' + str(get_age((year, month, day))))

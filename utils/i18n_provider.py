@@ -4,8 +4,8 @@ import json
 from random import choice
 from re import sub
 from typing import overload, Literal
-from flatdict import FlatDict
 
+from .box import box
 from .logger import log
 
 class I18nProviderConfig(dict):
@@ -29,9 +29,9 @@ class I18nProvider:
         not_found_message=not_found_message, error_not_found=error_not_found, none_not_found=none_not_found
     )
 
-    self.locale_data = FlatDict(delimiter='.')
+    self.locale_data = box
+    self.default_locale_data = box
     self.available_locales: dict[str, str] = {}
-    self.default_locale_data: FlatDict
 
     self.load_all_locales()
 
@@ -48,11 +48,11 @@ class I18nProvider:
           continue
 
         with open(full_path, encoding='utf-8') as file:
-          try:
-            data[splitext(item)[0]] = json.load(file)
-          except json.JSONDecodeError:
-            file.seek(0)
-            data[splitext(item)[0]] = json.loads('[' + file.read().replace('}{', '},{') + ']')[0]
+          # try:
+          data[splitext(item)[0]] = json.load(file)
+          # except json.JSONDecodeError:
+          #   file.seek(0)
+          #   data[splitext(item)[0]] = json.loads(file.read())
 
     return data
 
@@ -75,18 +75,22 @@ class I18nProvider:
       raise FileNotFoundError(
           f'There are no valid language files for the default locale ({self.config.default_locale}) in the supplied locales path!')
 
-    self.default_locale_data = FlatDict(data)
+    self.default_locale_data = box.fromkeys(data)
 
   @overload
-  def __(self, locale: str | None, error_not_found: Literal[False], none_not_found: Literal[True],
-         backup_path: str | None, key: str, replacement_all: str | None, **kw_replacements: str | None) -> str | None: ...
+  def __(self, key: str, locale: str | None = None, error_not_found: Literal[False] | None = None, none_not_found: Literal[True] = True,
+         backup_path: str | None = None, replacement_all: str | None = None, **kw_replacements: str) -> str | None: ...
 
   @overload
-  def __(self, locale: str | None, error_not_found: Literal[False], none_not_found: Literal[False],
-         backup_path: str | None, key: str, replacement_all: str | None, **kw_replacements: str | None) -> str: ...
+  def __(self, key: str, locale: str | None = None, error_not_found: Literal[False] = False, none_not_found: Literal[False] = False,
+         backup_path: str | None = None, replacement_all: str | None = None, **kw_replacements: str) -> str: ...
 
-  def __(self, locale: str | None, error_not_found: bool | None, none_not_found: bool | None, backup_path: str | None, key: str,
-         replacement_all: str | None, **kw_replacements: str | None):
+  @overload
+  def __(self, key: str, locale: str | None = None, error_not_found: Literal[True] = True, none_not_found: bool | None = None,
+         backup_path: str | None = None, replacement_all: str | None = None, **kw_replacements: str) -> str: ...
+
+  def __(self, key: str, locale: str | None = None, error_not_found: bool | None = None, none_not_found: bool | None = None,
+         backup_path: str | None = None, replacement_all: str | None = None, **kw_replacements: str):
     """
     Args:
         locale (str | None): the locale code to use. Defaults to `config.default_locale`.
