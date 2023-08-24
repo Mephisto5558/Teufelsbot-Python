@@ -1,7 +1,8 @@
-from random import randint
 from math import isnan
+from random import randint
 
-from utils import Command, Aliases, Option
+from utils import Aliases, Command, Option
+
 
 class RandomNumber(Command):
   name = 'randomnumber'

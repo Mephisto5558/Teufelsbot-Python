@@ -1,7 +1,8 @@
 # https://github.com/Mephisto5558/Teufelsbot/blob/main/Commands/Fun/joke.js
 
 from random import choice
-from requests import get, RequestException
+
+from requests import RequestException, get
 
 default_api_list = [
     {'name': 'jokeAPI', 'link': 'https://v2.jokeapi.dev', 'url': 'https://v2.jokeapi.dev/joke/Any'},

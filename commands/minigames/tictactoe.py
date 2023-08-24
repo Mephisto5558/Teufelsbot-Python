@@ -2,6 +2,7 @@
 
 from random import choice
 
+
 def print_board(board: list[list[str]]):
   print("\033[1m")
   for row in board:

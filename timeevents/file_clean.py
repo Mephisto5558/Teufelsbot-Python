@@ -1,6 +1,7 @@
 import os
 from datetime import date, timedelta
 
+
 def delete_old(path: str):
   os.makedirs(path, exist_ok=True)
 

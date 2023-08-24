@@ -2,6 +2,7 @@
 
 from requests import get
 
+
 def fact(lang: str = 'de'):
   data = get(f'https://uselessfacts.jsph.pl/api/v2/facts/random?language={lang}', timeout=10).json()
   if not data['text']: return None

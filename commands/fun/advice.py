@@ -2,6 +2,7 @@
 
 from requests import get
 
+
 def advice():
   data = get('https://api.adviceslip.com/advice', timeout=10).json()
   return data['slip'].get('advice', None)

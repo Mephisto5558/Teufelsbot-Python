@@ -1,10 +1,10 @@
 # https://github.com/Mephisto5558/Teufelsbot/blob/main/Commands/Fun/8ball.js
 
 from datetime import datetime
-from os import getcwd
-from sys import exit
 from hashlib import sha256
-from random import seed, choice
+from os import getcwd
+from random import choice, seed
+from sys import exit
 
 # https://github.com/Mephisto5558/Teufelsbot/blob/main/Locales/en/commands/fun.json#L11-L46
 response_list = [

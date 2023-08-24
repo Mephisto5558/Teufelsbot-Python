@@ -1,7 +1,9 @@
+from importlib import import_module
 from os import listdir, path
 from time import sleep
-from importlib import import_module
+
 import schedule
+
 
 def main(client):
   if client.botType == 'dev':

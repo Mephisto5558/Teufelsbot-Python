@@ -1,6 +1,7 @@
 import logging
 from datetime import date
 
+
 class CustomFormatter(logging.Formatter):
   format_ = '%(asctime)s [%(levelname)s] %(module)s#%(lineno)d: %(message)s'
 

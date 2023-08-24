@@ -2,6 +2,7 @@
 
 from datetime import date
 
+
 def get_age(date_param: tuple[int, int, int]):
   """param date_param: A tuple representing the birth date in the format (year, month, day)."""
 
