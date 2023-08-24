@@ -1,6 +1,6 @@
 # https://github.com/Mephisto5558/Teufelsbot/blob/main/Commands/Useful/passwordgenerator.js
 
-from random import sample
+from secrets import choice
 
 default_charset = ['abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!?§$%&/\\=*\'"#*(){}[]']
 
@@ -17,11 +17,15 @@ def password_generator():
   if not charset: return 'charsetEmpty'
 
   for _ in range(count):
-    old_random_char = ''
+    last_random_char = ''
     if (len(password_list) + length) > 1743:
       break
 
-    random_chars = sample([char for char in charset if char != old_random_char], length)
+    random_chars = []
+    for _ in range(length):
+      random_char = choice(charset.strip(last_random_char))
+      # Todo: check if necessary to implement: https://github.com/Mephisto5558/Teufelsbot/blob/main/Commands/Useful/passwordgenerator.js#L47-L50
+      random_chars.append(random_char)
     password = ''.join(random_chars)
     password_list.append(password)
 

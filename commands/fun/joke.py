@@ -1,6 +1,6 @@
 # https://github.com/Mephisto5558/Teufelsbot/blob/main/Commands/Fun/joke.js
 
-from random import choice
+from secrets import choice
 
 from requests import RequestException, get
 

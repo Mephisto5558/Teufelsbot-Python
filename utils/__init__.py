@@ -8,4 +8,5 @@ from .git_pull import git_pull
 from .i18n_provider import I18nProvider, i18n_provider
 from .limit import limit
 from .logger import log
+from .random_int import random_int
 from .uptime import uptime

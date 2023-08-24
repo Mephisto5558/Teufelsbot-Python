@@ -1,6 +1,6 @@
 # https://github.com/Mephisto5558/Teufelsbot/blob/main/Commands/Fun/happy.js
 
-from random import choice
+from secrets import choice
 
 response_list = [
     'c:', 'C:', ':D',

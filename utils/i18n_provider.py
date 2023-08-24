@@ -1,7 +1,7 @@
 import json
 from os import listdir
 from os.path import isdir, isfile, join, splitext
-from random import choice
+from secrets import choice
 from re import sub
 from typing import Literal, overload
 
@@ -9,7 +9,7 @@ from .box import box
 from .logger import log
 
 
-class I18nProviderConfig(dict):
+class I18nProviderConfig(dict):  # pylint: disable-next=too-many-arguments
   def __init__(self, locales_path: str, default_locale: str, separator: str, not_found_message: str, error_not_found: bool, none_not_found: bool):
     self.locales_path = locales_path
     self.default_locale = default_locale

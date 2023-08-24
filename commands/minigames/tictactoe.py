@@ -1,6 +1,6 @@
 # https://github.com/Mephisto5558/Teufelsbot/blob/main/Commands/Minigames/tictactoe.js
 
-from random import choice
+from secrets import choice
 
 
 def print_board(board: list[list[str]]):
