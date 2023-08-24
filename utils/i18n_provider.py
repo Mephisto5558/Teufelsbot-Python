@@ -1,12 +1,13 @@
-from os import listdir
-from os.path import isfile, isdir, join, splitext
 import json
+from os import listdir
+from os.path import isdir, isfile, join, splitext
 from random import choice
 from re import sub
-from typing import overload, Literal
+from typing import Literal, overload
 
 from .box import box
 from .logger import log
+
 
 class I18nProviderConfig(dict):
   def __init__(self, locales_path: str, default_locale: str, separator: str, not_found_message: str, error_not_found: bool, none_not_found: bool):
@@ -29,8 +30,8 @@ class I18nProvider:
         not_found_message=not_found_message, error_not_found=error_not_found, none_not_found=none_not_found
     )
 
-    self.locale_data = box
-    self.default_locale_data = box
+    self.locale_data = box()
+    self.default_locale_data = box()
     self.available_locales: dict[str, str] = {}
 
     self.load_all_locales()
@@ -75,7 +76,7 @@ class I18nProvider:
       raise FileNotFoundError(
           f'There are no valid language files for the default locale ({self.config.default_locale}) in the supplied locales path!')
 
-    self.default_locale_data = box.fromkeys(data)
+    self.default_locale_data = box(data)
 
   @overload
   def __(self, key: str, locale: str | None = None, error_not_found: Literal[False] | None = None, none_not_found: Literal[True] = True,

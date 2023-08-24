@@ -1,9 +1,13 @@
 # https://github.com/Mephisto5558/Teufelsbot/blob/main/Utils/db.js
 
 import json
+
 import oracledb
-from .box import box, Box
+from box import Box
+
+from .box import box
 from .logger import log
+
 
 class DB:
   """
@@ -14,7 +18,7 @@ class DB:
   # pylint: disable-next=too-many-arguments
   def __init__(self, db_connection_str: str, value_logging_max_json_length: int | None = 20, pool_min=1, pool_max=4, key_separator='.'):
     self.value_logging_max_json_length = value_logging_max_json_length or 0
-    self._cache = box
+    self._cache = box()
     self.__key_sep = key_separator
 
     self._pool = oracledb.create_pool(
@@ -111,7 +115,7 @@ class DB:
 
       if isinstance(v, dict): items.extend(self._flatten_dict(v, new_key).items())
       else: items.append((new_key, v))
-    return Box(items)
+    return box(items)
 
   def _save_log(self, msg: str, value=None):
     json_value = json.dumps(value) if value else None
