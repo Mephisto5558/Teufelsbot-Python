@@ -28,9 +28,12 @@ class Client(dict):
 
     self.db = DB(str(self.env.get('dbConnectionStr', environ.get('dbConnectionStr', ''))))
 
-    if not self.env: self.env = self.settings.get('env', box())
+    if not self.env: self.env = self.settings.env or box()
 
-    self.bot_type = self.env.get('environment', 'main')
+    self.bot_type = str(self.env.get('environment', 'main'))
+    self.prefix_commands: list[dict] = []
+    self.slash_commands: list[dict] = []
+    self.cooldowns: dict[str, int] = {}
 
   @property
   def settings(self):
