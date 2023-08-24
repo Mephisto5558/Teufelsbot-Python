@@ -1,6 +1,8 @@
-from typing import DefaultDict, NotRequired, TypedDict, Callable  # pylint: disable = no-name-in-module # false positive in git action
-from .logger import log
+# pylint: disable-next = no-name-in-module # false positive in git action
+from typing import Any, Callable, DefaultDict, NotRequired, TypedDict
+
 from .i18n_provider import i18n_provider
+from .logger import log
 
 MIN_NAME_LENGTH = 2
 MAX_NAME_LENGTH = 32
@@ -40,8 +42,9 @@ class Option(DefaultDict):
   "Do not set manually."
 
   required: NotRequired[bool] = False
-  autocomplete_options: NotRequired[tuple | Callable] = ()
+  autocomplete_options: NotRequired[tuple | Callable[[Any], str]] = ()
   strict_autocomplete: NotRequired[bool] = False
+  options: NotRequired[list['Option']] = []
   choices: NotRequired[list[Choice | dict[str, str | int] | str | int]] = []
 
 class Command:
@@ -172,8 +175,8 @@ class Command:
     # PERMISSIONS
       # Todo: Implement permission conversion
 
-    for i, option in enumerate(self.options):
-      option = self._options_formatter(option, f'{path}.options[{i}]')
+    for option in self.options:
+      option = self._options_formatter(option, f'{path}.options.{option.name}')
 
   def run(self, msg, lang: Callable):
     raise NotImplementedError('Subclasses must implement the run method')
