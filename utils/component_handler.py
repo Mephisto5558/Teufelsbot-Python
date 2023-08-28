@@ -1,5 +1,10 @@
+from importlib import import_module
+from os import listdir
+from os.path import splitext
+
 from .cooldowns import cooldowns
-from .component_handler import handlers
+
+handlers = [import_module(splitext(file)[0]).__dict__[splitext(file)[0]] for file in listdir('./component_handler') if file.endswith('.py')]
 
 def message_component_handler(interaction, lang):
   feature, *args = interaction.custom_id.split('.') + [None]
@@ -13,15 +18,14 @@ def message_component_handler(interaction, lang):
   role_list: list = disabled_list.get('roles', [])
 
   if interaction.user.id in member_list:
-    return interaction.reply(embeds=[error_embed.set_description(lang('events.notAllowed.member'))], ephemeral=True)
-  if interaction.channel.id in channel_list:
-    return interaction.reply(embeds=[error_embed.set_description(lang('events.notAllowed.channel'))], ephemeral=True)
-  if any(role.id in role_list for role in interaction.member.roles):
-    return interaction.reply(embeds=[error_embed.set_description(lang('events.notAllowed.role'))], ephemeral=True)
-  if command.category.lower() == 'nsfw' and not interaction.channel.nsfw:
-    return interaction.reply(embeds=[error_embed.set_description(lang('events.nsfwCommand'))], ephemeral=True)
-  if cooldown:
-    return interaction.reply(content=lang('events.buttonPressOnCooldown', cooldown), ephemeral=True)
-
-  if handlers[feature] and hasattr(handlers[feature], 'main') and callable(handlers[feature].main):
-    return handlers[feature].main(interaction, lang, *args)
+    interaction.reply(embeds=[error_embed.set_description(lang('events.notAllowed.member'))], ephemeral=True)
+  elif interaction.channel.id in channel_list:
+    interaction.reply(embeds=[error_embed.set_description(lang('events.notAllowed.channel'))], ephemeral=True)
+  elif any(role.id in role_list for role in interaction.member.roles):
+    interaction.reply(embeds=[error_embed.set_description(lang('events.notAllowed.role'))], ephemeral=True)
+  elif command.category.lower() == 'nsfw' and not interaction.channel.nsfw:
+    interaction.reply(embeds=[error_embed.set_description(lang('events.nsfwCommand'))], ephemeral=True)
+  elif cooldown:
+    interaction.reply(content=lang('events.buttonPressOnCooldown', cooldown), ephemeral=True)
+  elif handlers[feature] and callable(handlers[feature]):
+    handlers[feature](interaction, lang, *args)
