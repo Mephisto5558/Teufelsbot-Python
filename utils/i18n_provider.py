@@ -1,8 +1,8 @@
 import json
 from os import listdir
 from os.path import isdir, isfile, join, splitext
-from secrets import choice
 from re import sub
+from secrets import choice
 from typing import Literal, overload
 
 from .box import box

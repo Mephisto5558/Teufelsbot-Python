@@ -1,5 +1,6 @@
 from time import time
 
+
 class application_command_option_type:
   subcommand = 0
 
