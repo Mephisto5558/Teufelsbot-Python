@@ -3,3 +3,5 @@ psutil>=5.9.5
 oracledb>=1.3.2
 schedule>=1.2.0
 python-box[all]~=7.1
+flask>=2.3.3
+flask_limiter>=3.4.1
