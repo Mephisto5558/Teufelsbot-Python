@@ -136,7 +136,8 @@ class Command:
       elif isinstance(choice, dict):
         key, value = choice
         choices[i] = Choice(key=key, value=value, name_localizations=locale_texts)
-      else: choices[i] = Choice(key=str(choice), value=i18n_provider.__(f'{path}.{i}', none_not_found=True) or choice, name_localizations=locale_texts)
+      else:
+        choices[i] = Choice(key=str(choice), value=i18n_provider.__(f'{path}.{i}', none_not_found=True) or choice, name_localizations=locale_texts)
     return choices
 
   @staticmethod
