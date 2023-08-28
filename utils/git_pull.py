@@ -9,9 +9,9 @@ def git_pull():
     return err
 
   print(
-      'GIT PULL\n' +
-      (f'out: {data.stdout.strip()}\n' if data.stdout else '') +
-      (f'err: {data.stderr.strip()}\n' if data.stderr else '')
+      'GIT PULL\n'
+      + (f'out: {data.stdout.strip()}\n' if data.stdout else '')
+      + (f'err: {data.stderr.strip()}\n' if data.stderr else '')
   )
 
   return 'OK'
