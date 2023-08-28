@@ -1,3 +1,4 @@
+from .autocomplete_generator import autocomplete_generator
 from .box import Box, box
 from .check_target_ban_perm import check_target
 from .command_class import Aliases, Command, Option
