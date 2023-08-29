@@ -1,5 +1,5 @@
 # pylint: disable-next = no-name-in-module # false positive in git action
-from typing import Any, Callable, DefaultDict, NotRequired, TypedDict
+from typing import Any, Callable, NotRequired
 
 from .i18n_provider import i18n_provider
 from .logger import log
@@ -10,42 +10,55 @@ MIN_DESC_LENGTH = 2
 MAX_DESC_LENGTH = 100
 MAX_CHOICE_NAME_LENGTH = 32
 
-class Aliases(DefaultDict):
+class Aliases(dict):
   """alias values must be between 2 and 32 chars"""
-  prefix: NotRequired[list[str]] = []
-  slash: NotRequired[list[str]] = []
 
-class Permissions(DefaultDict):
+  def __init__(self, prefix: list[str] | None = None, slash: list[str] | None = None):
+    self.prefix = prefix or []
+    self.slash = slash or []
+
+class Permissions(dict):
   client: NotRequired[list[str]] = []
   user: NotRequired[list[str]] = []
 
-class Cooldowns(DefaultDict):
+  def __init__(self, client: list[str] | None = None, user: list[str] | None = None):
+    self.client = client or []
+    self.user = user or []
+
+class Cooldowns(dict):
   """Cooldowns in milliseconds"""
-  guild: NotRequired[int] = 0
-  user: NotRequired[int] = 0
 
-class Choice(TypedDict):
-  key: str
-  value: str | int
-  name_localizations: dict[str, str]
+  def __init__(self, guild: int = 0, user: int = 0):
+    self.guild = guild or 0
+    self.user = user or 0
 
-class Option(DefaultDict):
-  name: str
-  type: str
-  description: str
+class Choice(dict):
+  def __init__(self, key: str, value: str | int, name_localizations: dict[str, str] | None = None):
+    self.key = key
+    self.value = value
+    self.name_localizations = name_localizations
 
+class Option(dict):
   @property
   def description_localizations(self):
     """Do not set manually."""
     return self._description_localizations
-  _description_localizations: dict[str, str] = {}
+  _description_localizations: dict[str, str] | None
   "Do not set manually."
 
-  required: NotRequired[bool] = False
-  autocomplete_options: NotRequired[tuple | Callable[[Any], str]] = ()
-  strict_autocomplete: NotRequired[bool] = False
-  options: NotRequired[list['Option']] = []
-  choices: NotRequired[list[Choice | dict[str, str | int] | str | int]] = []
+  def __init__(
+      self, name: str, type: str | None = None, description: str | None = None, required: bool = False,
+      autocomplete_options: list[str | int] | Callable[[Any], list[str | int] | str | int] | None = None, strict_autocomplete: bool = False,
+      options: list['Option'] | None = None, choices: list[Choice | dict[str, str | int] | str | int] | None = None
+  ):
+    self.name = name
+    self.type = type or None
+    self.description = description or None
+    self.required = required or False
+    self.autocomplete_options = autocomplete_options or []
+    self.strict_autocomplete = strict_autocomplete or False
+    self.options = options or []
+    self.choices = choices or []
 
 class Command:
   name: str
@@ -90,7 +103,7 @@ class Command:
     return name
 
   @staticmethod
-  def _description_formatter(description: str, path: str):
+  def _description_formatter(description: str | None, path: str):
     if not description:
       description = i18n_provider.__(f'{path}.description', error_not_found=True)
     if not description or not isinstance(description, str):
@@ -135,13 +148,23 @@ class Command:
 
         locale_texts[locale] = locale_text[:MAX_CHOICE_NAME_LENGTH]
 
-      if isinstance(choice, Choice): choices[i] = Choice({**choice, 'name_localizations': locale_texts})
-      elif isinstance(choice, dict):
-        key, value = choice
-        choices[i] = Choice(key=key, value=value, name_localizations=locale_texts)
-      else:
-        choices[i] = Choice(key=str(choice), value=i18n_provider.__(
-            f'{path}.{i}', none_not_found=True) or choice, name_localizations=locale_texts)
+      if type(choice) is dict:  # pylint: disable=unidiomatic-typecheck
+        name_localizations = choice.get('name_localizations', None)
+        choice = Choice(
+            key=str(choice.get('key', '')),
+            value=choice.get('value', ''),
+            name_localizations=name_localizations if isinstance(name_localizations, dict) else locale_texts
+        )
+
+      if isinstance(choice, Choice):
+        if not choice.name_localizations: choice.name_localizations = locale_texts
+        choices[i] = choice
+      elif isinstance(choice, (int, str)): choices[i] = Choice(
+          key=str(choice),
+          value=i18n_provider.__(f'{path}.{i}', none_not_found=True) or choice,
+          name_localizations=locale_texts
+      )
+      else: raise TypeError(choice)
     return choices
 
   @staticmethod
