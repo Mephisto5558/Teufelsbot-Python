@@ -1,5 +1,5 @@
 from main import client
-
+# todo: cyclic import
 from .command_class import Command
 from .component_handler import filter_commands
 
