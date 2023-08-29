@@ -2,6 +2,7 @@
 
 from random import choices
 
+
 def coin_flip():
   return choices(['Heads', 'Tail', 'Side!'], weights=[1, 1, 1 / 3000], k=1)[0]
 

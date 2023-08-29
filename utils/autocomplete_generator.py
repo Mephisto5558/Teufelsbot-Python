@@ -11,11 +11,12 @@ async def autocomplete_generator(msg, command, locale: str):
         'value': v
     }
 
-  if msg.options._group:  # pylint: disable=protected-access
-    options = next((e for e in command.options if e.name == msg.options._group), None)  # pylint: disable=protected-access
-  if msg.options._subcommand:  # pylint: disable=protected-access
+  # pylint: disable=protected-access
+  if msg.options._group:
+    options = next((e for e in command.options if e.name == msg.options._group), None)
+  if msg.options._subcommand:
     options = next(
-        (e for e in command.options if e.name == msg.options._subcommand),  # pylint: disable=protected-access
+        (e for e in command.options if e.name == msg.options._subcommand),
         {}).get('options', None)
   options = next((e for e in command.options if e.name == msg.focused.name), {}).get('autocompleteOptions', None)
 
