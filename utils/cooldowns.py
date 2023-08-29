@@ -14,7 +14,7 @@ def sub_command_cooldowns(msg, name: str) -> int:
   if group:
     cmd = msg.client.slash_commands.get(msg.command_name)
     if cmd and cmd.options and isinstance(cmd.options, list):
-      group_obj = [e.cooldowns for e in cmd.options if e.name == group and e.type == application_command_option_type.subcommand][0]
+      group_obj = next(e.cooldowns for e in cmd.options if e.name == group and e.type == application_command_option_type.subcommand)
     if not depth and group_obj: return cooldowns(msg, f'{name}.{group}', group_obj)
 
   sub_cmd = msg.options.get_subcommand(False)
