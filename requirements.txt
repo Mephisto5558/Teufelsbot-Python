@@ -5,3 +5,4 @@ schedule>=1.2.0
 python-box[all]~=7.1
 flask>=2.3.3
 flask_limiter>=3.4.1
+flask_wtf>=1.1.1

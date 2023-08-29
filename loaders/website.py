@@ -6,6 +6,7 @@ from sys import argv
 from time import sleep
 
 from flask import Flask, jsonify, make_response, request
+from flask_wtf.csrf import CSRFProtect
 from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
 
@@ -60,6 +61,8 @@ def website_handler(client):
   while 'is_child=True' in argv: sleep(.5)  # Waiting for slash command loader to finish so parent process ends to free the port
 
   app = Flask(__name__)
+  csrf = CSRFProtect()
+  csrf.init_app(app)
   limiter = Limiter(key_func=get_remote_address, app=app)
 
   @app.route('/')
