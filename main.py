@@ -33,7 +33,7 @@ class Client(dict):
     self.bot_type = str(self.env.get('environment', 'main'))
     self.prefix_commands: list[dict] = []
     self.slash_commands: list[dict] = []
-    self.cooldowns: dict[str, int] = {}
+    self.cooldowns: dict[str, dict[str, dict[str, int]]] = {'guild': {}, 'user': {}}
 
   @property
   def settings(self):

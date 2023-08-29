@@ -21,8 +21,8 @@ class Permissions(DefaultDict):
 
 class Cooldowns(DefaultDict):
   """Cooldowns in milliseconds"""
-  guild: NotRequired[tuple[()] | tuple[int, ...]] = ()
-  user: NotRequired[tuple[()] | tuple[int, ...]] = ()
+  guild: NotRequired[int] = 0
+  user: NotRequired[int] = 0
 
 class Choice(TypedDict):
   key: str
@@ -49,6 +49,7 @@ class Option(DefaultDict):
 
 class Command:
   name: str
+  alias_of: NotRequired[str | None] = None
   type: str
   "The command name, must be between 2 and 32 chars"
   description: NotRequired[str] = ''
@@ -72,6 +73,8 @@ class Command:
   ephemeral_defer: NotRequired[bool] = False
   beta: NotRequired[bool] = False
   options: NotRequired[list[Option]] = []
+
+  # def __getitem__: # Todo
 
   @staticmethod
   def _name_formatter(name: str, path: str):
@@ -137,7 +140,8 @@ class Command:
         key, value = choice
         choices[i] = Choice(key=key, value=value, name_localizations=locale_texts)
       else:
-        choices[i] = Choice(key=str(choice), value=i18n_provider.__(f'{path}.{i}', none_not_found=True) or choice, name_localizations=locale_texts)
+        choices[i] = Choice(key=str(choice), value=i18n_provider.__(
+            f'{path}.{i}', none_not_found=True) or choice, name_localizations=locale_texts)
     return choices
 
   @staticmethod
