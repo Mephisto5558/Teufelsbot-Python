@@ -2,6 +2,8 @@ from .i18n_provider import i18n_provider
 
 
 async def autocomplete_generator(msg, command, locale: str):
+  if 'options' not in command: return
+
   def response(v):
     return {
         'name': i18n_provider.__(
@@ -12,13 +14,12 @@ async def autocomplete_generator(msg, command, locale: str):
     }
 
   # pylint: disable=protected-access
+  options: list = command.options
   if msg.options._group:
-    options = next((e for e in command.options if e.name == msg.options._group), None)
+    options = next((e for e in options if e.name == msg.options._group), [])
   if msg.options._subcommand:
-    options = next(
-        (e for e in command.options if e.name == msg.options._subcommand),
-        {}).get('options', None)
-  options = next((e for e in command.options if e.name == msg.focused.name), {}).get('autocompleteOptions', None)
+    options = next((e for e in options if e.name == msg.options._subcommand), {}).get('options', [])
+  options = next((e for e in options if e.name == msg.focused.name), {}).get('autocompleteOptions', [])
 
   if callable(options): options = options()
   if isinstance(options, dict): return [options]

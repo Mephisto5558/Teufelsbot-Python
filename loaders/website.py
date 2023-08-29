@@ -32,16 +32,20 @@ def get_commands() -> list[dict[str, str | bool | list[dict[str, str]]]]:
       cmd = import_module(f'commands/{subfolder}/{cmd_file}')
       if not cmd or not cmd.name or cmd.disabled: continue
 
+      prefix_list = ', '.join(cmd.aliases.prefix) if cmd.aliases and cmd.aliases.prefix else ''
+      slash_list = ', '.join(cmd.aliases.slash) if cmd.aliases and cmd.aliases.slash else ''
+
       command_list.append({
           'command_name': cmd.name,
           'command_usage':
-              ('SLASH Command: Look at the option descriptions.\n' if cmd.slash_command else '')
-              + sub(r'slash command:', '', lang(f'commands.{subfolder.lower()}.{cmd.name}.usage.usage') or '', flags=IGNORECASE)
+              ('SLASH Command: Look at the option descriptions.\n' if cmd.slash_command else '') + sub(  # NOSONAR (false positive)
+                  'slash command:', '', lang(f'commands.{subfolder.lower()}.{cmd.name}.usage.usage') or '', flags=IGNORECASE)
               or 'No information found',
           'command_description': cmd.description or lang(f'commands.{subfolder.lower()}.{cmd.name}.description') or 'No information found',
           'command_alias':
-          (f'Prefix: {", ".join(cmd.aliases.prefix)}\n' if cmd.aliases and cmd.aliases.prefix else '')
-          + f'Slash: {", ".join(cmd.aliases.slash)}\n' if cmd.aliases and cmd.aliases.slash else '' or lang('global.none') or ''
+              (f'Prefix: {prefix_list}\n' if prefix_list else '')
+              + (f'Slash: {slash_list}\n' if slash_list else '')
+              or str(lang('global.none'))
       })
 
     category_command_list.append({
