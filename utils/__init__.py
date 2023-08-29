@@ -2,7 +2,7 @@ from .autocomplete_generator import autocomplete_generator
 from .box import Box, box
 from .check_target_ban_perm import check_target
 from .command_class import Aliases, Command, Option
-from .component_handler import message_component_handler
+from .component_handler_ import message_component_handler
 from .cooldowns import cooldowns
 from .db import DB
 from .filter_empty import filter_empty
