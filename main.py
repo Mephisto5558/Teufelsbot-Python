@@ -6,7 +6,7 @@ from os import environ, listdir
 from sys import exit
 from time import process_time_ns
 
-from utils import DB, Box, box, git_pull, log
+from utils import DB, Box, box, git_pull, log, Command
 
 result = git_pull()
 if result != 'OK' and 'Could not resolve host' in result.stderr:
@@ -31,8 +31,8 @@ class Client(dict):
     if not self.env: self.env = self.settings.env or box()
 
     self.bot_type = str(self.env.get('environment', 'main'))
-    self.prefix_commands: list[dict] = []
-    self.slash_commands: list[dict] = []
+    self.prefix_commands: dict[str, Command] = {}
+    self.slash_commands: dict[str, Command] = {}
     self.cooldowns: dict[str, dict[str, dict[str, int]]] = {'guild': {}, 'user': {}}
 
   @property
