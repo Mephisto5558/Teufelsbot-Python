@@ -9,7 +9,7 @@ from .box import box
 from .logger import log
 
 
-class I18nProviderConfig(dict):  # pylint: disable-next=too-many-arguments
+class I18nProviderConfig(dict):
   def __init__(self, locales_path: str, default_locale: str, separator: str, not_found_message: str, error_not_found: bool, none_not_found: bool):
     self.locales_path = locales_path
     self.default_locale = default_locale
@@ -20,7 +20,7 @@ class I18nProviderConfig(dict):  # pylint: disable-next=too-many-arguments
 
 
 class I18nProvider:
-  def __init__(  # pylint: disable=too-many-arguments
+  def __init__(
       self,
       locales_path='locales', default_locale='en', separator='.',
       not_found_message='', error_not_found=False, none_not_found=False
