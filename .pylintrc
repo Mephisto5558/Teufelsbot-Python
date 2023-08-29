@@ -11,6 +11,7 @@ disable=locally-disabled,
 
 indent-string='  '
 max-args=10
+max-attributes=10
 
 [FORMAT]
 variable-rgx=^[a-z_][a-z0-9_]{0,30}$
