@@ -1,8 +1,10 @@
+from typing import Callable
+
 from .autocomplete_generator import autocomplete_generator
 from .box import Box, box
 from .check_target_ban_perm import check_target
 from .command_class import Aliases, Command, Option
-from .component_handler_ import message_component_handler
+# from .component_handler_ import message_component_handler
 from .cooldowns import cooldowns
 from .db import DB
 from .filter_empty import filter_empty
@@ -12,8 +14,11 @@ from .get_owner_only_folders import get_owner_only_folders
 from .git_pull import git_pull
 from .i18n_provider import I18nProvider, i18n_provider
 from .limit import limit
-from .list_commands import list_commands
+from . import list_commands
 from .logger import log
 from .permission_translator import permission_translator
 from .random_int import random_int
 from .uptime import uptime
+
+def build(client):
+  list_commands.list_commands = list_commands.list_commands_builder(client)

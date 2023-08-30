@@ -4,6 +4,8 @@ from secrets import choice
 
 from requests import RequestException, get
 
+from utils import log
+
 default_api_list = [
     {'name': 'jokeAPI', 'link': 'https://v2.jokeapi.dev', 'url': 'https://v2.jokeapi.dev/joke/Any'},
     {'name': 'humorAPI', 'link': 'https://humorapi.com', 'url': 'https://api.humorapi.com/jokes/random'},
@@ -36,12 +38,14 @@ def get_joke(api_list=None, joke_type='', max_length=2000) -> tuple[str, dict[st
       response = res['joke']
   except RequestException as err:
     if err.response and err.response.status_code in [402, 403, 522]:
-      print('joke.py:', err.response.text)
+      log.error(err.response.text)
     elif err.response:
-      print(
-          f"joke.py: {api['url']} responded with error {err.response.status_code}, {err.response.reason}: {err.response.text}")
+      log.error(
+          '%s responded with error %i, %s: %s',
+          api['url'], err.response.status_code, err.response.reason, err.response.text
+      )
     else:
-      print(f"joke.py: {api['url']} responded with error: {err}")
+      log.error('%s responded with error: %s', api['url'], err)
 
   if isinstance(response, str):
     return response.replace('`', "'"), api

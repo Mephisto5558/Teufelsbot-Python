@@ -1,6 +1,8 @@
 import os
 from datetime import date, timedelta
 
+from utils import log
+
 
 def delete_old(path: str):
   os.makedirs(path, exist_ok=True)
@@ -11,7 +13,7 @@ def delete_old(path: str):
 
     if file.is_dir(): delete_old(file_path)
     elif date.fromtimestamp(os.path.getmtime(file_path)) < time:
-      print(f'deleting {file_path}')
+      log.debug(f'deleting {file_path}')
       os.unlink(file_path)
 
 
@@ -22,12 +24,12 @@ def on_tick(self):
   now = date.today().strftime('%m-%d')
 
   if self.settings.lastFileClear == now:
-    print('Already ran file deletion today')
+    log.info('Already ran file deletion today')
     return
 
-  print('started file deletion')
+  log.info('started file deletion')
 
   delete_old('./Logs')
 
-  self.db.set('botSettings', 'lastFileClear', now)
-  print('Finished file deletion')
+  self.db.set('BOT_SETTINGS', 'lastFileClear', now)
+  log.info('Finished file deletion')

@@ -1,6 +1,6 @@
 from functools import partial
 from importlib import import_module
-from os import listdir
+from os import listdir, path
 from re import IGNORECASE, sub
 from sys import argv
 from time import sleep
@@ -29,7 +29,7 @@ def get_commands() -> list[dict[str, str | bool | list[dict[str, str]]]]:
     for cmd_file in listdir(f'commands/{subfolder}'):
       if not cmd_file.endswith('.py'): continue
 
-      cmd = import_module(f'commands/{subfolder}/{cmd_file}')
+      cmd = import_module(f'commands.{subfolder}.{path.splitext(cmd_file)[0]}')
       if not cmd or not cmd.name or cmd.disabled: continue
 
       prefix_list = ', '.join(cmd.aliases.prefix) if cmd.aliases and cmd.aliases.prefix else ''

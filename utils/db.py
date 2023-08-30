@@ -16,7 +16,10 @@ class DB:
   """
 
   # pylint: disable-next=too-many-arguments
-  def __init__(self, db_connection_str: str, value_logging_max_json_length: int | None = 20, pool_min=1, pool_max=4, key_separator='.'):
+  def __init__(
+      self, db_connection_str: str, value_logging_max_json_length: int | None = 20,
+      pool_min=1, pool_max=4, key_separator='.', required_tables: list | None = None
+  ):
     self.value_logging_max_json_length = value_logging_max_json_length or 0
     self._cache = box()
     self.__key_sep = key_separator
@@ -28,7 +31,7 @@ class DB:
         encoding='utf-8'
     )
 
-    self.fetch_all()
+    self.fetch_all(required_tables)
 
   def _execute_query(self, statement: str, params: list | tuple | dict = (), **keyword_params):
     connection = self._pool.acquire()
@@ -37,7 +40,12 @@ class DB:
     if keyword_params: cursor.execute(statement=statement, **keyword_params)
     else: cursor.execute(statement=statement, parameters=params)
 
-    result = cursor.fetchall()
+    try: result = cursor.fetchall()
+    except oracledb.InterfaceError as err:
+      if err.args[0].full_code == 'DPY-1003':  # "the executed statement does not return rows"
+        return None
+      raise
+
     cursor.close()
 
     connection.commit()
@@ -45,10 +53,14 @@ class DB:
 
     return result
 
-  def fetch_all(self):
-    tables = self._execute_query('SELECT table_name FROM user_tables')
-    for table, in tables:
+  def fetch_all(self, create_missing: list[str] | None):
+    tables = [e[0] for e in self._execute_query('SELECT table_name FROM user_tables') or []]
+    for table in tables:
       self._cache[table] = self.fetch(table)
+
+    if isinstance(create_missing, list):
+      for table in create_missing:
+        if table.upper() not in tables: self.create(table)
 
     return self
 
@@ -63,6 +75,8 @@ class DB:
   def create(self, table: str):
     """Note that there is NO VALIDATION of table names, so don't let the user put an SQL injection there"""
 
+    self._save_log(f'Creating table {table}')
+
     self._execute_query(f'CREATE TABLE {table}(key VARCHAR2(200) NOT NULL, value VARCHAR2(2000))')
     self._cache[table] = {}
     return self
@@ -76,11 +90,11 @@ class DB:
 
     self._save_log(f'Setting {table}{self.__key_sep}{key}' if key else f'Setting {table}', value)
 
-    for attr, val in self._flatten_dict(value).items() if isinstance(value, dict) else ['', value]:
+    for attr, val in (self._flatten_dict(value).items() if isinstance(value, dict) else [['', value]]):
       if key and attr: key = f'{key}{self.__key_sep}{attr}'
       elif attr: key = attr
 
-      self._execute_query(f"INSERT INTO {table}(key, value) VALUES (':key', :value)", key=key, value=val)
+      self._execute_query(f"INSERT INTO {table}(key, value) VALUES (:key, :value)", key=key, value=val)
       self._cache[table][key] = val
     return value
 
@@ -98,7 +112,7 @@ class DB:
       if data and key in data:
         del data[key]
 
-        self._execute_query(f"DELETE FROM {table} WHERE entity = ':entity'", entity=key)
+        self._execute_query(f"DELETE FROM {table} WHERE entity = :entity", entity=key)
         self._cache[table] = data
         return True
       return False
@@ -119,6 +133,6 @@ class DB:
 
   def _save_log(self, msg: str, value=None):
     json_value = json.dumps(value) if value else None
-    log.debug(msg + (f', value: {json_value}' if json_value and self.value_logging_max_json_length >= len(json_value) else ''))
+    log.debug(msg + (f', value: {json_value}' if json_value is not None and self.value_logging_max_json_length >= len(json_value) else ''))
 
     return self._save_log

@@ -4,13 +4,13 @@ from os.path import splitext
 
 from .cooldowns import cooldowns
 
-handlers = [import_module(splitext(file)[0]).__dict__[splitext(file)[0]] for file in listdir('./component_handler') if file.endswith('.py')]
+handlers = [import_module('utils.component_handler.' + splitext(file)[0]).__dict__[splitext(file)[0]] for file in listdir('utils/component_handler') if file.endswith('.py')]
 
 def message_component_handler(interaction, lang):
   feature, *args = interaction.custom_id.split('.') + [None]
   cooldown = cooldowns(interaction, f'button_press_event.{interaction.message.id}', {'user': 1000})
   command = interaction.client.slash_commands.get(feature) or interaction.client.prefix_commands.get(feature)
-  error_embed = {'color': 'Red', 'set_description': lambda: None}
+  error_embed = {'color': 'Red'}
   disabled_list = interaction.guild.db[f'commandSettings.{command.alias_of or command.name}.disabled'] or {}
 
   member_list: list = disabled_list.get('members', [])
