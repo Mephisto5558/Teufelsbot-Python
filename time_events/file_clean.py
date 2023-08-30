@@ -13,7 +13,7 @@ def delete_old(path: str):
 
     if file.is_dir(): delete_old(file_path)
     elif date.fromtimestamp(os.path.getmtime(file_path)) < time:
-      log.debug(f'deleting {file_path}')
+      log.debug('deleting %s', file_path)
       os.unlink(file_path)
 
 
