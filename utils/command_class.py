@@ -38,7 +38,7 @@ class Choice(dict):
     self.value = value
     self.name_localizations = name_localizations
 
-class Option(dict):
+class Option(dict):  # pylint: disable=too-many-instance-attributes
   @property
   def description_localizations(self):
     """Do not set manually."""
@@ -46,9 +46,10 @@ class Option(dict):
   _description_localizations: dict[str, str] | None
   "Do not set manually."
 
-  def __init__(
+  def __init__(  # pylint: disable=too-many-arguments
       self, name: str, type: str | None = None, description: str | None = None, required: bool = False,
       autocomplete_options: list[str | int] | Callable[[Any], list[str | int] | str | int] | None = None, strict_autocomplete: bool = False,
+      min_value: int | None = None, max_value: int | None = None, min_length: int | None = None, max_length: int | None = None,
       options: list['Option'] | None = None, choices: list[Choice | dict[str, str | int] | str | int] | None = None
   ):
     self.name = name
@@ -57,6 +58,10 @@ class Option(dict):
     self.required = required or False
     self.autocomplete_options = autocomplete_options or []
     self.strict_autocomplete = strict_autocomplete or False
+    self.min_value = min_value if self.type == 'Integer' else None
+    self.max_value = max_value if self.type == 'Integer' else None
+    self.min_length = min_length if self.type == 'String' else None
+    self.min_length = min_length if self.type == 'String' else None
     self.options = options or []
     self.choices = choices or []
 
@@ -206,5 +211,5 @@ class Command:
     for option in self.options:
       option = self._options_formatter(option, f'{path}.options.{option.name}')
 
-  def run(self, msg, lang: Callable):
+  def run(self, msg, lang):
     raise NotImplementedError('Subclasses must implement the run method')

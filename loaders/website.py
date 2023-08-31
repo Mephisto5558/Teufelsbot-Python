@@ -34,14 +34,15 @@ def get_commands() -> list[dict[str, str | bool | list[dict[str, str]]]]:
 
       prefix_list = ', '.join(cmd.aliases.prefix) if cmd.aliases and cmd.aliases.prefix else ''
       slash_list = ', '.join(cmd.aliases.slash) if cmd.aliases and cmd.aliases.slash else ''
+      lang_path = f'commands.{subfolder.lower()}.{cmd.name}'
 
       command_list.append({
           'command_name': cmd.name,
           'command_usage':
-              ('SLASH Command: Look at the option descriptions.\n' if cmd.slash_command else '') + sub(  # NOSONAR (false positive)
-                  'slash command:', '', lang(f'commands.{subfolder.lower()}.{cmd.name}.usage.usage') or '', flags=IGNORECASE)
+              ('SLASH Command: Look at the option descriptions.\n' if cmd.slash_command else '')
+              + sub('slash command:', '', lang(f'commands.{lang_path}.usage.usage') or '', flags=IGNORECASE)  # NOSONAR (false positive)
               or 'No information found',
-          'command_description': cmd.description or lang(f'commands.{subfolder.lower()}.{cmd.name}.description') or 'No information found',
+          'command_description': cmd.description or lang(f'commands.{lang_path}.description') or 'No information found',
           'command_alias':
               (f'Prefix: {prefix_list}\n' if prefix_list else '')
               + (f'Slash: {slash_list}\n' if slash_list else '')

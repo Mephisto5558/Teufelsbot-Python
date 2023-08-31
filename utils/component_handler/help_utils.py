@@ -5,8 +5,7 @@ from ..i18n_provider import I18nProvider
 from ..command_class import Command
 from ..permission_translator import permission_translator
 from ..get_owner_only_folders import get_owner_only_folders
-
-
+  
 owner_only_folders = get_owner_only_folders()
 
 def get_all_commands(interaction) -> list[Command]:
@@ -179,7 +178,7 @@ def command_query(interaction, lang, query: str):
 
   command: Command = interaction.client.slash_commands.get(query) or interaction.client.prefix_commands.get(query)
   if not filter_commands(command,interaction):
-    embed = EmbedBuilder(description=lang('one.notFound', query), color=Colors.Red);
+    embed = EmbedBuilder(description=lang('one.notFound', query), color=Colors.Red)
 
     return interaction.custom_reply(embeds=[embed], components=[create_category_component(interaction, lang)])
 

@@ -1,11 +1,5 @@
-from main import client
-# todo: cyclic import
 from .command_class import Command
 from .component_handler import filter_commands
 
-def list_commands(i=None) -> list[Command]:
-  c = i if i else client
-  return list(set(
-      [e for e in c.prefix_commands.values() if filter_commands(e, i, client)]
-      + [e for e in c.slash_commands.values() if filter_commands(e, i, client)]
-  ))
+def list_commands(i) -> list[Command]:
+  return list(set(e for e in [*i.client.prefix_commands.values(), *i.client.slash_commands.values()] if filter_commands(i, e)))

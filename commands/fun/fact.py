@@ -1,13 +1,16 @@
-# https://github.com/Mephisto5558/Teufelsbot/blob/main/Commands/Fun/fact.js
-
 from requests import get
 
+from utils import Command, Cooldowns
 
-def fact(lang: str = 'de'):
-  data = get(f'https://uselessfacts.jsph.pl/api/v2/facts/random?language={lang}', timeout=10).json()
-  if not data['text']: return None
+class Fact(Command):
+  name = 'fact'
+  cooldowns = Cooldowns(guild=100)
+  slash_command = True
+  prefix_command = True
+  dm_permission = True
 
-  return f"{data['text']}\n\nSource: [{data['source']}]({data['source_url']})"
+  def run(self, msg, lang):
+    res = get(f'https://uselessfacts.jsph.pl/api/v2/facts/random?language={lang}', timeout=10).json()
+    if not res['text']: return None
 
-
-if __name__ == '__main__': print(fact())
+    return msg.custom_reply(f"{res['text']}\n\nSource: [{res['source']}]({res['source_url']})")

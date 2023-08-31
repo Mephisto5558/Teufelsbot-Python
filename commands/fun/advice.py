@@ -1,11 +1,13 @@
-# https://github.com/Mephisto5558/Teufelsbot/blob/main/Commands/Fun/advice.js
-
 from requests import get
 
+from utils import Command
 
-def advice():
-  data = get('https://api.adviceslip.com/advice', timeout=10).json()
-  return data['slip'].get('advice', None)
+class Advice(Command):
+  name = 'advice'
+  slash_command = True
+  prefix_command = True
+  dm_permission = True
 
-
-if __name__ == '__main__': print(advice())
+  def run(self, msg, _):
+    data = get('https://api.adviceslip.com/advice', timeout=10).json()
+    return msg.custom_reply(data['slip'].get('advice', None))

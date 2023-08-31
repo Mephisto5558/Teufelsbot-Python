@@ -1,6 +1,6 @@
-# https://github.com/Mephisto5558/Teufelsbot/blob/main/Commands/Fun/happy.js
-
 from secrets import choice
+
+from utils import Command
 
 response_list = [
     'c:', 'C:', ':D',
@@ -8,7 +8,11 @@ response_list = [
     'https://tenor.com/view/happy-cat-smile-cat-gif-26239281'
 ]
 
-def happy():
-  return choice(response_list)
+class Happy(Command):
+  name = 'happy'
+  slash_command = False
+  prefix_command = True
+  dm_permission = True
 
-if __name__ == '__main__': print(happy())
+  def run(self, msg, _):
+    return msg.custom_reply(choice(response_list))

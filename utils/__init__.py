@@ -1,10 +1,11 @@
 from typing import Callable
 
 from .autocomplete_generator import autocomplete_generator
+from .better_partial import better_partial
 from .box import Box, box
 from .check_target_ban_perm import check_target
-from .command_class import Aliases, Command, Option
-# from .component_handler_ import message_component_handler
+from .command_class import Aliases, Command, Option, Cooldowns, Permissions
+from .component_handler_ import message_component_handler
 from .cooldowns import cooldowns
 from .db import DB
 from .filter_empty import filter_empty
@@ -19,6 +20,3 @@ from .logger import log
 from .permission_translator import permission_translator
 from .random_int import random_int
 from .uptime import uptime
-
-def build(client):
-  list_commands.list_commands = list_commands.list_commands_builder(client)

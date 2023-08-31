@@ -1,10 +1,12 @@
-# https://github.com/Mephisto5558/Teufelsbot/blob/main/Commands/Minigames/coinflip.js
-
 from random import choices
 
+from utils import Command
 
-def coin_flip():
-  return choices(['Heads', 'Tail', 'Side!'], weights=[1, 1, 1 / 3000], k=1)[0]
+class CoinFlip(Command):
+  name = 'coinflip'
+  slash_command = True
+  prefix_command = True
+  dm_permission = True
 
-
-if __name__ == '__main__': print(coin_flip())
+  def run(self, msg, lang):
+    return msg.custom_reply(lang(choices(['response', 'side!'], weights=[1, 1 / 3000], k=1)[0]))

@@ -13,7 +13,8 @@ class Help(Command):
       Option(
           name='category',
           type='String',
-          choices=[e.category for e in list_commands()]
+          autocomplete_options=lambda i: [e.category for e in list_commands(i)],
+          strict_autocomplete=True
       ),
       Option(
           name='command',

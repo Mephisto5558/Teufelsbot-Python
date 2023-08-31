@@ -26,4 +26,4 @@ class RandomNumber(Command):
       result = random_int(max_value, min_value)
       msg.custom_reply(str(result))
     except ValueError as err:
-      msg.custom_reply(lang('outOfRange', err.args[0]))
+      msg.custom_reply(lang('out_of_range', err.args[0]))
