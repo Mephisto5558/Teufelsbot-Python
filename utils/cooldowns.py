@@ -30,9 +30,9 @@ def sub_command_cooldowns(msg, name: str) -> int:
 
   return 0
 
-def cooldowns(msg, name: str, cooldowns: dict[str, int]) -> int:
-  guild = cooldowns.get('guild', 0)
-  user = cooldowns.get('user', 0)
+def cooldowns(msg, name: str, cooldowns: dict[str, int|float]) -> int:
+  guild = int(cooldowns.get('guild', 0))
+  user = int(cooldowns.get('user', 0))
 
   if not guild and not user: return sub_command_cooldowns(msg, name)
 
