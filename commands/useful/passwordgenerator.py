@@ -1,5 +1,3 @@
-# https://github.com/Mephisto5558/Teufelsbot/blob/main/Commands/Useful/passwordgenerator.js
-
 from secrets import choice
 from utils import Command, Cooldowns, Option
 default_charset = ['abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!?§$%&/\\=*\'"#*(){}[]']

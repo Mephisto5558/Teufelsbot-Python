@@ -7,7 +7,7 @@ disable=locally-disabled,
   missing-class-docstring,
   missing-final-newline,
   redefined-outer-name,
-  redefined-builtin
+  too-many-return-statements
 
 indent-string='  '
 max-args=10
