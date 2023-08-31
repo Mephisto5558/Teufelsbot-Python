@@ -5,7 +5,7 @@ from re import sub
 from secrets import choice
 from typing import Literal, overload
 
-from .box import box
+from .box import box, Box
 from .logger import log
 
 
@@ -30,11 +30,14 @@ class I18nProvider:
         not_found_message=not_found_message, error_not_found=error_not_found, none_not_found=none_not_found
     )
 
-    self.locale_data = box()
-    self.default_locale_data = box()
+    self.locale_data = box(camel_killer_box=True)
     self.available_locales: dict[str, str] = {}
 
     self.load_all_locales()
+
+  @property
+  def default_locale_data(self) -> Box:
+    return self.locale_data[self.config.default_locale]
 
   def _load_files(self, path: str):
     data = {}
@@ -49,11 +52,7 @@ class I18nProvider:
           continue
 
         with open(full_path, encoding='utf-8') as file:
-          # try:
           data[splitext(item)[0]] = json.load(file)
-          # except json.JSONDecodeError:
-          #   file.seek(0)
-          #   data[splitext(item)[0]] = json.loads(file.read())
 
     return data
 
@@ -71,12 +70,9 @@ class I18nProvider:
 
     for locale in self.available_locales: self.load_locale(locale)
 
-    data = self.locale_data[self.config.default_locale]
-    if not data or isinstance(data, str):  # isinstance is a type guard
-      raise FileNotFoundError(
-          f'There are no valid language files for the default locale ({self.config.default_locale}) in the supplied locales path!')
-
-    self.default_locale_data = box(data)
+    if not self.default_locale_data: raise FileNotFoundError(
+        f'There are no valid language files for the default locale ({self.config.default_locale}) in the supplied locales path!'
+    )
 
   @overload
   def __(self, key: str, locale: str | None = None, error_not_found: Literal[False] | None = None, none_not_found: Literal[True] = True,
