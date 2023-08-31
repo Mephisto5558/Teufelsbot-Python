@@ -28,9 +28,9 @@ class Permissions(dict):
 class Cooldowns(dict):
   """Cooldowns in milliseconds"""
 
-  def __init__(self, guild: int = 0, user: int = 0):
-    self.guild = guild or 0
-    self.user = user or 0
+  def __init__(self, guild: int | float = 0, user: int | float = 0):
+    self.guild = int(guild or 0)
+    self.user = int(user or 0)
 
 class Choice(dict):
   def __init__(self, key: str, value: str | int, name_localizations: dict[str, str] | None = None):
@@ -46,22 +46,25 @@ class Option(dict):  # pylint: disable=too-many-instance-attributes
   _description_localizations: dict[str, str] | None
   "Do not set manually."
 
-  def __init__(  # pylint: disable=too-many-arguments
-      self, name: str, type: str | None = None, description: str | None = None, required: bool = False,
-      autocomplete_options: list[str | int] | Callable[[Any], list[str | int] | str | int] | None = None, strict_autocomplete: bool = False,
+  def __init__(
+      self, name: str, type: str, description: str | None = None, cooldowns: Cooldowns | None = None, required: bool = False,
+      autocomplete_options: list[str | int | dict[str, str | int]] | Callable[[Any], list[str | int | dict[str, str | int]] | str | int] | None = None, strict_autocomplete: bool = False,
+      channel_types: list[str] | None = None,
       min_value: int | None = None, max_value: int | None = None, min_length: int | None = None, max_length: int | None = None,
       options: list['Option'] | None = None, choices: list[Choice | dict[str, str | int] | str | int] | None = None
   ):
     self.name = name
-    self.type = type or None
+    self.type = type
     self.description = description or None
+    cooldowns = cooldowns or Cooldowns()
     self.required = required or False
     self.autocomplete_options = autocomplete_options or []
     self.strict_autocomplete = strict_autocomplete or False
+    self.channel_types = channel_types if self.type == 'Channel' else None
     self.min_value = min_value if self.type == 'Integer' else None
     self.max_value = max_value if self.type == 'Integer' else None
     self.min_length = min_length if self.type == 'String' else None
-    self.min_length = min_length if self.type == 'String' else None
+    self.max_length = max_length if self.type == 'String' else None
     self.options = options or []
     self.choices = choices or []
 
