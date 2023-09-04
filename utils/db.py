@@ -18,11 +18,12 @@ class DB:
   # pylint: disable-next=too-many-arguments
   def __init__(
       self, db_connection_str: str, value_logging_max_json_length: int | None = 20,
-      pool_min=1, pool_max=4, key_separator='.', required_tables: list | None = None
+      pool_min=1, pool_max=4, key_separator='.', required_tables: list | None = None, allow_drop_table: bool | None = False
   ):
     self.value_logging_max_json_length = value_logging_max_json_length or 0
     self._cache = box()
     self.__key_sep = key_separator
+    self._allow_drop_table = allow_drop_table or False
 
     self._pool = oracledb.create_pool(
         dsn=db_connection_str,
@@ -101,7 +102,7 @@ class DB:
   def delete(self, table: str, key: str | None = None):
     """
     Note that there is NO VALIDATION of table names, so don't let the user put an SQL injection there
-    If no key has been provided, will drop the database
+    If no key has been provided, will drop the database if allowed on init with `allow_drop_table` param, else raises an error
     returns: True if data has been found & deleted, otherwise False
     """
 
@@ -112,10 +113,13 @@ class DB:
       if data and key in data:
         del data[key]
 
-        self._execute_query(f"DELETE FROM {table} WHERE entity = :entity", entity=key)
+        self._execute_query(f'DELETE FROM {table} WHERE entity = :entity', entity=key)
         self._cache[table] = data
         return True
       return False
+
+    if not self._allow_drop_table:
+      raise ValueError('Dropping tables with DB#delete is not permitted!')
 
     self._save_log(f'Deleting {table}')
 
