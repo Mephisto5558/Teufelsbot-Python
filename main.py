@@ -2,7 +2,7 @@
 
 from importlib import import_module
 from os import environ, listdir
-from sys import exit
+from sys import exit  # pylint:disable=redefined-builtin
 from time import process_time_ns
 
 from oracledb import OperationalError
@@ -28,8 +28,8 @@ class Client(dict):
 
     try:
       self.db = DB(
-        str(self.env.get('dbConnectionStr', environ.get('dbConnectionStr', ''))),
-        required_tables=['LEADERBOARDS', 'GIVEAWAYS', 'BOT_SETTINGS', 'USER_SETTINGS', 'GUILD_SETTINGS', 'POLLS']
+          str(self.env.get('dbConnectionStr', environ.get('dbConnectionStr', ''))),
+          required_tables=['LEADERBOARDS', 'GIVEAWAYS', 'BOT_SETTINGS', 'USER_SETTINGS', 'GUILD_SETTINGS', 'POLLS']
       )
     except OperationalError as err:
       log.error('Error connecting to the database: %s', err)
