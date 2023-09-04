@@ -49,7 +49,7 @@ class Option(dict):  # pylint: disable=too-many-instance-attributes
   def __init__(
       self, name: str, type: str, description: str | None = None, cooldowns: Cooldowns | None = None, required: bool = False,
       autocomplete_options: list[str | int | dict[str, str | int]] | Callable[[Any], list[str | int | dict[str, str | int]] | str | int] | None = None, strict_autocomplete: bool = False,
-      channel_types: list[str] | None = None,
+      channel_types: list[str] | None = None, dm_permission: bool|None=False,
       min_value: int | None = None, max_value: int | None = None, min_length: int | None = None, max_length: int | None = None,
       options: list['Option'] | None = None, choices: list[Choice | dict[str, str | int] | str | int] | None = None
   ):
@@ -61,6 +61,7 @@ class Option(dict):  # pylint: disable=too-many-instance-attributes
     self.autocomplete_options = autocomplete_options or []
     self.strict_autocomplete = strict_autocomplete or False
     self.channel_types = channel_types if self.type == 'Channel' else None
+    self.dm_permission = (dm_permission if self.type in ('Subcommand', 'Subcommand_group') else False) or False
     self.min_value = min_value if self.type == 'Integer' else None
     self.max_value = max_value if self.type == 'Integer' else None
     self.min_length = min_length if self.type == 'String' else None
