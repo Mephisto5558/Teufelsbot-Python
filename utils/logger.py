@@ -1,9 +1,9 @@
 import logging
 from datetime import date
 
-
+logging.Formatter.default_msec_format = ''
 class CustomFormatter(logging.Formatter):
-  format_ = '%(asctime)s [%(levelname)s] %(module)s#%(lineno)d: %(message)s'
+  format_ = '%(asctime)s.%(msecs)03d [%(levelname)s] %(module)s#%(lineno)d: %(message)s'
 
   FORMATS = {
       logging.DEBUG: '\033[38;5;33m' + format_ + '\033[0m',
