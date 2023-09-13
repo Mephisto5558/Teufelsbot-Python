@@ -1,11 +1,8 @@
-# https://github.com/Mephisto5558/Teufelsbot/blob/main/Utils/db.js
-
 import json
 
 import oracledb
-from box import Box
 
-from .box import box
+from .box import box, Box
 from .logger import log
 
 

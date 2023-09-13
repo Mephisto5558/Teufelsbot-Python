@@ -8,7 +8,6 @@ from typing import Literal, overload
 from .box import box, Box
 from .logger import log
 
-
 class I18nProviderConfig(dict):
   def __init__(self, locales_path: str, default_locale: str, separator: str, not_found_message: str, error_not_found: bool, none_not_found: bool):
     self.locales_path = locales_path
@@ -119,8 +118,8 @@ class I18nProvider:
     if isinstance(message, list): message = choice(message)
 
     if not message:
-      if original_error_not_found or (error_not_found and original_none_not_found is False): raise KeyError(
-          f'Key not found: "{key}"' + f'({backup_path}.{key})' if backup_path else '')
+      if original_error_not_found or (error_not_found and original_none_not_found is False):
+        raise KeyError(f'Key not found: "{key}"' + f'({backup_path}.{key})' if backup_path else '')
       if none_not_found: return None
 
       log.warning('Missing default ("%s") localization for %s%s!', locale, key, (f' ({backup_path}.{key})' if backup_path else ''))

@@ -1,7 +1,7 @@
 from time import time
 
 
-class application_command_option_type:
+class ApplicationCommandOptionType:
   subcommand = 0
 
 def sub_command_cooldowns(msg, name: str) -> int:
@@ -14,7 +14,7 @@ def sub_command_cooldowns(msg, name: str) -> int:
   if group:
     cmd = msg.client.slash_commands.get(msg.command_name)
     if cmd and cmd.options and isinstance(cmd.options, list):
-      group_obj = next(e.cooldowns for e in cmd.options if e.name == group and e.type == application_command_option_type.subcommand)
+      group_obj = next(e.cooldowns for e in cmd.options if e.name == group and e.type == ApplicationCommandOptionType.subcommand)
     if not depth and group_obj: return cooldowns(msg, f'{name}.{group}', group_obj)
 
   sub_cmd = msg.options.get_subcommand(False)
@@ -23,7 +23,7 @@ def sub_command_cooldowns(msg, name: str) -> int:
     if cmd and cmd.options and isinstance(cmd.options, list):
       sub_cmd_cooldowns = [
           e.cooldowns for e in cmd.options if e.name ==
-          sub_cmd and e.type == application_command_option_type.subcommand
+          sub_cmd and e.type == ApplicationCommandOptionType.subcommand
       ][0]
       if sub_cmd_cooldowns:
         return cooldowns(msg, f'{name}.{group}.{sub_cmd}' if group else f'{name}.{sub_cmd}', sub_cmd_cooldowns)

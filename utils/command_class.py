@@ -1,5 +1,5 @@
 # pylint: disable-next = no-name-in-module # false positive in git action
-from typing import Any, Callable, NotRequired
+from typing import TypeVar, Any, Callable, NotRequired
 
 from .i18n_provider import i18n_provider
 from .logger import log
@@ -14,16 +14,13 @@ class Aliases(dict):
   """alias values must be between 2 and 32 chars"""
 
   def __init__(self, prefix: list[str] | None = None, slash: list[str] | None = None):
-    self.prefix = prefix or []
-    self.slash = slash or []
+    self.prefix = set(prefix or {})
+    self.slash = set(slash or {})
 
 class Permissions(dict):
-  client: NotRequired[list[str]] = []
-  user: NotRequired[list[str]] = []
-
   def __init__(self, client: list[str] | None = None, user: list[str] | None = None):
-    self.client = client or []
-    self.user = user or []
+    self.client = set(client or {})
+    self.user = set(user or {})
 
 class Cooldowns(dict):
   """Cooldowns in milliseconds"""
@@ -38,6 +35,8 @@ class Choice(dict):
     self.value = value
     self.name_localizations = name_localizations
 
+ChoicesT = TypeVar('ChoicesT', list[Choice | dict[str, str | int] | str | int], set[Choice | dict[str, str | int] | str | int], None)
+
 class Option(dict):  # pylint: disable=too-many-instance-attributes
   @property
   def description_localizations(self):
@@ -47,21 +46,21 @@ class Option(dict):  # pylint: disable=too-many-instance-attributes
   "Do not set manually."
 
   def __init__(
-      self, name: str, type: str, description: str | None = None, cooldowns: Cooldowns | None = None, required: bool = False,
+      self, name: str, type_: str, description: str | None = None, cooldowns: Cooldowns | None = None, required: bool = False,  # NOSONAR
       autocomplete_options: list[str | int | dict[str, str | int]] | Callable[[Any], list[str | int | dict[str, str | int]] | str | int] | None = None, strict_autocomplete: bool = False,
-      channel_types: list[str] | None = None, dm_permission: bool|None=False,
+      channel_types: list[str] | None = None, dm_permission: bool | None = False,
       min_value: int | None = None, max_value: int | None = None, min_length: int | None = None, max_length: int | None = None,
-      options: list['Option'] | None = None, choices: list[Choice | dict[str, str | int] | str | int] | None = None
+      options: list['Option'] | None = None, choices: ChoicesT = None
   ):
     self.name = name
-    self.type = type
+    self.type = type_
     self.description = description or None
     cooldowns = cooldowns or Cooldowns()
     self.required = required or False
     self.autocomplete_options = autocomplete_options or []
     self.strict_autocomplete = strict_autocomplete or False
     self.channel_types = channel_types if self.type == 'Channel' else None
-    self.dm_permission = (dm_permission if self.type in ('Subcommand', 'Subcommand_group') else False) or False
+    self.dm_permission = self.type in ('Subcommand', 'Subcommand_group') and bool(dm_permission)
     self.min_value = min_value if self.type == 'Integer' else None
     self.max_value = max_value if self.type == 'Integer' else None
     self.min_length = min_length if self.type == 'String' else None
@@ -99,7 +98,7 @@ class Command:
   # def __getitem__: # Todo
 
   @staticmethod
-  def _name_formatter(name: str, path: str):
+  def _name_formatter(name: str, path: str) -> str:
     if not name or not isinstance(name, str) or len(name) < MIN_NAME_LENGTH:
       raise TypeError(f'name ({path}.name) must be a string with at least {MIN_NAME_LENGTH} chars!')
     if len(name) > MAX_NAME_LENGTH:
@@ -140,7 +139,8 @@ class Command:
     return locale_texts
 
   @staticmethod
-  def _choice_formatter(choices: list[Choice | dict[str, str | int] | str | int], path: str):
+  def _choice_formatter(choices: ChoicesT, path: str) -> set[Choice]:
+    choices_formatted = set()
     for i, choice in enumerate(choices):
       locale_texts = {}
 
@@ -167,14 +167,15 @@ class Command:
 
       if isinstance(choice, Choice):
         if not choice.name_localizations: choice.name_localizations = locale_texts
-        choices[i] = choice
-      elif isinstance(choice, (int, str)): choices[i] = Choice(
+        choices_formatted.add(choice)
+      elif isinstance(choice, (int, str)): choices_formatted.add(Choice(
           key=str(choice),
           value=i18n_provider.__(f'{path}.{i}', none_not_found=True) or choice,
           name_localizations=locale_texts
-      )
+      ))
       else: raise TypeError(choice)
-    return choices
+
+    return choices_formatted
 
   @staticmethod
   def _options_formatter(option: Option, path: str):
@@ -198,16 +199,14 @@ class Command:
     self.description = self._description_formatter(self.description, path)
     self._description_localizations = self._description_localizer(path)
 
-    if not self.aliases.prefix: self.aliases.prefix = []
-    if not self.aliases.slash: self.aliases.slash = []
-
     for i, alias in enumerate(self.aliases.slash):
       if not isinstance(alias, str) or len(alias) < MIN_NAME_LENGTH:
         log.warning('slash alias (%s[%i]) must be a string with at least %i chars! Ignoring', path, i, MIN_NAME_LENGTH)
         self.aliases.slash.remove(alias)
       elif len(alias) > MAX_NAME_LENGTH:
         log.warning('slash alias (%s[%i]) must not be longer then %i chars! Slicing', path, i, MAX_NAME_LENGTH)
-        self.aliases.slash[i] = alias[:MAX_NAME_LENGTH]
+        self.aliases.slash.remove(alias)
+        self.aliases.slash.add(alias[:MAX_NAME_LENGTH])
 
     # PERMISSIONS
       # Todo: Implement permission conversion

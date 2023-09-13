@@ -29,7 +29,7 @@ def on_tick(self):
 
   log.info('started file deletion')
 
-  delete_old('./Logs')
+  delete_old('./logs')
 
   self.db.set('BOT_SETTINGS', 'lastFileClear', now)
   log.info('Finished file deletion')

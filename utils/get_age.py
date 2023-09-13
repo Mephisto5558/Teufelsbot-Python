@@ -1,5 +1,3 @@
-# https://github.com/Mephisto5558/Teufelsbot/blob/main/Utils/getAge.js
-
 from datetime import date
 
 
@@ -21,6 +19,6 @@ if __name__ == '__main__':
     month = int(input('Month: '))
     day = int(input('Day:   '))
 
-    print('\nAge:   ' + str(get_age((year, month, day))))
+    print(f'\nAge:   {get_age((year, month, day))}')
   except ValueError:
     print('Invalid Input')

@@ -1,7 +1,4 @@
-# https://github.com/Mephisto5558/Teufelsbot/blob/main/Utils/findAllEntries.js
-# https://www.w3schools.com/python/ref_keyword_nonlocal.asp
-
-def find_all_entries(obj, key):
+def find_all_entries(obj: dict, key: str):
   if not obj or not key: return {}
 
   counter = 0

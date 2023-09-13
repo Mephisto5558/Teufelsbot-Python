@@ -4,7 +4,11 @@ from os.path import splitext
 
 from .cooldowns import cooldowns
 
-handlers = [import_module('utils.component_handler.' + splitext(file)[0]).__dict__[splitext(file)[0]] for file in listdir('utils/component_handler') if file.endswith('.py')]
+handlers = [
+    import_module('utils.component_handler.' + splitext(file)[0]).__dict__[splitext(file)[0]]
+    for file in listdir('utils/component_handler')
+    if file.endswith('.py')
+]
 
 def message_component_handler(interaction, lang):
   feature, *args = interaction.custom_id.split('.') + [None]

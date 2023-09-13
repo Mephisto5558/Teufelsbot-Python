@@ -1,5 +1,3 @@
-from typing import Callable
-
 from .autocomplete_generator import autocomplete_generator
 from .better_partial import better_partial
 from .box import Box, box
