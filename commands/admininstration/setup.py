@@ -142,16 +142,16 @@ class CMD(Command):
             command_data[type_] = [*(command_data[type_] or []), id_]
             count['disabled'][type_] += 1
 
-        embed = EmbedBuilder({
-            'title': lang('toggle_cmd.embed_title', command),
-            'description': lang('toggle_cmd.embed_description', msg.command.id),
-            'fields': [{
+        embed = EmbedBuilder(
+            title=lang('toggle_cmd.embed_title', command),
+            description=lang('toggle_cmd.embed_description', msg.command.id),
+            fields=[{
                 'name': lang(f'toggle_cmd.embed.{k}'),
                 'value': '\n'.join([f"{lang(f'toggleCmd.{k}')}: **{v}**" for k, v in v.items() if v]),
                 'inline': True
             } for k, v in count.items() if any(v.values())],
-            'color': Colors.White
-        })
+            color=Colors.White
+        )
 
         msg.client.db.set('GUILDSETTINGS', f'{msg.guild.id}.command_settings.{command}.disabled', command_data)
         return msg.edit_reply(embeds=[embed])
