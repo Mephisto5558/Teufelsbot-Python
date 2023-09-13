@@ -1,8 +1,7 @@
 from utils import Command, Option, list_commands
 from utils.component_handler import all_query, command_query, category_query
 
-
-class Help(Command):
+class CMD(Command):
   name = 'help'
   slash_command = True
   prefix_command = True

@@ -1,6 +1,6 @@
 from utils import Command, Permissions
 
-class Selfrole(Command):
+class CMD(Command):
   name = 'selfrole'
   permissions = Permissions(client=['manage_members'], user=['manage_guild'])
   slash_command = True

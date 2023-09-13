@@ -45,15 +45,15 @@ class Option(dict):  # pylint: disable=too-many-instance-attributes
   _description_localizations: dict[str, str] | None
   "Do not set manually."
 
-  def __init__(
-      self, name: str, type_: str, description: str | None = None, cooldowns: Cooldowns | None = None, required: bool = False,  # NOSONAR
+  def __init__( #pylint: disable-next=redefined-builtin
+      self, name: str, type: str, description: str | None = None, cooldowns: Cooldowns | None = None, required: bool = False,  # NOSONAR
       autocomplete_options: list[str | int | dict[str, str | int]] | Callable[[Any], list[str | int | dict[str, str | int]] | str | int] | None = None, strict_autocomplete: bool = False,
       channel_types: list[str] | None = None, dm_permission: bool | None = False,
       min_value: int | None = None, max_value: int | None = None, min_length: int | None = None, max_length: int | None = None,
       options: list['Option'] | None = None, choices: ChoicesT = None
   ):
     self.name = name
-    self.type = type_
+    self.type = type
     self.description = description or None
     cooldowns = cooldowns or Cooldowns()
     self.required = required or False

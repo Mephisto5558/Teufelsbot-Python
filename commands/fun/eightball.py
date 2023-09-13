@@ -5,7 +5,7 @@ from random import choice, seed
 
 from utils import Command, Aliases, Option
 
-class EightBall(Command):
+class CMD(Command):
   name = '8ball'
   aliases = Aliases(prefix=['eightball'])
   slash_command = True

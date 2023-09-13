@@ -55,7 +55,7 @@ def get_joke(api_list=None, joke_type: str | None = '', blacklist: str | None = 
     return get_joke(api_list, joke_type, blacklist, max_length)
   return '', {}
 
-class Joke(Command):
+class CMD(Command):
   name = 'joke'
   cooldowns = Cooldowns(guild=100)
   slash_command = True
@@ -70,12 +70,12 @@ class Joke(Command):
 
   def run(self, msg, lang):
     api = msg.options.get_string('api')
-    type_ = msg.options.get_string('type') or msg.args[0] if msg.args else None
+    type = msg.options.get_string('type') or msg.args[0] if msg.args else None
     blacklist = msg.options.get_string('blacklist')
     max_length = msg.options.get_integer('max_length')
     joke_msg, api = get_joke(
         api_list=[e['name'] for e in default_api_list if e['name'] == api] if api else default_api_list,
-        joke_type=type_,
+        joke_type=type,
         blacklist=blacklist,
         max_length=max_length
     )

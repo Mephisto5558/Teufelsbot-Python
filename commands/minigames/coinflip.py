@@ -2,7 +2,7 @@ from random import choices
 
 from utils import Command
 
-class CoinFlip(Command):
+class CMD(Command):
   name = 'coinflip'
   slash_command = True
   prefix_command = True

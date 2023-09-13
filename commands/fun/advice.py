@@ -2,7 +2,7 @@ from requests import get
 
 from utils import Command
 
-class Advice(Command):
+class CMD(Command):
   name = 'advice'
   slash_command = True
   prefix_command = True

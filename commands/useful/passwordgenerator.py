@@ -3,7 +3,7 @@ from utils import Command, Cooldowns, Option
 default_charset = ['abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!?§$%&/\\=*\'"#*(){}[]']
 
 
-class PasswordGenerator(Command):
+class CMD(Command):
   name = 'passwordgenerator'
   cooldowns = Cooldowns(user=1000)
   slash_command = True

@@ -2,7 +2,7 @@ from requests import get
 
 from utils import Command, Cooldowns
 
-class Fact(Command):
+class CMD(Command):
   name = 'fact'
   cooldowns = Cooldowns(guild=100)
   slash_command = True

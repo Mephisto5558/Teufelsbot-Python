@@ -1,20 +1,21 @@
-import os
+from os import makedirs, scandir, unlink
+from os.path import join, getmtime
 from datetime import date, timedelta
 
 from utils import log
 
 
 def delete_old(path: str):
-  os.makedirs(path, exist_ok=True)
+  makedirs(path, exist_ok=True)
 
   time = date.today() - timedelta(weeks=2)
-  for file in os.scandir(path):
-    file_path = os.path.join(path, file.name)
+  for file in scandir(path):
+    file_path = join(path, file.name)
 
     if file.is_dir(): delete_old(file_path)
-    elif date.fromtimestamp(os.path.getmtime(file_path)) < time:
+    elif date.fromtimestamp(getmtime(file_path)) < time:
       log.debug('deleting %s', file_path)
-      os.unlink(file_path)
+      unlink(file_path)
 
 
 TIME = '00:00:00'
@@ -31,5 +32,5 @@ def on_tick(self):
 
   delete_old('./logs')
 
-  self.db.set('BOT_SETTINGS', 'lastFileClear', now)
+  self.db.set('BOT_SETTINGS', 'last_file_clear', now)
   log.info('Finished file deletion')

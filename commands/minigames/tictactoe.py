@@ -1,6 +1,6 @@
 from utils import Command, Aliases, Permissions, Cooldowns, Option
 
-class TicTacToe(Command):
+class CMD(Command):
   name = 'tictactoe'
   aliases = Aliases(slash=['ttt'])
   permissions = Permissions(client=['manage_messages'])

@@ -3,7 +3,7 @@ from math import isnan
 from utils import Aliases, Command, Option, random_int
 
 
-class RandomNumber(Command):
+class CMD(Command):
   name = 'randomnumber'
   aliases = Aliases(prefix=['random-number'])
   slashCommand = True

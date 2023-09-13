@@ -1,6 +1,6 @@
 from utils import Command, Option, Cooldowns
 
-class AfkCommand(Command):
+class CMD(Command):
   name = 'afk'
   cooldowns = Cooldowns(user=5000)
   slash_command = True

@@ -10,7 +10,7 @@ from flask_wtf.csrf import CSRFProtect
 from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
 
-from utils import git_pull, i18n_provider
+from utils import git_pull, i18n_provider, Command
 
 lang = partial(i18n_provider.__, locale='en', none_not_found=True)
 owner_only_folders = []
@@ -29,7 +29,7 @@ def get_commands() -> list[dict[str, str | bool | list[dict[str, str]]]]:
     for cmd_file in listdir(f'commands/{subfolder}'):
       if not cmd_file.endswith('.py'): continue
 
-      cmd = import_module(f'commands.{subfolder}.{path.splitext(cmd_file)[0]}')
+      cmd: Command = import_module(f'commands.{subfolder}.{path.splitext(cmd_file)[0]}').CMD
       if not cmd or not cmd.name or cmd.disabled: continue
 
       prefix_list = ', '.join(cmd.aliases.prefix) if cmd.aliases and cmd.aliases.prefix else ''

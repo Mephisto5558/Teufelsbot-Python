@@ -8,7 +8,7 @@ response_list = [
     'https://tenor.com/view/happy-cat-smile-cat-gif-26239281'
 ]
 
-class Happy(Command):
+class CMD(Command):
   name = 'happy'
   slash_command = False
   prefix_command = True

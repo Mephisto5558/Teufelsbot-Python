@@ -3,7 +3,7 @@ from datetime import datetime
 
 current_year = datetime.now().year
 
-class CustomCommand(Command):
+class CMD(Command):
   name = 'birthday'
   cooldowns = Cooldowns(user=1000)
   slash_command = True
@@ -88,5 +88,5 @@ class CustomCommand(Command):
 
     if not do_not_hide: return msg.edit_reply(embeds=[embed])
 
-    msg.channel.send(embed=[embeds])
+    msg.channel.send(embed=[embed])
     return msg.edit_reply(lang('global.message_sent'))

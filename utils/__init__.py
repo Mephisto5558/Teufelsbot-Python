@@ -13,7 +13,7 @@ from .get_owner_only_folders import get_owner_only_folders
 from .git_pull import git_pull
 from .i18n_provider import I18nProvider, i18n_provider
 from .limit import limit
-from . import list_commands
+from .list_commands import list_commands
 from .logger import log
 from .permission_translator import permission_translator
 from .random_int import random_int
