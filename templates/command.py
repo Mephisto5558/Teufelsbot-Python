@@ -1,7 +1,7 @@
 # pylint: skip-file #type: ignore
 from utils import Aliases, Command, Option, Cooldowns, Permissions
 
-class CustomCommand(Command):
+class CMD(Command):
   name = ''
   aliases = Aliases(prefix=[], slash=[])
   permissions = Permissions(client=[], user=[])
