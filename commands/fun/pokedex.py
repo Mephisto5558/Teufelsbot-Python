@@ -1,6 +1,6 @@
 from requests import JSONDecodeError, get
 
-from utils import Command, Option
+from utils import Command, Option, Colors
 
 cache = {}
 

@@ -1,5 +1,6 @@
-from utils import Command, Option, Cooldowns, get_age
 from datetime import datetime
+
+from utils import Command, Option, Cooldowns, get_age, Colors
 
 current_year = datetime.now().year
 

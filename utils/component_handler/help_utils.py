@@ -5,6 +5,7 @@ from ..i18n_provider import I18nProvider
 from ..command_class import Command
 from ..permission_translator import permission_translator
 from ..get_owner_only_folders import get_owner_only_folders
+from ..colors import Colors
 
 owner_only_folders = get_owner_only_folders()
 

@@ -1,6 +1,6 @@
 from functools import partial
 
-from utils import Aliases, Command, Option, Cooldowns, Permissions, i18n_provider
+from utils import Aliases, Command, Option, Cooldowns, Permissions, i18n_provider, Colors
 
 
 backup = {'creator': 0, 'owner': 1, 'creator+owner': 2, 'admins': 3}

@@ -1,4 +1,4 @@
-from utils import Command, Option, Permissions
+from utils import Command, Option, Permissions, Colors
 
 class CMD(Command):
   name = 'trigger'
@@ -77,7 +77,7 @@ class CMD(Command):
         filtered = [trigger for trigger in old_data if trigger['id'] != trigger['id']]
         if len(filtered) == len(old_data):
           return msg.edit_reply(lang('id_not_found'))
-        msg.client.db.update('GUILDSETTINGS', f'{msg.guild.id}.triggers', filtered)
+        msg.client.db.set('GUILDSETTINGS', f'{msg.guild.id}.triggers', filtered)
         return msg.edit_reply(lang('deleted_one', trigger['id']))
 
       case 'clear':
