@@ -5,6 +5,7 @@ from os import environ, listdir
 from sys import exit  # pylint:disable=redefined-builtin
 from time import process_time_ns
 
+from discord import AllowedMentions, Client, Intents
 from oracledb import OperationalError
 
 from utils import DB, Box, box, git_pull, log, Command
@@ -17,10 +18,23 @@ if result != 'OK' and 'Could not resolve host' in result.stderr:
 init_time = process_time_ns() / 1e6
 log.info('Initializing time: %fms', init_time)
 
-class Client(dict):
-  """This will be discord client obj at some point"""
-
+class MyClient(Client):
   def __init__(self):
+    super().__init__(
+        shards='auto',
+        allowed_mentions=AllowedMentions(everyone=False, users=True, roles=True),
+        intents=Intents(
+            guilds=True,
+            members=True,
+            messages=True,
+            reactions=True,
+            voice_states=True,
+            message_content=True,
+            dm_messages=True
+        ),
+        partials=['channel', 'message', 'reaction']
+    )
+
     try:
       self.env = box().from_json(filename='env.json', encoding='utf8')
     except FileNotFoundError:
@@ -46,7 +60,7 @@ class Client(dict):
     data = self.db.get('BOT_SETTINGS')
     return data if isinstance(data, Box) else box()
 
-client = Client()
+client = MyClient()
 
 for loader in listdir('./loaders'):
   if client.bot_type != 'dev' or 'website' not in loader:

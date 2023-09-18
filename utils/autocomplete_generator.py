@@ -1,8 +1,8 @@
 from .i18n_provider import i18n_provider
 
 
-async def autocomplete_generator(msg, command, locale: str):
-  if 'options' not in command: return
+def autocomplete_generator(msg, command, locale: str):
+  if 'options' not in command: return None
   # pylint: disable=protected-access
 
   def response(v: str):
