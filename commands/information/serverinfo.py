@@ -17,7 +17,7 @@ class CMD(Command):
     channels = guild.channels.fetch().values()
 
     channels_count = {'text': 0, 'voice': 0, 'category': 0}
-    for channel in guild.channels: channels_count[channel.type] += 1
+    for channel in channels: channels_count[channel.type] += 1
 
     embed = EmbedBuilder(
         title=guild.name,

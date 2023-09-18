@@ -70,12 +70,12 @@ class CMD(Command):
 
   def run(self, msg, lang):
     api = msg.options.get_string('api')
-    type = msg.options.get_string('type') or msg.args[0] if msg.args else None
+    joke_type = msg.options.get_string('type') or msg.args[0] if msg.args else None
     blacklist = msg.options.get_string('blacklist')
     max_length = msg.options.get_integer('max_length')
     joke_msg, api = get_joke(
         api_list=[e['name'] for e in default_api_list if e['name'] == api] if api else default_api_list,
-        joke_type=type,
+        joke_type=joke_type,
         blacklist=blacklist,
         max_length=max_length
     )

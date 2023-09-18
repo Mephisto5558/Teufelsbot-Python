@@ -73,8 +73,8 @@ class CMD(Command):
         else:
           trigger = max(old_data, key=lambda trigger: trigger['id'], default={})
         if not trigger:
-          return msg.edit_reply(lang('not_dound'))
-        filtered = [trigger for trigger in old_data if trigger['id'] != trigger['id']]
+          return msg.edit_reply(lang('not_found'))
+        filtered = [t for t in old_data if t['id'] != trigger['id']]
         if len(filtered) == len(old_data):
           return msg.edit_reply(lang('id_not_found'))
         msg.client.db.set('GUILDSETTINGS', f'{msg.guild.id}.triggers', filtered)

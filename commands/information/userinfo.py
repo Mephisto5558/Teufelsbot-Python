@@ -37,7 +37,7 @@ class CMD(Command):
         fields=[
             {'name': lang('mention'), 'value': member.user.toString(), 'inline': True},
             {'name': 'ID', 'value': f'`{member.id}`', 'inline': True},
-            {'name': lang('type'), 'value': type, 'inline': True},
+            {'name': lang('type'), 'value': member_type, 'inline': True},
             {'name': lang('position'),
              'value': f'`{msg.guild.roles.highest.position - member.roles.highest.position + 1}`, {member.roles.highest}', 'inline': True},
             {'name': lang('roles'), 'value': f'`{member.roles.cache.size}`', 'inline': True},
