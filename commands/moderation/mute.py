@@ -3,7 +3,7 @@ from datetime import datetime
 from utils import Aliases, Command, Option, Permissions, time_validator, limit, Colors
 
 class CMD(Command):
-  name = 'mute',
+  name = 'mute'
   aliases = Aliases(prefix=['timeout'], slash=['timeout'])
   permissions = Permissions(client=['MuteMembers'], user=['MuteMembers'])
   slash_command = True
@@ -44,6 +44,7 @@ class CMD(Command):
       color=Colors.Red
     )
 
+    no_msg = False
     try: target.send(embeds=[embed])
     except: no_msg = True
 

@@ -1,5 +1,5 @@
 # pylint: disable-next = no-name-in-module # false positive in git action
-from typing import TypeVar, Any, Callable, NotRequired
+from typing import TypeVar, Any, Callable, NotRequired, Iterable
 
 from .i18n_provider import i18n_provider
 from .logger import log
@@ -13,12 +13,12 @@ MAX_CHOICE_NAME_LENGTH = 32
 class Aliases(dict):
   """alias values must be between 2 and 32 chars"""
 
-  def __init__(self, prefix: list[str] | None = None, slash: list[str] | None = None):
+  def __init__(self, prefix: Iterable[str] | None = None, slash: Iterable[str] | None = None):
     self.prefix = set(prefix or {})
     self.slash = set(slash or {})
 
 class Permissions(dict):
-  def __init__(self, client: list[str] | None = None, user: list[str] | None = None):
+  def __init__(self, client: Iterable[str] | None = None, user: Iterable[str] | None = None):
     self.client = set(client or {})
     self.user = set(user or {})
 
@@ -35,7 +35,7 @@ class Choice(dict):
     self.value = value
     self.name_localizations = name_localizations
 
-ChoicesT = TypeVar('ChoicesT', list[Choice | dict[str, str | int] | str | int], set[Choice | dict[str, str | int] | str | int], None)
+ChoicesT = TypeVar('ChoicesT', Iterable[Choice | dict[str, str | int] | str | int], None)
 
 class Option(dict):  # pylint: disable=too-many-instance-attributes
   @property
@@ -47,10 +47,10 @@ class Option(dict):  # pylint: disable=too-many-instance-attributes
 
   def __init__( #pylint: disable-next=redefined-builtin
       self, name: str, type: str, description: str | None = None, cooldowns: Cooldowns | None = None, required: bool = False,  # NOSONAR
-      autocomplete_options: list[str | int | dict[str, str | int]] | Callable[[Any], list[str | int | dict[str, str | int]] | str | int] | None = None, strict_autocomplete: bool = False,
-      channel_types: list[str] | None = None, dm_permission: bool | None = False,
+      autocomplete_options: Iterable[str | int | dict[str, str | int]] | Callable[[Any], Iterable[str | int | dict[str, str | int]] | str | int] | None = None,
+      strict_autocomplete: bool = False, channel_types: Iterable[str] | None = None, dm_permission: bool | None = False,
       min_value: int | None = None, max_value: int | None = None, min_length: int | None = None, max_length: int | None = None,
-      options: list['Option'] | None = None, choices: ChoicesT = None
+      options: Iterable['Option'] | None = None, choices: ChoicesT = None
   ):
     self.name = name
     self.type = type
@@ -89,11 +89,12 @@ class Command:
   slash_command: bool = False
   prefix_command: bool = False
   dm_permission: NotRequired[bool] = False
+  premium: NotRequired[bool] = False
   disabled: NotRequired[bool] = False
   no_defer: NotRequired[bool] = False
   ephemeral_defer: NotRequired[bool] = False
   beta: NotRequired[bool] = False
-  options: NotRequired[list[Option]] = []
+  options: NotRequired[Iterable[Option]] = []
 
   # def __getitem__: # Todo
 
