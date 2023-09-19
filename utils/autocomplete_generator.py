@@ -1,7 +1,9 @@
+from discord import Interaction
+
 from .i18n_provider import i18n_provider
 from .command_class import Command
 
-def autocomplete_generator(msg, command: Command, locale: str):
+def autocomplete_generator(msg: Interaction, command: Command, locale: str):
   if not command.options: return None
 
   # pylint: disable=protected-access
