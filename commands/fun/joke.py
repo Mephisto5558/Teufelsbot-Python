@@ -1,7 +1,4 @@
-# https://github.com/Mephisto5558/Teufelsbot/blob/main/Commands/Fun/joke.js
-
 from secrets import choice
-
 from requests import RequestException, get
 
 from utils import log, Command, Cooldowns, Option
@@ -68,7 +65,7 @@ class CMD(Command):
       Option(name='max_length', type='Integer', min_value=10, max_value=2000)
   ]
 
-  def run(self, msg, lang):
+  async def run(self, msg, lang):
     api = msg.options.get_string('api')
     joke_type = msg.options.get_string('type') or msg.args[0] if msg.args else None
     blacklist = msg.options.get_string('blacklist')

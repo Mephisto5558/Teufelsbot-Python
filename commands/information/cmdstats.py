@@ -1,6 +1,8 @@
 from operator import itemgetter
 
-from utils import Command, Option, Cooldowns, list_commands, get_owner_only_folders, Colors
+from discord import Embed
+
+from utils import Command, Option, Cooldowns, list_commands, get_owner_only_folders
 
 owner_only_folders = get_owner_only_folders()
 
@@ -19,11 +21,11 @@ class CMD(Command):
 
   def run(self, msg, lang):
     command = msg.options.get_string('command') or msg.args[0]
-    embed = EmbedBuilder(title=lang('embed_title'), color=Colors.White)
+    embed = Embed(title=lang('embed_title'), color=0)
 
     if command:
       id_ = next(e.id for e in msg.client.application.commands.cache if e.name == command)
-      embed.data.description = lang(
+      embed.description = lang(
           'embed_description', command=f'</{command}:{id_}>' if id_ else '`/{command}`', count=msg.client.settings[f'stats.{command}'] or 0)
     else:
       commands = [
@@ -31,11 +33,11 @@ class CMD(Command):
           if (msg.client.prefix_commands.get(k) or msg.client.slash_commands.get(k)).category.lower() not in owner_only_folders
       ]
 
-      embed.data.description = lang('embed_description_many')
-      embed.data.fields = [{
+      embed.description = lang('embed_description_many')
+      embed.fields = [{
           'name': f"</{k}:{msg.client.application.commands.cache.get(k).name}>" if msg.client.application.commands.cache.get(k) else f"/{k}",
           'value': f"**{v}**",
           'inline': True
       } for k, v in sorted(commands, key=itemgetter(1), reverse=True)[:10]]
 
-      return msg.custom_reply(embeds=[embed])
+      return msg.custom_reply(embed=embed)

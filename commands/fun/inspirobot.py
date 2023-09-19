@@ -1,5 +1,7 @@
 from requests import JSONDecodeError, get
 
+from discord import Color, Embed
+
 from utils import Command, Cooldowns, log
 
 class CMD(Command):
@@ -9,7 +11,7 @@ class CMD(Command):
   prefix_command = True
   dm_permission = True
 
-  def run(self, msg, lang):
+  async def run(self, msg, lang):
     try:
       res = get('https://inspirobot.me/api?generate=true', timeout=10).json()
     except JSONDecodeError as err:
@@ -18,6 +20,5 @@ class CMD(Command):
 
     if not res: return msg.custom_reply(lang('not_found'))
 
-    embed = EmbedBuilder(image={'url': res.url}, footer={'text': '- inspirotbot.me'}, color='Random')
-
-    return msg.custom_reply(embeds=[embed])
+    embed = Embed(color=Color.random()).set_image(url=res.url).set_footer(text='- inspirotbot.me')
+    return msg.custom_reply(embed=embed)

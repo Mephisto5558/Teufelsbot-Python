@@ -1,6 +1,8 @@
 from json import load
 
-from utils import Command, Cooldowns, uptime, Colors
+from discord import Embed
+
+from utils import Command, Cooldowns, uptime
 
 with open('config.json', 'r', encoding='utf8') as file:
   config = load(file)
@@ -13,9 +15,9 @@ class CMD(Command):
   dm_permission = True
 
   def run(self, msg, lang):
-    embed = EmbedBuilder(
+    embed = Embed(
         description=lang('embed_description', time=uptime(True, lang)['formatted'], Domain=config.get('Domain')),
-        color=Colors.White
+        color=0
     )
 
-    return msg.custom_reply(embeds=[embed])
+    return msg.custom_reply(embed=embed)

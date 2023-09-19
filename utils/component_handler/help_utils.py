@@ -1,19 +1,20 @@
 from functools import partial
+from discord import Embed, ComponentType, Interaction, Color, ActionRow, SelectMenu
+
 from main import Client
 
 from ..i18n_provider import I18nProvider
 from ..command_class import Command
 from ..permission_translator import permission_translator
 from ..get_owner_only_folders import get_owner_only_folders
-from ..colors import Colors
 
 owner_only_folders = get_owner_only_folders()
 
-def get_all_commands(interaction) -> list[Command]:
+def get_all_commands(interaction: Interaction) -> list[Command]:
   unique_commands = list(set(list(interaction.client.prefix_commands.values()) + list(interaction.client.slash_commands.values())))
   return list(filter(partial(filter_commands, interaction=interaction), unique_commands))
 
-def create_category_component(interaction, lang, command_categories: list | set | None = None):
+def create_category_component(interaction: Interaction, lang, command_categories: list | set | None = None):
   if not command_categories:
     command_categories = {e.category for e in [*interaction.client.prefix_commands.values(), *interaction.client.slash_commands.values()]}
 
@@ -35,20 +36,20 @@ def create_category_component(interaction, lang, command_categories: list | set 
       default_option.default = True
     return interaction.message.components[0]
 
-  return ActionRowBuilder({
-      'components': [StringSelectMenuBuilder({
-          'custom_id': 'help.category',
-          'placeholder': lang('categoryListPlaceholder'),
-          'min_values': 0,
-          'options': [{
-              'label': lang(f'options.category.choices.{e.lower()}'),
-              'value': e.lower(),
-              'default': default_option and default_option.value == e
-          } for e in command_categories]
-      })]
-  })
+  return ActionRow(components=[SelectMenu(
+      custom_id='help.category',
+      type=ComponentType.select,
+      placeholder=lang('categoryListPlaceholder'),
+      min_values=0,
+      options=[{
+          'label': lang(f'options.category.choices.{e.lower()}'),
+          'value': e.lower(),
+          'default': default_option and default_option.value == e
+      } for e in command_categories]
+  )]
+  )
 
-def create_commands_component(interaction, lang, category):
+def create_commands_component(interaction: Interaction, lang, category: str):
   default_option = (
       (interaction.args[0] if interaction.args else None)
       or (interaction.options.get_string('command') if interaction.options else None)
@@ -68,7 +69,7 @@ def create_commands_component(interaction, lang, category):
       })]
   })
 
-def create_info_fields(interaction, cmd: Command, lang, help_lang):
+def create_info_fields(interaction: Interaction, cmd: Command, lang, help_lang):
   if not cmd: return []
   arr = []
   prefix = interaction.guild.db['config.prefix'] or interaction.client.default_settings['config.prefix']
@@ -128,24 +129,21 @@ def all_query(interaction, lang):
   if interaction.user.id != interaction.client.application.id:
     command_categories = {e for e in command_categories if e.lower() not in owner_only_folders}
 
-  embed = EmbedBuilder(
+  embed = Embed(
       title=lang('all.embedTitle'),
       description=lang('all.embedDescription' if command_categories else 'all.notFound'),
-      fields=[
-          {
+      fields=[{
               'name': lang(f'options.category.choices.{e.lower()}'),
               'value': lang(f'commands.{e.lower()}.categoryDescription') + '\n‎',
               'inline': True
-          }
-          for e in command_categories
-      ],
+              } for e in command_categories],
       footer={'text': lang('all.embedFooterText')},
       color=Colors.Blurple if command_categories else Colors.Red
   )
 
   return interaction.custom_reply(embeds=[embed], components=[create_category_component(interaction, lang, command_categories)])
 
-def category_query(interaction, lang, query: str):
+def category_query(interaction: Interaction, lang, query: str):
   if not query:
     for i, option in enumerate(interaction.message.components[0].components[0].options):
       if option.default: del interaction.message.components[0].components[0].options[i]
@@ -153,17 +151,17 @@ def category_query(interaction, lang, query: str):
 
   help_lang = partial(I18nProvider.__, none_not_found=True, locale=interaction.guild.locale_code, backup_path=f'commands.{query}')
   commands = get_all_commands(interaction)
-  embed = EmbedBuilder(
+  embed = Embed(
       title=lang(f'options.category.choices{query}'),  # U+200E (LEFT-TO-RIGHT MARK) is used to make a newline for better spacing
       fields=[
           {'name': e.name, 'value': help_lang(key=f'{e.name}.description') + '\n‎', 'inline': True}
           for e in commands
-          if e.category.lower() == query and not e.alias_of and filter_commands(interaction, e)
+          if e.category.lower() == query and not e.alias_of and filter_commands(e, interaction)
       ],
-      color=Colors.Blurple
+      color=Color.blurple()
   )
 
-  if not embed.data.fields: embed.data.description = lang('all.notFound')
+  if not embed.fields: embed.description = lang('all.notFound')
 
   return interaction.custom_reply(embeds=[embed], components=[create_category_component(interaction, lang), create_commands_component(interaction, lang, query)])
 
@@ -172,7 +170,7 @@ def command_query(interaction, lang, query: str):
 
   command: Command = interaction.client.slash_commands.get(query) or interaction.client.prefix_commands.get(query)
   if not filter_commands(command, interaction):
-    embed = EmbedBuilder(description=lang('one.notFound', query), color=Colors.Red)
+    embed = Embed(description=lang('one.notFound', query), color=Color.red())
 
     return interaction.custom_reply(embeds=[embed], components=[create_category_component(interaction, lang)])
 
@@ -181,14 +179,14 @@ def command_query(interaction, lang, query: str):
       backup_path=f'commands.{command.category.lower()}.{command.name}'
   )
 
-  embed = EmbedBuilder(
+  embed = Embed(
       title=lang('one.embedTitle', category=command.category, command=command.name),
       description=help_lang(key='description'),
       fields=create_info_fields(interaction, command, lang, help_lang),
       footer={
           'text': lang('one.embedFooterText', interaction.guild.db['config.prefix'] or interaction.client.defaultSettings['config.prefix'])
       },
-      color=Colors.Blurple,
+      color=Color.blurple(),
   )
 
   return interaction.customReply(embeds=[embed], components=[create_category_component(interaction, lang), create_commands_component(interaction, lang, command.category.lower())])

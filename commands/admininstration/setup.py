@@ -79,7 +79,7 @@ class CMD(Command):
         module = msg.options.get_string('module')
         setting = msg.guild.db[f'{module}.enable']
 
-        msg.client.db.set('GUILDSETTINGS', f'{msg.guild.id}.{module}.enable', not setting)
+        msg.client.db.set('GUILD_SETTINGS', f'{msg.guild.id}.{module}.enable', not setting)
         return msg.edit_reply(lang('toggled_module', name=module, state=lang('global.disabled' if setting else 'global.enabled')))
 
       case 'toggle_command':
@@ -117,7 +117,7 @@ class CMD(Command):
 
         if len(msg.options.data[0].options) == (2 if next(e for e in msg.options.data[0].options if e.name == 'get') else 1):
           msg.client.db.set(
-              'GUILDSETTINGS',
+              'GUILD_SETTINGS',
               f'{msg.guild.id}.command_settings.{command}.disabled.users',
               filter(lambda e: e != '*', users) if '*' in users else ['*', *users]
           )
@@ -153,7 +153,7 @@ class CMD(Command):
             color=Colors.White
         )
 
-        msg.client.db.set('GUILDSETTINGS', f'{msg.guild.id}.command_settings.{command}.disabled', command_data)
+        msg.client.db.set('GUILD_SETTINGS', f'{msg.guild.id}.command_settings.{command}.disabled', command_data)
         return msg.edit_reply(embeds=[embed])
 
       case 'language':
@@ -171,16 +171,16 @@ class CMD(Command):
             color=Colors.Green
         )
 
-        msg.client.db.set('GUILDSETTINGS', f'{msg.guild.id}.config.lang', language)
+        msg.client.db.set('GUILD_SETTINGS', f'{msg.guild.id}.config.lang', language)
         return msg.edit_reply(embeds=[embed])
 
       case 'serverbackup':
-        msg.client.db.set('GUILDSETTINGS', 'serverbackup.allowed_to_load', int(backup[msg.options.get_string('allowed_to_load')]))
+        msg.client.db.set('GUILD_SETTINGS', 'serverbackup.allowed_to_load', int(backup[msg.options.get_string('allowed_to_load')]))
         return msg.custom_reply(lang('serverbackup.success'))
 
       case 'autopublish':
         enabled = msg.options.get_boolean('enabled')
-        msg.client.db.set('GUILDSETTINGS', f'{msg.guild.id}.config.autopublish', enabled)
+        msg.client.db.set('GUILD_SETTINGS', f'{msg.guild.id}.config.autopublish', enabled)
         return msg.custom_reply(lang('autopublish.success', lang('global.enabled' if enabled else 'global.disabled')))
 
       case 'logger':
@@ -198,7 +198,7 @@ class CMD(Command):
           if enabled is None: return msg.edit_reply(lang('logger.no_channel'))
 
           for action in logger_action_types:
-            msg.client.db.set('GUILDSETTINGS', f'{msg.guild.id}.config.logger.{action}', {'channel': channel, 'enabled': enabled})
+            msg.client.db.set('GUILD_SETTINGS', f'{msg.guild.id}.config.logger.{action}', {'channel': channel, 'enabled': enabled})
 
-        msg.client.db.set('GUILDSETTINGS', f'{msg.guild.id}.config.logger.{action}', {'channel': channel, 'enabled': enabled})
+        msg.client.db.set('GUILD_SETTINGS', f'{msg.guild.id}.config.logger.{action}', {'channel': channel, 'enabled': enabled})
         return msg.edit_reply(lang('logger.enabled' if enabled else 'logger.disabled', {'channel': channel, 'action': lang(f'logger.actions.{action}')}))

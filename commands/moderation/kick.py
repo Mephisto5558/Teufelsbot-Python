@@ -2,7 +2,7 @@ from utils import  Command, Option, Permissions, ban_kick
 
 class CMD(Command):
   name = 'kick'
-  permissions = Permissions(prefix=['KickMembers'], slash=['KickMembers'])
+  permissions = Permissions(client=['KickMembers'], user=['KickMembers'])
   slash_command = True
   prefix_command = False
   options = [

@@ -1,8 +1,10 @@
+from discord import Guild
+
 from utils import log
 
-def run(guild):
+def run(client, guild:Guild):
   log.debug('Joined new guild: %s', guild.id)
-  if guild.client.bot_type == 'dev': return
+  if client.bot_type == 'dev': return
 
-  settings = guild.client.db.get('GUILDSETTINGS')
-  guild.client.db.set('GUILDSETTINGS', f'{guild.id}.position', (max((e.get('position', 0) for e in settings.values()), default=0) + 1) if settings else 1)
+  settings = client.db.get('GUILD_SETTINGS')
+  client.db.set('GUILD_SETTINGS', f'{guild.id}.position', (max((e.get('position', 0) for e in settings.values()), default=0) + 1) if settings else 1)

@@ -12,13 +12,13 @@ class CMD(Command):
       Option(
           name='category',
           type='String',
-          autocomplete_options=lambda i: [e.category for e in list_commands(i)],
+          autocomplete_options=lambda i: {e.category for e in list_commands(i)},
           strict_autocomplete=True
       ),
       Option(
           name='command',
           type='String',
-          autocomplete_options=lambda i: [e.name for e in list_commands(i)],
+          autocomplete_options=lambda i: {e.name for e in list_commands(i)},
           strict_autocomplete=True
       )
   ]

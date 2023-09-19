@@ -1,5 +1,7 @@
 from requests import get
 
+from discord import ButtonStyle, Button, ActionRow, Embed, Color
+
 from utils import Command, Cooldowns
 
 class CMD(Command):
@@ -9,8 +11,15 @@ class CMD(Command):
   prefix_command = True
   dm_permission = True
 
-  def run(self, msg, lang):
-    res = get(f'https://uselessfacts.jsph.pl/api/v2/facts/random?language={lang}', timeout=10).json()
-    if not res['text']: return None
+  async def run(self, msg, lang):
+    data = get(f'https://uselessfacts.jsph.pl/api/v2/facts/random?language={lang}', timeout=10).json()
 
-    return msg.custom_reply(f"{res['text']}\n\nSource: [{res['source']}]({res['source_url']})")
+    embed = Embed(
+        title=lang('embed_title'),
+        description=f'{data.text}\n\nSource: [{data.source}]({data.source_url})',
+        color=Color.random()
+    ).set_footer(text='- https://uselessfacts.jsph.pl')
+
+    component = ActionRow([Button(label=lang('global.anotherone'), custom_id='fact', style=ButtonStyle.primary)])
+
+    return msg.custom_reply(embed=embed, components=[component])

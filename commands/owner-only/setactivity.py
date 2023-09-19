@@ -1,3 +1,5 @@
+from discord import Message, ActivityType
+
 from utils import Command
 
 class CMD(Command):
@@ -6,17 +8,17 @@ class CMD(Command):
   prefix_command = True
   dm_permission = True
 
-  def run(self, msg, lang):
+  async def run(self, msg:Message, lang):
     args = msg.content.split(';')
-    actitvity = args[0]
-    activity_type = ActivityType.Playing if not args[1] else ActivityType[next(e for e in ActivityType if e.lower() == args[1].lower())]
+    activity = args[0]
+    activity_type = ActivityType.playing if not args[1] else next(e for e in ActivityType if e.name.lower() == args[1].lower())
 
-    if not isinstance(activity_type, int): activity_type = ActivityType[activity_type]
+    if not isinstance(activity_type, ActivityType): activity_type = ActivityType[activity_type]
 
-    if not activity_type and activity_type != 0:
-      return msg.reply(lang('invalid_type', '`, `'.join(e for e in ActivityType if isinstance(e, str))))
+    if not isinstance(activity_type, ActivityType):
+      return msg.reply(lang('invalid_type', '`, `'.join(e.name for e in ActivityType)))
 
-    msg.client.user.set_activity(actitvity, type=activity_type)
-    msg.client.db.set('BOTSETTINGS', 'activity', name=actitvity, type=activity_type)
+    msg.client.user.set_activity(activity, type=activity_type)
+    msg.client.db.set('BOT_SETTINGS', 'activity', name=activity, type=activity_type)
 
-    return msg.reply(lang('set', name=actitvity, type=ActitvityType[actitvity]) if actitvity else lang('reset'))
+    return msg.reply(lang('set', name=activity, type=activity_type) if activity else lang('reset'))

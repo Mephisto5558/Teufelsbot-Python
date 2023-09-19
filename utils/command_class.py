@@ -1,6 +1,8 @@
 # pylint: disable-next = no-name-in-module # false positive in git action
 from typing import TypeVar, Any, Callable, NotRequired, Iterable
 
+from discord import Interaction, Message
+
 from .i18n_provider import i18n_provider
 from .logger import log
 
@@ -215,5 +217,5 @@ class Command:
     for option in self.options:
       option = self._options_formatter(option, f'{path}.options.{option.name}')
 
-  def run(self, msg, lang):
+  async def run(self, msg:Interaction|Message, lang):
     raise NotImplementedError('Subclasses must implement the run method')

@@ -1,6 +1,8 @@
 import hashlib
 
-from utils import Command, Option, Cooldowns, Colors
+from discord import Interaction, Embed, Color
+
+from utils import Command, Option, Cooldowns
 
 class CMD(Command):
   name = 'hash'
@@ -14,14 +16,14 @@ class CMD(Command):
       Option(name='method', type='String', autocomplete_options=hashlib.algorithms_guaranteed, strict_autocomplete=True)
   ]
 
-  def run(self, msg, lang):
+  async def run(self, msg: Interaction, lang):
     input_: str = msg.options.get_string('input')
     method = msg.options.get_string('method')
-    embed = EmbedBuilder(
+    embed = Embed(
         title=lang('embed_title'),
         description=lang('embed_description', input=input_[:500] + '...' if len(input_) > 500 else input_, method=method),
-        color=Colors.DarkGold
+        color=Color.dark_gold()
     )
 
     hash_ = hashlib.new(method, data=input_.encode()).hexdigest()
-    return msg.edit_reply(content=lang('text', hash_), embeds=[embed])
+    return msg.response.edit_message(content=lang('text', hash_), embed=embed)

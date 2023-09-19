@@ -1,7 +1,9 @@
 from json import load
 from time import process_time, time
 
-from utils import Command, Colors
+from discord import Embed, Color
+
+from utils import Command
 
 with open('config.json', 'r', encoding='utf8') as file:
   config = load(file)
@@ -32,11 +34,10 @@ class CMD(Command):
         + lang('links', Invite=config.get('Invite'), Dashboard=config.get('Dashboard'), PrivacyPolicy=config.get('PrivacyPolicy'))
     )
 
-    embed = EmbedBuilder(
+    embed = Embed(
         title=lang('embed_title'),
         description=description,
-        color=Colors.DarkGold,
-        footer={'text': lang('embed_footer_text')}
-    )
+        color=Color.dark_gold()
+    ).set_footer(text=lang('embed_footer_text'))
 
-    return msg.custom_reply(embeds=[embed])
+    return msg.custom_reply(embed=embed)

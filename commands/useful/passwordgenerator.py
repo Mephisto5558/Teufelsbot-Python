@@ -1,7 +1,9 @@
 from secrets import choice
-from utils import Command, Cooldowns, Option
-default_charset = ['abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!?§$%&/\\=*\'"#*(){}[]']
+from discord import Interaction
 
+from utils import Command, Cooldowns, Option
+
+default_charset = ['abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!?§$%&/\\=*\'"#*(){}[]']
 
 class CMD(Command):
   name = 'passwordgenerator'
@@ -17,7 +19,7 @@ class CMD(Command):
       Option(name='include_chars', type='String')
   ]
 
-  def run(self, msg, lang):
+  def run(self, msg:Interaction, lang):
     count = msg.options.get_integer('count') or 1
     length = msg.options.get_integer('length') or 12
     exclude = msg.options.get_string('exclude_chars') or ''
@@ -25,7 +27,7 @@ class CMD(Command):
     password_list = []
 
     charset = ''.join([char for char in default_charset + list(include) if char not in exclude])
-    if not charset: return msg.edit_reply(lang('charset_empty'))
+    if not charset: return msg.response.edit_message(content=lang('charset_empty'))
 
     for _ in range(count):
       last_random_char = ''
@@ -41,4 +43,4 @@ class CMD(Command):
 
     if len(charset) > 100: charset = charset[:97] + '...'
 
-    return msg.edit_reply(lang('success', passwords=password_list, charset=charset))
+    return msg.response.edit_message(content=lang('success', passwords=password_list, charset=charset))

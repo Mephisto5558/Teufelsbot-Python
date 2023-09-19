@@ -1,15 +1,17 @@
-from subprocess import CalledProcessError, run
+from asyncio import subprocess, create_subprocess_exec
+
 from .logger import log
 
 
-def git_pull():
-  try:
-    data = run('git pull', capture_output=True, text=True, check=True, shell=True)
-  except CalledProcessError as err:
-    log.error('Exec error: %s', err.stderr)
-    return err
+async def git_pull():
+  process = await create_subprocess_exec('git pull', text=True, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+  stdout, stderr = await process.communicate()
 
-  if data.stdout: log.info('OUT: %s', data.stdout.strip())
-  if data.stderr: log.info('ERR: %s', data.stderr.strip())
+  if process.returncode:
+    log.error('Exec error: %s', stderr)
+    return None
+
+  if stdout: log.info('OUT: %s', stdout.decode(encoding='utf8').strip())
+  if stderr: log.info('ERR: %s', stderr.decode(encoding='utf8').strip())
 
   return 'OK'

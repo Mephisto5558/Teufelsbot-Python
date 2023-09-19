@@ -1,6 +1,8 @@
-def rps(interaction, lang):
+from discord import Interaction
+
+def rps(interaction:Interaction, lang):
   lang.__boundArgs__[0].backupPath = 'commands.fun.topic'
 
-  interaction.update(components=[])
+  interaction.response.edit_message(components=[])
 
   interaction.client.slash_commands.get('topic').main(interaction, lang)

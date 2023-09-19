@@ -11,11 +11,9 @@ class CMD(Command):
   slash_command = True
   prefix_command = True
   dm_permission = True
-  options = [
-      Option(name='question', type='String', required=True)
-  ]
+  options = [Option(name='question', type='String', required=True)]
 
-  def run(self, msg, lang):
+  async def run(self, msg, lang):
     input_str = msg.options.get_string('question') or msg.content
     if not input_str: return msg.custom_reply(lang('no_question'))
 
@@ -25,4 +23,4 @@ class CMD(Command):
     seed(int(sha256(seed_str.encode()).hexdigest(), 16))
 
     response_list = lang.__self__.locale_data[f"{lang.keywords['locale']}.{lang.keywords['backup_path']}.response_list"]
-    return msg.custom_reply(choice(response_list))
+    return msg.custom_reply(content=choice(response_list))

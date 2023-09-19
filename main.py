@@ -1,9 +1,8 @@
-# https://github.com/Mephisto5558/Teufelsbot/blob/main/index.js
-
 from importlib import import_module
 from os import environ, listdir
 from sys import exit  # pylint:disable=redefined-builtin
 from time import process_time_ns
+import asyncio
 
 from discord import AllowedMentions, Client, Intents
 from oracledb import OperationalError
@@ -60,14 +59,17 @@ class MyClient(Client):
     data = self.db.get('BOT_SETTINGS')
     return data if isinstance(data, Box) else box()
 
-client = MyClient()
+async def main():
+  client = MyClient()
 
-for loader in listdir('./loaders'):
-  if client.bot_type != 'dev' or 'website' not in loader:
-    module = import_module(f'loaders.{loader[:-3]}')
-    if module.main and callable(module.main): module.main(client)
+  for loader in listdir('./loaders'):
+    if client.bot_type != 'dev' or 'website' not in loader:
+      module = import_module(f'loaders.{loader[:-3]}')
+      if module.main and callable(module.main): module.main(client)
 
-# client.login()
-log.info('Logged into %s', client.bot_type)
+  await client.login(client.env[client.env.bot_type].token)
+  log.info('Logged into %s', client.bot_type)
 
-client.db.set('BOT_SETTINGS', f'startCount.{client.bot_type}', client.settings.get(f'startCount.{client.bot_type}', 0) + 1)
+  client.db.set('BOT_SETTINGS', f'startCount.{client.bot_type}', client.settings.get(f'startCount.{client.bot_type}', 0) + 1)
+
+asyncio.run(main())

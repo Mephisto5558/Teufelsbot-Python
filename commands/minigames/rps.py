@@ -10,4 +10,4 @@ class CMD(Command):
   options = [Option(name='opponent', type='User')]
 
   def run(self, msg, lang):
-    return rps_send_challenge(msg, msg.member, msg.options.get_member('opponent') or msg.args[0], lang)
+    return rps_send_challenge(msg, msg.user, msg.options.get_member('opponent') or msg.args[0], lang)

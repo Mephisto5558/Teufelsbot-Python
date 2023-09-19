@@ -1,6 +1,8 @@
 from datetime import datetime
 
-from utils import Command, Option, Cooldowns, get_age, Colors
+from discord import Embed, Color, Interaction
+
+from utils import Command, Option, Cooldowns, get_age
 
 current_year = datetime.now().year
 
@@ -32,46 +34,46 @@ class CMD(Command):
       Option(name='remove', type='Subcommand', dm_permission=True)
   ]
 
-  def run(self, msg, lang):
+  def run(self, msg:Interaction, lang):
     target = msg.options.get_member('target')
     do_not_hide = msg.options.getBoolean('do_not_hide')
 
     match(msg.options.get_subcommand()):
       case 'set':
         msg.client.db.set(
-            'USERSETTINGS',
+            'USER_SETTINGS',
             f'{msg.user.id}.birthday',
             f"{msg.options.get_integer('year')}/{msg.options.get_integer('month'):02}/{msg.options.get_integer('day'):02}"
         )
 
-        return msg.edit_eeply(lang('saved'))  # Todo: maybe add "your birthday is in <d> days"
+        return msg.response.edit_message(content=lang('saved'))  # Todo: maybe add "your birthday is in <d> days"
 
       case 'remove':
-        msg.client.db.delete('USERSETTINGS', f'{msg.user.id}.birthday')
-        return msg.edit_reply(lang('removed'))
+        msg.client.db.delete('USER_SETTINGS', f'{msg.user.id}.birthday')
+        return msg.response.edit_message(content=lang('removed'))
 
       case 'get':
-        embed = EmbedBuilder(color=Colors.Burple, footer_text=msg.user.username, footer_icon_url=msg.member.display_avatar_url())
+        embed = Embed(color=Color.blurple()).set_footer(text=msg.user.name, icon_url=msg.member.display_avatar.url)
 
         if target:
-          embed.data.title = lang('get_user.embed_title', msg.user.custom_tag)
+          embed.title = lang('get_user.embed_title', msg.user.custom_tag)
 
           data = target.user.db['birthday'].split('/')
           if data:
             age = get_age(data) + 1
-            embed.data.description = lang('get_user.date', user=target.custom_name, month=lang(f'months.{data[1]}'), day=data[2])
-            if age < current_year: embed.data.description += lang('get_user.new_age', age)
-          else: embed.data.description = lang('get_user.not_found', target.custom_name)
+            embed.description = lang('get_user.date', user=target.custom_name, month=lang(f'months.{data[1]}'), day=data[2])
+            if age < current_year: embed.description += lang('get_user.new_age', age)
+          else: embed.description = lang('get_user.not_found', target.custom_name)
         else:
-          embed.data.title = lang('get_all.embed._title')
+          embed.title = lang('get_all.embed_title')
 
-          guild_members = [e.id for e in msg.guild.members.fetch()]
+          guild_members = 
           current_time = datetime.now()
           data = sorted(
               [
                   (k, *v['birthday'].split('/'))
-                  for k, v in msg.client.db.get('USERSETTINGSS')
-                  if 'birthday' in v and k in guild_members
+                  for k, v in msg.client.db.get('USER_SETTINGSS')
+                  if 'birthday' in v and any(k == e.id for e in msg.guild.members)
               ],
               key=lambda x:
               datetime(current_year, int(x[2]), int(x[3])) if datetime(current_year, int(x[2]), int(x[3])) >= current_time
@@ -83,11 +85,11 @@ class CMD(Command):
         for id_, year, month, day in data:
           date = lang('get_all.date', month=lang(f'months.{month}'), day=day)
           age = get_age([year, month, day]) + 1
-          msg = f"> <@{id_}>{' (' + str(age) + ')' if age < current_year else ''}\n"
+          message = f"> <@{id_}>{' (' + str(age) + ')' if age < current_year else ''}\n"
 
-          embed.data.description += msg if date in embed.data.description else f'\n{date}{msg}'
+          embed.data.description += message if date in embed.data.description else f'\n{date}{message}'
 
-    if not do_not_hide: return msg.edit_reply(embeds=[embed])
+        if not do_not_hide: return msg.response.edit_message(embed=embed)
 
-    msg.channel.send(embed=[embed])
-    return msg.edit_reply(lang('global.message_sent'))
+        msg.channel.send(embed=embed)
+        return msg.response.edit_message(content=lang('global.message_sent'))

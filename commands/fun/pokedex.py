@@ -1,6 +1,8 @@
 from requests import JSONDecodeError, get
 
-from utils import Command, Option, Colors
+from discord import Embed, Color, ActionRow, Button, ButtonStyle
+
+from utils import Command, Option
 
 cache = {}
 
@@ -29,15 +31,11 @@ class CMD(Command):
         if res.name: cache[res.name.lower()] = res
 
     name = res.name.lower()
-    embed = EmbedBuilder(
-        thumbnail={'url': f'https://play.pokemonshowdown.com/sprites/ani/{name}.gif'},
-        color=Colors.Blurple,
-        footer={'test': res.description},
-        author={
-            'name': f'PokéDex: {res.name}',
-            'icon_url': f'https://play.pokemonshowdown.com/sprites/ani/{name}.gif'
-        },
-        fields=[
+    embed = Embed(color=Color.blurple()) \
+        .set_thumbnail(url=f'https://play.pokemonshowdown.com/sprites/ani/{name}.gif') \
+        .set_footer(text=res.description) \
+        .set_author(name=f'PokéDex: {res.name}', icon_url=f'https://play.pokemonshowdown.com/sprites/ani/{name}.gif') \
+        .set_fields([
             {'name': lang('types'), 'value': ', '.join(res.types), 'inline': False},
             {'name': lang('abilities'), 'value': f"{res.abilities.normal}{f' and {res.abilities.hidden}' if res.abilities.hidden else ''}.", 'inline': False},
             {'name': lang('genderRatio'), 'value': ', '.join(res.gender) if res.get('gender') else lang('noGender'), 'inline': False},
@@ -48,12 +46,12 @@ class CMD(Command):
                 'inline': False
             },
             {'name': lang('gen'), 'value': res.gen, 'inline': False}
-        ]
-    )
-    component = ActionRowBuilder(components=[
-        ButtonBuilder(label='Blubapedia', style=ButtonStyle.Link, url=f'https://blubapedia.blubagarden.net/wiki/{res.name}'),
-        ButtonBuilder(label='Serebii', style=ButtonStyle.Link, url=f'https://serebii.net/pokedex-swsh/{name}'),
-        ButtonBuilder(label='Smogon', style=ButtonStyle.Link, url=f'https://smogon.com/dex/ss/pokemon/{name}')
+        ])
+
+    component = ActionRow([
+        Button(label='Blubapedia', style=ButtonStyle.link, url=f'https://blubapedia.blubagarden.net/wiki/{res.name}'),
+        Button(label='Serebii', style=ButtonStyle.link, url=f'https://serebii.net/pokedex-swsh/{name}'),
+        Button(label='Smogon', style=ButtonStyle.link, url=f'https://smogon.com/dex/ss/pokemon/{name}')
     ])
 
     return msg.edit(content=None, embeds=[embed], components=[component])

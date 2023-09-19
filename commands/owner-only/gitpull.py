@@ -1,3 +1,5 @@
+from discord import Message
+
 from utils import Command, git_pull
 
 class CMD(Command):
@@ -5,8 +7,8 @@ class CMD(Command):
   slash_command = False
   prefix_command = True
   dm_permission = True
-  beta=True
+  beta = True
 
-  def run(self, msg, lang):
-    git_pull()
+  async def run(self, msg: Message, lang):
+    await git_pull()
     return msg.reply(lang('success'))

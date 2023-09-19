@@ -1,4 +1,6 @@
-from utils import Aliases, Command, Cooldowns, Colors
+from discord import Embed, Color
+
+from utils import Aliases, Command, Cooldowns
 
 class CMD(Command):
   name = 'changelog'
@@ -9,5 +11,5 @@ class CMD(Command):
   dm_permission = True
 
   def run(self, msg, lang):
-    embed = EmbedBuilder(title=lang('embed_title'), description=msg.client.settings.changelog or lang('none_found'), color=Colors.White)
+    embed = Embed(title=lang('embed_title'), description=msg.client.settings.changelog or lang('none_found'), color=0)
     return msg.custom_reply(embeds=[embed])

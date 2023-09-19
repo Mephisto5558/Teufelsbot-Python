@@ -9,4 +9,4 @@ class CMD(Command):
   dm_permission = True
 
   def run(self, msg, lang):
-    return msg.custom_reply(lang(choices(['response', 'side!'], weights=[1, 1 / 3000], k=1)[0]))
+    return msg.custom_reply(content=lang(choices(['response', 'side!'], weights=[1, 1 / 3000], k=1)[0]))

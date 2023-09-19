@@ -2,6 +2,8 @@ from importlib import import_module
 from os import listdir
 from os.path import splitext
 
+from discord import InteractionType, Embed, Color, Interaction
+
 from .cooldowns import cooldowns
 
 handlers = [
@@ -10,11 +12,11 @@ handlers = [
     if file.endswith('.py')
 ]
 
-def message_component_handler(interaction, lang):
+async def message_component_handler(interaction: Interaction, lang):
   feature, *args = interaction.custom_id.split('.') + [None]
   cooldown = cooldowns(interaction, f'button_press_event.{interaction.message.id}', {'user': 1000})
   command = interaction.client.slash_commands.get(feature) or interaction.client.prefix_commands.get(feature)
-  error_embed = {'color': 'Red'}
+  error_embed = Embed(color=Color.red())
   disabled_list = interaction.guild.db[f'command_settings.{command.alias_of or command.name}.disabled'] or {}
 
   member_list: list = disabled_list.get('members', [])
@@ -22,14 +24,18 @@ def message_component_handler(interaction, lang):
   role_list: list = disabled_list.get('roles', [])
 
   if interaction.user.id in member_list:
-    interaction.reply(embeds=[error_embed.set_description(lang('events.not_allowed.member'))], ephemeral=True)
+    error_embed.description = lang('events.not_allowed.member')
+    await interaction.response.send_message(embeds=[error_embed], ephemeral=True)
   elif interaction.channel.id in channel_list:
-    interaction.reply(embeds=[error_embed.set_description(lang('events.not_allowed.channel'))], ephemeral=True)
-  elif any(role.id in role_list for role in interaction.member.roles):
-    interaction.reply(embeds=[error_embed.set_description(lang('events.not_allowed.role'))], ephemeral=True)
+    error_embed.description = lang('events.not_allowed.channel')
+    await interaction.response.send_message(embeds=[], ephemeral=True)
+  elif any(role.id in role_list for role in interaction.user.roles):
+    error_embed.description = lang('events.not_allowed.role')
+    await interaction.response.send_message(embeds=[], ephemeral=True)
   elif command.category.lower() == 'nsfw' and not interaction.channel.nsfw:
-    interaction.reply(embeds=[error_embed.set_description(lang('events.nsfw_command'))], ephemeral=True)
+    error_embed.description = lang('events.nsfw_command')
+    await interaction.response.send_message(embeds=[], ephemeral=True)
   elif cooldown:
-    interaction.reply(content=lang('events.button_press_on_cooldown', cooldown), ephemeral=True)
+    await interaction.response.send_message(content=lang('events.button_press_on_cooldown', cooldown), ephemeral=True)
   elif handlers[feature] and callable(handlers[feature]):
     handlers[feature](interaction, lang, *args)

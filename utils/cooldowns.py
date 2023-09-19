@@ -1,12 +1,10 @@
 from time import time
 
+from discord import Message, AppCommandOptionType, Interaction
 
-class ApplicationCommandOptionType:
-  subcommand = 0
-
-def sub_command_cooldowns(msg, name: str) -> int:
+def sub_command_cooldowns(msg: Message | Interaction, name: str) -> int:
   depth = len(name.split('.'))
-  if depth >= 2:  # or not isinstance(msg, ChatInputCommandInteraction):
+  if depth >= 2 or not isinstance(msg, Interaction):
     return 0
 
   group_obj = None
@@ -14,7 +12,7 @@ def sub_command_cooldowns(msg, name: str) -> int:
   if group:
     cmd = msg.client.slash_commands.get(msg.command_name)
     if cmd and cmd.options and isinstance(cmd.options, list):
-      group_obj = next(e.cooldowns for e in cmd.options if e.name == group and e.type == ApplicationCommandOptionType.subcommand)
+      group_obj = next(e.cooldowns for e in cmd.options if e.name == group and e.type == AppCommandOptionType.subcommand)
     if not depth and group_obj: return cooldowns(msg, f'{name}.{group}', group_obj)
 
   sub_cmd = msg.options.get_subcommand(False)
@@ -23,14 +21,16 @@ def sub_command_cooldowns(msg, name: str) -> int:
     if cmd and cmd.options and isinstance(cmd.options, list):
       sub_cmd_cooldowns = [
           e.cooldowns for e in cmd.options if e.name ==
-          sub_cmd and e.type == ApplicationCommandOptionType.subcommand
+          sub_cmd and e.type == AppCommandOptionType.subcommand
       ][0]
       if sub_cmd_cooldowns:
         return cooldowns(msg, f'{name}.{group}.{sub_cmd}' if group else f'{name}.{sub_cmd}', sub_cmd_cooldowns)
 
   return 0
 
-def cooldowns(msg, name: str, cooldowns: dict[str, int|float]) -> int:
+def cooldowns(msg: Message | Interaction, name: str, cooldowns: dict[str, int | float]) -> int:
+  """returns the cooldown for the command or sets it if it is 0"""
+
   guild = int(cooldowns.get('guild', 0))
   user = int(cooldowns.get('user', 0))
 

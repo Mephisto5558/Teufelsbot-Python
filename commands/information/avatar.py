@@ -1,4 +1,6 @@
-from utils import Command, Option, Cooldowns, Colors
+from discord import Embed, ActionRow, Button, ButtonStyle
+
+from utils import Command, Option, Cooldowns
 
 class CMD(Command):
   name = 'avatar'
@@ -17,16 +19,13 @@ class CMD(Command):
 
   def run(self, msg, lang):
     target = msg.options.get_member('target') or msg.mentions.members.first() or next((
-        e for e in msg.guild.members.cache
-        if any(item in [e.user.id, e.user.username, e.user.tag, e.nickname] for item in [*(msg.args or []), msg.content])
-    ), None) or msg.member
+        e for e in msg.guild.members
+        if any(item in [e.id, e.user.name, e.user.tag, e.nick] for item in [*(msg.args or []), msg.content])
+    ), None) or msg.user
     avatar_url = target.display_avatar_url(size=msg.options.get_integer('size') or 2048)
-    embed = EmbedBuilder(
-        description=lang('embed_description', target.user.username),
-        color=Colors.White,
-        image={'url': avatar_url},
-        footer={'text': msg.member.tag}
-    )
-    component = ActionRowBuilder(components=ButtonBuilder(label=lang('download_button'), url=avatar_url, style=ButtonStyle.Link))
+    embed = Embed(description=lang('embed_description', target.user.name), color=0) \
+        .set_image(url=avatar_url)\
+        .set_footer(url=msg.member.username)
+    component = ActionRow(components=Button(label=lang('download_button'), url=avatar_url, style=ButtonStyle.link))
 
-    return msg.custom_reply(embeds=[embed], components=[component])
+    return msg.custom_reply(embed=embed, components=[component])

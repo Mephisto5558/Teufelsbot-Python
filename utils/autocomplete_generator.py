@@ -1,10 +1,10 @@
 from .i18n_provider import i18n_provider
+from .command_class import Command
 
+def autocomplete_generator(msg, command: Command, locale: str):
+  if not command.options: return None
 
-def autocomplete_generator(msg, command, locale: str):
-  if 'options' not in command: return None
   # pylint: disable=protected-access
-
   def response(v: str):
     return {
         'name': i18n_provider.__(
@@ -14,7 +14,7 @@ def autocomplete_generator(msg, command, locale: str):
         'value': v
     }
 
-  options: list = command.options
+  options = command.options
   if msg.options._group:
     options = next((e for e in options if e.name == msg.options._group), [])
   if msg.options._subcommand:
@@ -24,6 +24,4 @@ def autocomplete_generator(msg, command, locale: str):
   if callable(options): options = options()
   if isinstance(options, dict): return [options[:25]]
   if isinstance(options, str): return [response(options)]
-  return list(map(response, filter(
-      lambda e: msg.focused.value.lower() in (e if hasattr(e, 'lower') else e.value).lower(), options[:25]
-  )))
+  return [response(e) for e in options[:25] if msg.focused.value.lower() in (e if isinstance(e, str) else e.value).lower()]

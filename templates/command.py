@@ -17,5 +17,5 @@ class CMD(Command):
       Option()
   ]
 
-  def run(self, msg, lang):
+  async def run(self, msg, lang):
     pass

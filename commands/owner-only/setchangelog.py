@@ -1,3 +1,5 @@
+from discord import Message
+
 from utils import Command
 
 class CMD(Command):
@@ -5,7 +7,7 @@ class CMD(Command):
   slash_command = False
   prefix_command = True
   dm_permission = True
-  
-  def run(self, msg, lang):
-    msg.client.db.set('BOTSETTINGS', 'changelog', msg.content.replace('/n', '\n'))
+
+  async def run(self, msg: Message, lang):
+    msg.client.db.set('BOT_SETTINGS', 'changelog', msg.content.replace('/n', '\n'))
     return msg.reply(lang('success'))

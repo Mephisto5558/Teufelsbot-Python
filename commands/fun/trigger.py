@@ -1,4 +1,13 @@
-from utils import Command, Option, Permissions, Colors
+from discord import Embed, Color, Interaction
+
+from utils import Command, Option, Permissions
+
+def autocomplete(i: Interaction):
+  return sorted(
+      [e for e in [trigger for trigger in i.guild.db.get('triggers', [])] if isinstance(e, str)] +
+      [e['trigger'] for e in [trigger for trigger in i.guild.db.get('triggers', [])] if isinstance(e, dict)],
+      key=lambda e: -1 if isinstance(e, str) else 1
+  )
 
 class CMD(Command):
   name = 'trigger'
@@ -18,15 +27,7 @@ class CMD(Command):
       Option(
           name='delete',
           type='Subcommand',
-          options=[Option(
-              name='query_or_id',
-              type='String',
-              autocomplete_options=lambda i: sorted(
-                  [e for e in [trigger for trigger in i.guild.db.get('triggers', [])] if isinstance(e, str)] +
-                  [e.trigger for e in [trigger for trigger in i.guild.db.get('triggers', [])] if isinstance(e, dict)],
-                  key=lambda e: -1 if isinstance(e, str) else 1
-              )
-          )]
+          options=[Option(name='query_or_id', type='String', autocomplete_options=autocomplete)]
       ),
       Option(
           name='clear',
@@ -37,21 +38,13 @@ class CMD(Command):
           name='get',
           type='Subcommand',
           options=[
-              Option(
-                  name='query_or_id',
-                  type='String',
-                  autocomplete_options=lambda i: sorted(
-                      [e for e in [trigger for trigger in i.guild.db.get('triggers', [])] if isinstance(e, str)] +
-                      [e.trigger for e in [trigger for trigger in i.guild.db.get('triggers', [])] if isinstance(e, dict)],
-                      key=lambda e: -1 if isinstance(e, str) else 1
-                  )
-              ),
+              Option(name='query_or_id', type='String', autocomplete_options=autocomplete),
               Option(name='short', type='Boolean')
           ]
       )
   ]
 
-  def run(self, msg, lang):
+  def run(self, msg: Interaction, lang):
     old_data = msg.guild.db.get('triggers') or []
     query = msg.options.get_string('query_or_id').lower()
 
@@ -64,38 +57,43 @@ class CMD(Command):
             'wildcard': msg.options.get_boolean('wildcard') or False
         }
 
-        msg.client.db.set('GUILDSETTINGS', f'{msg.guild.id}.triggers', old_data + [data])
-        return msg.edit_reply(lang('saved', data['trigger']))
+        msg.client.db.set('GUILD_SETTINGS', f'{msg.guild.id}.triggers', old_data + [data])
+        return msg.response.edit_message(content=lang('saved', data['trigger']))
 
       case 'delete':
         if query:
           trigger = next((trigger for trigger in old_data if trigger['id'] == query or trigger['trigger'].lower() == query), None)
         else:
           trigger = max(old_data, key=lambda trigger: trigger['id'], default={})
+
         if not trigger:
-          return msg.edit_reply(lang('not_found'))
+          return msg.response.edit_message(content=lang('not_found'))
         filtered = [t for t in old_data if t['id'] != trigger['id']]
+
         if len(filtered) == len(old_data):
-          return msg.edit_reply(lang('id_not_found'))
-        msg.client.db.set('GUILDSETTINGS', f'{msg.guild.id}.triggers', filtered)
-        return msg.edit_reply(lang('deleted_one', trigger['id']))
+          return msg.response.edit_message(content=lang('id_not_found'))
+        msg.client.db.set('GUILD_SETTINGS', f'{msg.guild.id}.triggers', filtered)
+
+        return msg.response.edit_message(content=lang('deleted_one', trigger['id']))
 
       case 'clear':
         confirmation = msg.options.get_string('confirmation').lower()
-        if confirmation != lang('confirmation'): return msg.edit_reply(lang('needConfirm'))
+        if confirmation != lang('confirmation'): return msg.response.edit_message(content=lang('needConfirm'))
 
         if not old_data:
-          return msg.edit_reply(lang('none_found'))
-        msg.client.db.delete('GUILDSETTINGS', f'{msg.guild.id}.triggers')
-        return msg.edit_reply(lang('deleted_all', len(old_data)))
+          return msg.response.edit_message(content=lang('none_found'))
+        msg.client.db.delete('GUILD_SETTINGS', f'{msg.guild.id}.triggers')
+        return msg.response.edit_message(content=lang('deleted_all', len(old_data)))
 
       case 'get':
         if not old_data:
-          return msg.edit_reply(lang('none_found'))
-        embed = EmbedBuilder(title=lang('embed_title'), color=Colors.Blue)
+          return msg.response.edit_message(content=lang('none_found'))
+
+        embed = Embed(title=lang('embed_title'), color=Color.blue())
+
         if query or query == 0:
           trigger = next((trigger for trigger in old_data if trigger['id'] == query or trigger['trigger'].lower() == query), None)
-          if not trigger: return msg.edit_reply(lang('not_found'))
+          if not trigger: return msg.response.edit_message(content=lang('not_found'))
           embed.title = lang('embed_title_one', trigger['id'])
           embed.description = lang('embed_description_one', {
               'trigger': trigger['trigger'][:1900],
@@ -104,7 +102,7 @@ class CMD(Command):
           })
         elif msg.options.get_boolean('short'):
           embed.description = lang('first_25') if len(old_data) > 25 else ' '
-          embed.fields = [{
+          embed.add_field([{
               'name': lang('short_field_name', trigger['id']),
               'inline': True,
               'value': lang('short_field_value', {
@@ -112,7 +110,7 @@ class CMD(Command):
                   'response': trigger['response'][:200],
                   'wildcard': bool(trigger['wildcard'])
               })
-          } for trigger in old_data[:25]]
+          } for trigger in old_data[:25]])
         else:
           embed.description = ''.join([
               lang('long_embed_description', {
@@ -124,4 +122,4 @@ class CMD(Command):
               for trigger in old_data
               if len(embed.description) < 3800
           ])
-          return msg.edit_reply(embeds=[embed])
+          return msg.response.edit_message(embed=embed)

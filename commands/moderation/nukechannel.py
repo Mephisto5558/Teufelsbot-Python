@@ -1,4 +1,6 @@
-from utils import Aliases, Command, Option, Cooldowns, Permissions, Colors
+from discord import TextChannel, Interaction, Embed, Color, ChannelType
+
+from utils import Aliases, Command, Option, Cooldowns, Permissions
 
 class CMD(Command):
   name = 'nukechannel'
@@ -9,21 +11,21 @@ class CMD(Command):
   prefix_command = False
   options = [
       Option(name='confirmation', type='String', required=True),
-      Option(name='channel', type='Channel', channel_types=Constants.TextBasedChannelTypes)
+      Option(name='channel', type='Channel', channel_types=ChannelType.TextBasedChannelTypes)
   ]
 
-  def run(self, msg, lang):
+  async def run(self, msg: Interaction, lang):
     if msg.options.get_string('confirmation') != lang('confirmation'):
-      return msg.edit_reply(lang('need_confirm'))
+      return msg.response.edit_message(content=lang('need_confirm'))
 
-    embed = EmbedBuilder(
-        description=lang('embed_description'),
-        color=Colors.Red,
-        image={'url': 'https://giphy.com/media/XUFPGrX5Zis6Y/giphy.gif'},
-        footer={'text': lang('embed_footer_text', msg.user.tag)}
-    )
     channel = msg.options.get_channel('channel') or msg.channel
-    cloned = channel.clone(parent=channel.parent_id)
+    if not isinstance(channel, TextChannel): return  # type guard
 
-    channel.delete(lang('global.mod_reason', command=msg.command_name, user=msg.user.username))
+    # todo: try catch
+    cloned: TextChannel = await channel.clone(reason=lang('global.mod_reason', command=msg.command_name, user=msg.user.name))
+    embed = Embed(description=lang('embed_description'), color=Color.red()) \
+        .set_image(url='https://giphy.com/media/XUFPGrX5Zis6Y/giphy.gif')  \
+        .set_footer(text=lang('embed_footer_text', msg.user.name))
+
+    await channel.delete(reason=lang('global.mod_reason', command=msg.command_name, user=msg.user.name))
     return cloned.send(embeds=[embed])

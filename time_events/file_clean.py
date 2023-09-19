@@ -21,10 +21,10 @@ def delete_old(path: str):
 TIME = '00:00:00'
 START_NOW = True
 
-def on_tick(self):
+def on_tick(client):
   now = date.today().strftime('%m-%d')
 
-  if self.settings.lastFileClear == now:
+  if client.settings.lastFileClear == now:
     log.info('Already ran file deletion today')
     return
 
@@ -32,5 +32,5 @@ def on_tick(self):
 
   delete_old('./logs')
 
-  self.db.set('BOT_SETTINGS', 'last_file_clear', now)
+  client.db.set('BOT_SETTINGS', 'last_file_clear', now)
   log.info('Finished file deletion')

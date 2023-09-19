@@ -1,6 +1,8 @@
 from json import load
 
-from utils import Command, Colors
+from discord import Embed, Color
+
+from utils import Command
 
 with open('config.json', 'r', encoding='utf8') as file:
   config = load(file)
@@ -12,10 +14,10 @@ class CMD(Command):
   dm_permission = True
 
   def run(self, msg, lang):
-    embed = EmbedBuilder(
+    embed = Embed(
         title=lang('embed_title'),
         description=lang('embed_description', config.get('Invite')),
-        color=Colors.Blue
+        color=Color.blue()
     )
 
-    return msg.custom_reply(embeds=[embed])
+    return msg.custom_reply(embed=embed)
