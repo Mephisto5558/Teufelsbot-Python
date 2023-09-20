@@ -9,11 +9,6 @@ from oracledb import OperationalError
 
 from utils import DB, Box, box, git_pull, log, Command
 
-result = git_pull()
-if result != 'OK' and 'Could not resolve host' in result.stderr:
-  log.error('It seems like the bot does not have internet access.')
-  exit(1)
-
 init_time = process_time_ns() / 1e6
 log.info('Initializing time: %fms', init_time)
 
@@ -59,7 +54,21 @@ class MyClient(Client):
     data = self.db.get('BOT_SETTINGS')
     return data if isinstance(data, Box) else box()
 
+  @property
+  def default_settings(self):
+    data = self.db.get('GUILD_SETTINGS')
+    return data.default if isinstance(data, Box) else box()
+
+  @default_settings.setter
+  def default_settings(self, val):
+    self.db.set('GUILD_SETTINGS', 'default', val)
+
 async def main():
+  result = await git_pull()
+  if result != 'OK' and 'Could not resolve host' in result:
+    log.error('It seems like the bot does not have internet access.')
+    exit(1)
+
   client = MyClient()
 
   for loader in listdir('./loaders'):

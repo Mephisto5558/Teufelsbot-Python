@@ -9,7 +9,7 @@ async def git_pull():
 
   if process.returncode:
     log.error('Exec error: %s', stderr)
-    return None
+    return stderr
 
   if stdout: log.info('OUT: %s', stdout.decode(encoding='utf8').strip())
   if stderr: log.info('ERR: %s', stderr.decode(encoding='utf8').strip())
