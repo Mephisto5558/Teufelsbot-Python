@@ -4,7 +4,7 @@ from sys import exit  # pylint:disable=redefined-builtin
 from time import process_time_ns
 import asyncio
 
-from discord import AllowedMentions, Client, Intents
+from discord import AllowedMentions, Client, Intents, Activity, ActivityType
 from oracledb import OperationalError
 
 from utils import DB, Box, box, git_pull, log, Command
@@ -43,11 +43,16 @@ class MyClient(Client):
       log.error('Error connecting to the database: %s', err)
 
     if not self.env: self.env = self.settings.env or box()
-
     self.bot_type = str(self.env.get('environment', 'main'))
-    self.prefix_commands: dict[str, Command] = {}
-    self.slash_commands: dict[str, Command] = {}
-    self.cooldowns: dict[str, dict[str, dict[str, int]]] = {'guild': {}, 'user': {}}
+
+    if self.settings.activity: activity = Activity(**self.settings.activity)
+    else: activity = Activity(name='/help', type=ActivityType.playing)
+
+    self.change_presence(activity=activity)
+
+  prefix_commands: dict[str, Command] = {}
+  slash_commands: dict[str, Command] = {}
+  cooldowns: dict[str, dict[str, dict[str, int]]] = {'guild': {}, 'user': {}}
 
   @property
   def settings(self):
