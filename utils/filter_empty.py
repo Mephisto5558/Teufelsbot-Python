@@ -1,5 +1,3 @@
-# https://github.com/Mephisto5558/Teufelsbot/blob/731991a54c3aceae1732ab739d44cd9d18f5cb29/Utils/prototypeRegisterer.js#L67-L70
-
 def filter_empty(obj: dict):
   """Filters empty values recursively from the provided dictionary"""
 

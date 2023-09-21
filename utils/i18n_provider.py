@@ -9,7 +9,9 @@ from .box import box, Box
 from .logger import log
 
 class I18nProviderConfig(dict):
-  def __init__(self, locales_path: str, default_locale: str, separator: str, not_found_message: str, error_not_found: bool, none_not_found: bool):
+  def __init__(
+      self, locales_path: str, default_locale: str, separator: str, not_found_message: str, error_not_found: bool, none_not_found: bool
+  ):
     self.locales_path = locales_path
     self.default_locale = default_locale
     self.separator = separator
@@ -125,7 +127,8 @@ class I18nProvider:
       log.warning('Missing default ("%s") localization for %s%s!', locale, key, (f' ({backup_path}.{key})' if backup_path else ''))
       return self.config.not_found_message.format(key=key)
 
-    return sub(r'{(\w+)}', lambda match: str(kw_replacements[match.group(1)] if match.group(1) in kw_replacements else replacement_all), message)
+    return sub(r'{(\w+)}', lambda match: str(kw_replacements[match.group(1)]
+               if match.group(1) in kw_replacements else replacement_all), message)
 
   def find_missing(self, check_equal: bool) -> dict[str, list[str]]:
     missing = {}

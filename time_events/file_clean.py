@@ -4,7 +4,6 @@ from datetime import date, timedelta
 
 from utils import log
 
-
 def delete_old(path: str):
   makedirs(path, exist_ok=True)
 

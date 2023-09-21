@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from discord import Interaction, Embed, Color
+from discord import DiscordException, Interaction, Embed, Color
 
 from utils import Aliases, Command, Option, Permissions, time_validator, limit
 
@@ -38,7 +38,7 @@ class CMD(Command):
     date.set_time(date.get_time() + duration)
 
     try: await target.timeout(until=date.get_time(), reason=f"{reason} | {lang('global.mod_reason', command=msg.command_name, user=msg.user.name)}")
-    except Exception as err: return msg.response.edit_message(content=lang('error', str(err)))  # todo
+    except DiscordException as err: return msg.response.edit_message(content=lang('error', str(err)))  # todo
 
     embed = Embed(
         title=lang('dm_embed_title'),
@@ -51,7 +51,7 @@ class CMD(Command):
 
     no_msg = False
     try: target.send(embeds=[embed])
-    except: no_msg = True
+    except DiscordException: no_msg = True
 
     embed.title = lang('info_embed_title')
     embed.description = lang(

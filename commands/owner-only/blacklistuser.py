@@ -8,7 +8,7 @@ class CMD(Command):
   prefix_command = True
   dm_permission = True
 
-  async def run(self, msg:Message, lang):
+  async def run(self, msg: Message, lang):
     if not msg.args: return msg.reply(lang('no_input'))
 
     blacklist = msg.client.settings.get('blacklist', [])

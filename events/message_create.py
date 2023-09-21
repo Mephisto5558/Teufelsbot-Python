@@ -18,7 +18,8 @@ error_embed = Embed(color=Color.red())
 
 def add_properties(client: MyClient, message: Message):
   message.guild.db = lambda key: client.db.get('GUILD_SETTINGS', message.guild.id + (f'.{key}' if key else ''))
-  message.guild.local_code = lambda _: message.guild.db('config.lang') or message.guild.preferred_locale[:2] or client.default_settings['config.lang']
+  message.guild.local_code = lambda _: \
+      message.guild.db('config.lang') or message.guild.preferred_locale[:2] or client.default_settings['config.lang']
 
   prefix_type = 'beta_bot_prefix' if client.bot_type == 'dev' else 'prefix'
   prefix = message.guild.db(f'config.{prefix_type}') or {}
@@ -165,8 +166,8 @@ async def run(client: MyClient, message: Message):
     if user_perms_missing or client_perms_missing:
       error_embed.title = lang('events.permission_denied.embed_title')
       error_embed.description = lang(
-        f"events.permission_denied.embed_description_{'user' if user_perms_missing else 'bot'}",
-        permissions='`, `'.join(permission_translator(user_perms_missing or client_perms_missing))
+          f"events.permission_denied.embed_description_{'user' if user_perms_missing else 'bot'}",
+          permissions='`, `'.join(permission_translator(user_perms_missing or client_perms_missing))
       )
 
     return await message.reply(embed=error_embed)
@@ -175,5 +176,5 @@ async def run(client: MyClient, message: Message):
     await command.run(message, lang)
     if client.bot_type != 'dev':
       client.db.set('BOT_SETTINGS', f'stats.{command.name}', (client.settings[f'stats.{command.name}'] or 1) + 1)
-  except Exception as err: # pylint:disable=broad-exception-caught
+  except Exception as err:  # pylint:disable=broad-exception-caught
     return error_handler(client, err, message, lang)

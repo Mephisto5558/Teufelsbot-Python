@@ -1,7 +1,12 @@
+from __future__ import annotations
 from sys import exit  # pylint:disable=redefined-builtin
-from utils import log
+from typing import TYPE_CHECKING
 
-def run(client, debug: str):
+from utils import log
+if TYPE_CHECKING:
+  from main import MyClient
+
+def run(client: MyClient, debug: str):
   if 'Sending a heartbeat.' in debug or 'Heartbeat acknowledged' in debug: return None
 
   log.debug(debug)

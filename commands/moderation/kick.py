@@ -1,4 +1,4 @@
-from utils import  Command, Option, Permissions, ban_kick
+from utils import Command, Option, Permissions, ban_kick
 
 class CMD(Command):
   name = 'kick'

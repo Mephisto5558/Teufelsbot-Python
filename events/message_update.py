@@ -11,10 +11,9 @@ if TYPE_CHECKING:
 def run(client: MyClient, old_msg: Message, new_msg: Message):
   setting = client.db.get('GUILD_SETTINGS', f'{old_msg.guild.id}.config.logger.message_update') or {}
 
-  if (
-      client.bot_type == 'dev' or not old_msg.guild or not setting['enabled'] or not setting['channel']
-      or all([old_msg.content == new_msg.content, len(old_msg.attachments) == len(new_msg.attachments), len(old_msg.embeds), len(new_msg.embeds)])
-  ):
+  if (client.bot_type == 'dev' or not old_msg.guild or not setting['enabled'] or not setting['channel'] or all(
+      [old_msg.content == new_msg.content, len(old_msg.attachments) == len(new_msg.attachments), len(old_msg.embeds), len(new_msg.embeds)]
+  )):
     return None
 
   channel = old_msg.guild.channels[setting.channel]

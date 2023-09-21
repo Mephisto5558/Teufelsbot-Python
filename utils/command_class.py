@@ -38,6 +38,7 @@ class Choice(dict):
     self.name_localizations = name_localizations
 
 ChoicesT = TypeVar('ChoicesT', Iterable[Choice | dict[str, str | int] | str | int], None)
+AutocompleteOptionsT = TypeVar('AutocompleteOptionsT', Iterable[str | int | dict[str, str | int]])
 
 class Option(dict):  # pylint: disable=too-many-instance-attributes
   @property
@@ -47,9 +48,9 @@ class Option(dict):  # pylint: disable=too-many-instance-attributes
   _description_localizations: dict[str, str] | None
   "Do not set manually."
 
-  def __init__( #pylint: disable-next=redefined-builtin
+  def __init__(  # pylint: disable-next=redefined-builtin
       self, name: str, type: str, description: str | None = None, cooldowns: Cooldowns | None = None, required: bool = False,  # NOSONAR
-      autocomplete_options: Iterable[str | int | dict[str, str | int]] | Callable[[Any], Iterable[str | int | dict[str, str | int]] | str | int] | None = None,
+      autocomplete_options: AutocompleteOptionsT | Callable[..., AutocompleteOptionsT] | None = None,
       strict_autocomplete: bool = False, channel_types: Iterable[str] | None = None, dm_permission: bool | None = False,
       min_value: int | None = None, max_value: int | None = None, min_length: int | None = None, max_length: int | None = None,
       options: Iterable['Option'] | None = None, choices: ChoicesT = None
@@ -160,7 +161,7 @@ class Command:
 
         locale_texts[locale] = locale_text[:MAX_CHOICE_NAME_LENGTH]
 
-      if type(choice) is dict:  # pylint: disable=unidiomatic-typecheck
+      if isinstance(choice, dict):
         name_localizations = choice.get('name_localizations', None)
         choice = Choice(
             key=str(choice.get('key', '')),
@@ -212,10 +213,10 @@ class Command:
         self.aliases.slash.add(alias[:MAX_NAME_LENGTH])
 
     # PERMISSIONS
-      # Todo: Implement permission conversion
+    # Todo: Implement permission conversion
 
     for option in self.options:
       option = self._options_formatter(option, f'{path}.options.{option.name}')
 
-  async def run(self, msg:Interaction|Message, lang):
+  async def run(self, msg: Interaction | Message, lang: Callable):
     raise NotImplementedError('Subclasses must implement the run method')

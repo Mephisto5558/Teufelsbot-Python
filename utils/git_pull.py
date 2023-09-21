@@ -2,7 +2,6 @@ from asyncio import subprocess, create_subprocess_exec
 
 from .logger import log
 
-
 async def git_pull():
   process = await create_subprocess_exec('git pull', text=True, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
   stdout, stderr = await process.communicate()

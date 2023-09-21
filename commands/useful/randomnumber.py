@@ -15,7 +15,7 @@ class CMD(Command):
       Option(name='maximum', type='Integer')
   ]
 
-  def run(self, msg, lang):
+  async def run(self, msg, lang):
     min_value = msg.options.get_integer('minimum') or int(msg.args[0]) if msg.args else None
     max_value = msg.options.get_integer('maximum') or int(msg.args[1]) if len(msg.args) > 1 else None
 

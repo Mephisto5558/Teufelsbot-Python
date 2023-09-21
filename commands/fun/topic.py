@@ -1,4 +1,5 @@
-# Credits for many of the response messages goes to the Lawliet Bot: https://github.com/Aninoss/lawliet-bot/tree/master/src/main/jib/data/resources
+# Credits for many of the response messages goes to the Lawliet Bot:
+# https://github.com/Aninoss/lawliet-bot/tree/master/src/main/jib/data/resources
 
 from discord import Embed, Color, ActionRow, Button, ButtonStyle
 

@@ -1,7 +1,7 @@
 from json import loads, dumps
 from time import time
 
-from discord import AllowedMentions, Interaction, Color, Embed, DiscordServerError
+from discord import AllowedMentions, Interaction, Color, Embed, DiscordException
 
 from utils import Command, Option, Cooldowns, Permissions, log_say_command_use
 
@@ -73,7 +73,7 @@ class CMD(Command):
       allowed_mentions = AllowedMentions(
           users=True, everyone=True, roles=True) if msg.user.resolved_permissions.mention_everyone else AllowedMentions(users=True)
       sent_message = await msg.channel.send(content=get_option('content') or None, embed=embed, allowed_mentions=allowed_mentions)
-    except DiscordServerError as err:
+    except DiscordException as err:
       return msg.response.edit_message(lang('invalid_option', err.args[0]))
 
     await msg.edit_reply(lang('success_json') if custom else lang('success', dumps(embed.to_dict())))

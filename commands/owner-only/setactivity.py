@@ -8,7 +8,7 @@ class CMD(Command):
   prefix_command = True
   dm_permission = True
 
-  async def run(self, msg:Message, lang):
+  async def run(self, msg: Message, lang):
     args = msg.content.split(';')
     activity = args[0]
     activity_type = ActivityType.playing if not args[1] else next(e for e in ActivityType if e.name.lower() == args[1].lower())

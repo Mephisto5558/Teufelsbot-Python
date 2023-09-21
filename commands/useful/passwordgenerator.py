@@ -19,7 +19,7 @@ class CMD(Command):
       Option(name='include_chars', type='String')
   ]
 
-  def run(self, msg:Interaction, lang):
+  async def run(self, msg: Interaction, lang):
     count = msg.options.get_integer('count') or 1
     length = msg.options.get_integer('length') or 12
     exclude = msg.options.get_string('exclude_chars') or ''
@@ -37,7 +37,8 @@ class CMD(Command):
       random_chars = []
       for _ in range(length):
         random_char = choice(charset.strip(last_random_char))
-        # Todo: check if necessary to implement: https://github.com/Mephisto5558/Teufelsbot/blob/main/Commands/Useful/passwordgenerator.js#L47-L50
+        # Todo: check if necessary to implement:
+        # https://github.com/Mephisto5558/Teufelsbot/blob/main/Commands/Useful/passwordgenerator.js#L47-L50
         random_chars.append(random_char)
       password_list.append(''.join(random_chars))
 

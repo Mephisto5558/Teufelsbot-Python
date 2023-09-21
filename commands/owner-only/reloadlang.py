@@ -7,9 +7,9 @@ class CMD(Command):
   slash_command = False
   prefix_command = True
   dm_permission = True
-  beta=True
+  beta = True
 
-  def run(self, msg:Message, lang):
+  async def run(self, msg: Message, lang):
     log.debug('Reloading language files, initiated by user %s', msg.user.name)
 
     i18n_provider.load_all_locales()

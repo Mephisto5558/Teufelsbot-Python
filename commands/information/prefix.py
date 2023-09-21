@@ -26,4 +26,7 @@ class CMD(Command):
     current_prefix = msg.guild.db['config.prefix.prefix'] or msg.client.default_settings['config.prefix']
     if not current_prefix: raise KeyError('No default prefix found in DB')
 
-    return msg.custom_reply(content=lang('current_prefix', current_prefix) + (lang('case_insensitive') if msg.guild.db.config['prefix.caseinsensitive'] else ''))
+    return msg.custom_reply(
+        content=lang('current_prefix', current_prefix)
+        + (lang('case_insensitive') if msg.guild.db.config['prefix.caseinsensitive'] else '')
+    )

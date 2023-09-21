@@ -10,7 +10,7 @@ if TYPE_CHECKING:
   from discord import Interaction
   from main import MyClient
   from utils import Command
-  
+
 with open('config.json', 'r', encoding='utf8') as file:
   config = load(file)
 
@@ -19,7 +19,8 @@ error_embed = Embed(color=Color.red())
 
 def add_properties(client: MyClient, interaction: Interaction):
   interaction.guild.db = lambda key: client.db.get('GUILD_SETTINGS', interaction.guild.id + (f'.{key}' if key else ''))
-  interaction.guild.local_code = lambda _: interaction.guild.db('config.lang') or interaction.guild.preferred_locale[:2] or client.default_settings['config.lang']
+  interaction.guild.local_code = lambda _: \
+    interaction.guild.db('config.lang') or interaction.guild.preferred_locale[:2] or client.default_settings['config.lang']
   interaction.command_name = interaction.command.name if interaction.command else None
 
 async def interaction_validator(interaction: Interaction, command: Command, lang):

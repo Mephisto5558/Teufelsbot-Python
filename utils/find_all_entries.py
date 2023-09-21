@@ -19,16 +19,3 @@ def find_all_entries(obj: dict, key: str):
 
   find_entries(obj)
   return entry_list
-
-
-if __name__ == '__main__':
-  obj = {
-      'a': 1,
-      'b': {
-          'a': 2,
-          'b': {'c': {'a': 3}}
-      },
-      'c': None
-  }
-
-  print(find_all_entries(obj, 'a'))

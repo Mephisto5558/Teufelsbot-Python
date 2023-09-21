@@ -56,7 +56,9 @@ class CMD(Command):
     elif role.icon:
       embed.thumbnail.url = f'https://cdn.discordapp.com/role-icons/{role.guild.id}/{role.icon}.webp?size=80&quality=lossless'
 
-    if msg.member.guild_permissions.manage_roles and role.editable and (msg.member.roles[-1].position > role.position or msg.user.id == msg.guild.owner_id):
+    if msg.member.guild_permissions.manage_roles and role.editable and (
+        msg.member.roles[-1].position > role.position or msg.user.id == msg.guild.owner_id
+    ):
       components = ActionRow([Button(label=lang('delete'), custom_id=f'info_cmds.{role.id}.delete.roles', style=ButtonStyle.danger)])
     else:
       components = None

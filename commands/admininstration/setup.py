@@ -1,7 +1,8 @@
 from functools import partial
 
-from utils import Aliases, Command, Option, Cooldowns, Permissions, i18n_provider, Colors
+from discord import Embed
 
+from utils import Aliases, Command, Option, Cooldowns, Permissions, i18n_provider, Colors
 
 backup = {'creator': 0, 'owner': 1, 'creator+owner': 2, 'admins': 3}
 logger_action_types = ['message_delete', 'message_update', 'voice_channel_activity', 'say_command_used']
@@ -9,11 +10,12 @@ logger_action_types = ['message_delete', 'message_update', 'voice_channel_activi
 def get_cmds(client):
   return list({e.name for e in client.prefix_commands + client.slash_commands if not e.alias_of})
 
-def autocomplete_language(i): return [
-    {'name': i18n_provider.__('global.language_name', locale=k, none_not_found=True) or k, 'value': k}
-    for k, v in i18n_provider.available_locales
-    if i.focused.value.lower() in k.lower() or i.focused.value.lower() in v.lower()
-][:25]
+def autocomplete_language(i):
+  return [
+      {'name': i18n_provider.__('global.language_name', locale=k, none_not_found=True) or k, 'value': k}
+      for k, v in i18n_provider.available_locales
+      if i.focused.value.lower() in k.lower() or i.focused.value.lower() in v.lower()
+  ][:25]
 
 
 class CMD(Command):
@@ -107,7 +109,7 @@ class CMD(Command):
               for e in [['roles', roles], ['channels', channels], ['users', users]]
               if e and e[1]
           ]
-          embed = EmbedBuilder(
+          embed = Embed(
               title=lang('toggle_cmd.list.embed_title', command),
               color=Colors.White,
               *({'fields': fields} if fields else {'description': lang('toggle_cmd.list.embed_description')})
@@ -142,7 +144,7 @@ class CMD(Command):
             command_data[type_] = [*(command_data[type_] or []), id_]
             count['disabled'][type_] += 1
 
-        embed = EmbedBuilder(
+        embed = Embed(
             title=lang('toggle_cmd.embed_title', command),
             description=lang('toggle_cmd.embed_description', msg.command.id),
             fields=[{
@@ -162,7 +164,7 @@ class CMD(Command):
             i18n_provider.__, locale=language if language in i18n_provider.available_locales else i18n_provider.config.default_locale
         )
         cmd = msg.client.slash_commands.get(msg.command_name)
-        embed = EmbedBuilder(
+        embed = Embed(
             title=new_lang(f'commands.{cmd.category.lower()}.{cmd.name}language.embed_title'),
             description=new_lang(
                 f'commands.{cmd.category.lower()}.{cmd.name}language.embed_description',
@@ -201,4 +203,7 @@ class CMD(Command):
             msg.client.db.set('GUILD_SETTINGS', f'{msg.guild.id}.config.logger.{action}', {'channel': channel, 'enabled': enabled})
 
         msg.client.db.set('GUILD_SETTINGS', f'{msg.guild.id}.config.logger.{action}', {'channel': channel, 'enabled': enabled})
-        return msg.edit_reply(lang('logger.enabled' if enabled else 'logger.disabled', {'channel': channel, 'action': lang(f'logger.actions.{action}')}))
+        return msg.edit_reply(lang(
+            'logger.enabled' if enabled
+            else 'logger.disabled', {'channel': channel, 'action': lang(f'logger.actions.{action}')}
+        ))
