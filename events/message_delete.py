@@ -19,7 +19,7 @@ def check_if_int(maybe_int: Any):
 
 async def counting_handler(client: MyClient, message: Message):
   counting_data = client.db.get('GUILD_SETTINGS', f'{message.channel.id}.counting_data') or {}
-  if counting_data['last_number'] and check_if_int(message.content): return message.channel.send(
+  if counting_data.get('last_number') and check_if_int(message.content): return message.channel.send(
       content=f"<t:{round(message.created_at / 1000)}>\n<@${message.user.id}>: *${counting_data['last_number']} -> {message.content}*",
       allowed_mentions=AllowedMentions.none()
   )

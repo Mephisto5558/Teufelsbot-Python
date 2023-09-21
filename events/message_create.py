@@ -22,9 +22,9 @@ def add_properties(client: MyClient, message: Message):
       message.guild.db('config.lang') or message.guild.preferred_locale[:2] or client.default_settings['config.lang']
 
   prefix_type = 'beta_bot_prefix' if client.bot_type == 'dev' else 'prefix'
-  prefix = message.guild.db(f'config.{prefix_type}') or {}
-  case_insensitive: bool | None = prefix['caseinsensitive']
-  prefix: str | None = prefix['prefix']
+  data = message.guild.db(f'config.{prefix_type}') or {}
+  case_insensitive: bool | None = data.get('caseinsensitive')
+  prefix: str | None = data.get('prefix')
 
   if not prefix: prefix = client.default_settings[f'config.{prefix_type}']
   if case_insensitive: prefix = prefix.lower()

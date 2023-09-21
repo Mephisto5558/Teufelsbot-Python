@@ -11,7 +11,7 @@ if TYPE_CHECKING:
 async def run(client: MyClient, old_state: VoiceState, new_state: VoiceState):
   guild = old_state.channel.guild
   setting = (guild and client.db.get('GUILD_SETTINGS', f'{guild.id}.config.logger.voice_channel_activity')) or {}
-  if client.bot_type == 'dev' or not guild or setting['enabled'] or not setting['channel'] or old_state.channel.id == new_state.channel.id:
+  if client.bot_type == 'dev' or not guild or setting.get('enabled') or not setting.get( 'channel') or old_state.channel.id == new_state.channel.id:
     return None
 
   channel = guild.channels[setting.channel]

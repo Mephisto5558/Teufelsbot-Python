@@ -12,7 +12,7 @@ if TYPE_CHECKING:
 
 async def run(client: MyClient, messages: list[Message], channel: TextChannel):
   setting = client.db.get('GUILD_SETTINGS', f'{channel.guild.id}.config.logger.message_delete') or {} if channel.guild else None
-  if client.bot_type == 'dev' or not channel.guild or not setting['enabled'] or not setting['channel']:
+  if client.bot_type == 'dev' or not channel.guild or not setting.get('enabled') or not setting.get('channel'):
     return None
 
   channel_to_send: TextChannel | None = channel.guild.channels[setting.channel]
