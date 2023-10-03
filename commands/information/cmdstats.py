@@ -1,6 +1,6 @@
 from operator import itemgetter
 
-from discord import Embed
+from discord import Embed, Color
 
 from utils import Command, Option, Cooldowns, list_commands, get_owner_only_folders
 
@@ -21,7 +21,7 @@ class CMD(Command):
 
   def run(self, msg, lang):
     command = msg.options.get_string('command') or msg.args[0]
-    embed = Embed(title=lang('embed_title'), color=0)
+    embed = Embed(title=lang('embed_title'), color=Color.white())
 
     if command:
       id_ = next(e.id for e in msg.client.application.commands.cache if e.name == command)

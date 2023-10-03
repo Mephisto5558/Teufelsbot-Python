@@ -1,4 +1,4 @@
-from discord import Embed, ActionRow, Button, ButtonStyle
+from discord import Embed, ActionRow, Button, ButtonStyle, Color
 
 from utils import Command, Option, Cooldowns
 
@@ -23,7 +23,7 @@ class CMD(Command):
         if any(item in [e.id, e.user.name, e.user.tag, e.nick] for item in [*(msg.args or []), msg.content])
     ), None) or msg.user
     avatar_url = target.display_avatar_url(size=msg.options.get_integer('size') or 2048)
-    embed = Embed(description=lang('embed_description', target.user.name), color=0) \
+    embed = Embed(description=lang('embed_description', target.user.name), color=Color.white()) \
         .set_image(url=avatar_url)\
         .set_footer(url=msg.member.username)
     component = ActionRow(components=Button(label=lang('download_button'), url=avatar_url, style=ButtonStyle.link))

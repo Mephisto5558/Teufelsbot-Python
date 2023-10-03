@@ -1,6 +1,6 @@
 from secrets import choice
 
-from discord import Embed
+from discord import Embed, Color
 
 from utils import Command, Cooldowns
 
@@ -23,7 +23,7 @@ class CMD(Command):
     embed = Embed(
         title=lang('embed_title'),
         description=lang('embed_description', msg.user.display_name),
-        color=0
+        color=Color.white()
     ).set_image(url=f'https://cdn.discordapp.com/attachments/1137786275701727343/{choice(images)}')
 
     return msg.custom_reply(embed=embed)

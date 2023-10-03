@@ -1,6 +1,6 @@
 from json import load
 
-from discord import Embed
+from discord import Embed, Color
 
 from utils import Command, Cooldowns, uptime
 
@@ -17,7 +17,7 @@ class CMD(Command):
   def run(self, msg, lang):
     embed = Embed(
         description=lang('embed_description', time=uptime(True, lang)['formatted'], Domain=config.get('Domain')),
-        color=0
+        color=Color.white()
     )
 
     return msg.custom_reply(embed=embed)

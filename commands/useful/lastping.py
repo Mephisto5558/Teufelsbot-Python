@@ -1,4 +1,4 @@
-from discord import ChannelType, Embed
+from discord import ChannelType, Embed, Color
 
 from utils import Command, Option, Cooldowns
 
@@ -40,7 +40,7 @@ class CMD(Command):
             content=f'>>> {message.content[:200]}' if message.content else lang('unknown'),
             author=message.author.get('id') or message.author
         ),
-        color=0,
+        color=Color.white(),
         timestamp=message.created_at
     )
 
