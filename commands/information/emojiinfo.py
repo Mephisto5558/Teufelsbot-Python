@@ -9,7 +9,7 @@ class CMD(Command):
   prefix_command = True
   options = [Option(name='emoji', type='String', required=True)]
 
-  def run(self, msg, lang):
+  async def run(self, msg, lang):
     parsed_emoji = parse_emoji(msg.options.get_string('emoji') or msg.args[0] or '')
     emoji = msg.client.emojis.cache.get(parsed_emoji.id) or parsed_emoji
 
@@ -21,7 +21,7 @@ class CMD(Command):
         color=int(get_average_color(emoji.url).hex[1:], 16)
     ) \
         .set_thumbnail(url=emoji.url) \
-        .add_field([
+        .add_fields([
             {'name': lang('name'), 'value': emoji.name, 'inline': True},
             {'name': lang('id'), 'value': emoji.id, 'inline': True},
             {'name': lang('guild'),
@@ -34,7 +34,7 @@ class CMD(Command):
              'value': lang(f'global.{emoji.requires_colons}') if emoji.requires_colons else lang('unknown'), 'inline': True},
         ])
 
-    component = ActionRow(components=[Button(label=lang('download'), style=ButtonStyle.link, url=emoji.url)])
+    component = ActionRow(children=[Button(label=lang('download'), style=ButtonStyle.link, url=emoji.url)])
 
     if emoji.guild.id == msg.guild.id and msg.user.guild_permissions.manage_expressions:
       component.children.append(Button(

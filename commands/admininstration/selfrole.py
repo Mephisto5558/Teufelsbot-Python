@@ -7,5 +7,5 @@ class CMD(Command):
   prefix_command = False
   ephemeral_defer = True
 
-  def run(self, msg, lang):
+  async def run(self, msg, lang):
     return msg.custom_reply(lang('deprecated'))

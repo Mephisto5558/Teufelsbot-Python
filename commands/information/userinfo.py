@@ -1,7 +1,7 @@
 from re import sub
 from datetime import datetime
 
-from discord import ActionRow, Button, ButtonStyle
+from discord import ActionRow, Button, ButtonStyle, Embed
 
 from utils import Aliases, Command, Option, Cooldowns, get_age, permission_translator
 
@@ -31,12 +31,12 @@ class CMD(Command):
     elif member.guild_permissions.moderate_members: member_type += lang('guild_mod')
     else: member_type += lang('guild_member')
 
-    embed = Embed(
+    embed: Embed = Embed(
         title=member.user.name,
         color=int(get_average_color(member.display_avatar).hex[1:], 16),
-        thumbnail={'url': member.display_avatar},
-        image={'url': banner_url and banner_url + '?size=1024'},
-        fields=[
+        image={'url': banner_url and banner_url + '?size=1024'}
+    ).set_thumbnail(member.display_avatar)\
+    .add_fields([
             {'name': lang('mention'), 'value': f'<@{member.id}>', 'inline': True},
             {'name': 'ID', 'value': f'`{member.id}`', 'inline': True},
             {'name': lang('type'), 'value': member_type, 'inline': True},
@@ -50,19 +50,18 @@ class CMD(Command):
             {'name': lang('roles_with_perms'),
              'value': ', '.join(e for e in member.roles if e.permissions and e.name != '@everyone'), 'inline': False},
             {'name': lang('perms'), 'value': f"`{lang('admin') if member.guild_permissions.administrator else permission_translator(member.guild_permissions, '`, `'.join(lang.__self__.locale)) or lang('global.none')}` ({len(member.guild_permissions)})`", 'inline': False}
-        ]
-    )
+        ])
     components = [ActionRow([Button(label=lang('download_avatar'), style=ButtonStyle.link, url=banner_url + '?size=2048')])]
 
-    if birthday: embed.data.fields.insert(-2, {
+    if birthday: embed.fields.insert(-2, {
         'name': lang('birthday'),
         'value': f'<t:{round(datetime.fromisoformat(birthday).get_time() / 1000)}:D', 'inline': True
     })
-    if member.is_timed_out(): embed.data.fields.insert(-2, {
+    if member.is_timed_out(): embed.fields.insert(-2, {
         'name': lang('timed_out_until'),
         'value': f'<t:{round(member.timed_out_until / 1000)}>', 'inline': True
     })
-    if member.user.public_flags: embed.data.fields.insert(-2, {
+    if member.user.public_flags: embed.fields.insert(-2, {
         'name': lang('flags.name'),
         'value': '`' + ', '.join([lang(f'flags.{flag}') for flag in member.user.public_flags if not isinstance(flag, int)]) + '`',
         'inline': False

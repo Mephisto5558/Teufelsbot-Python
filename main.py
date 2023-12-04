@@ -13,7 +13,7 @@ init_time = process_time_ns() / 1e6
 log.info('Initializing time: %fms', init_time)
 
 class MyClient(Client):
-  def __init__(self):
+  async def __init__(self):
     super().__init__(
         shards='auto',
         allowed_mentions=AllowedMentions(everyone=False, users=True, roles=True),
@@ -48,7 +48,7 @@ class MyClient(Client):
     if self.settings.activity: activity = Activity(**self.settings.activity)
     else: activity = Activity(name='/help', type=ActivityType.playing)
 
-    self.change_presence(activity=activity)
+    await self.change_presence(activity=activity)
 
   prefix_commands: dict[str, Command] = {}
   slash_commands: dict[str, Command] = {}

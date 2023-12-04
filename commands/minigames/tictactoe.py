@@ -33,9 +33,9 @@ class CMD(Command):
   options = [Option(name='opponent', type='user')]
   disabled = True  # game not implemented yet
 
-  def run(self, msg: Interaction, lang):
+  async def run(self, msg: Interaction, lang):
     target = msg.options.get_user('opponent').id
-    game = sth  # code for game lib
+    game = None  # code for game lib
 
     if target: msg.channel.send(lang('new_challenge'), delete_after=5000)
 

@@ -1,8 +1,8 @@
 from functools import partial
 
-from discord import Embed
+from discord import Embed, Color
 
-from utils import Aliases, Command, Option, Cooldowns, Permissions, i18n_provider, Colors
+from utils import Aliases, Command, Option, Cooldowns, Permissions, i18n_provider
 
 backup = {'creator': 0, 'owner': 1, 'creator+owner': 2, 'admins': 3}
 logger_action_types = ['message_delete', 'message_update', 'voice_channel_activity', 'say_command_used']
@@ -75,7 +75,7 @@ class CMD(Command):
       )
   ]
 
-  def run(self, msg, lang):
+  async def run(self, msg, lang):
     match(msg.options.get_subcommand()):
       case 'toggle_module':
         module = msg.options.get_string('module')
@@ -111,7 +111,7 @@ class CMD(Command):
           ]
           embed = Embed(
               title=lang('toggle_cmd.list.embed_title', command),
-              color=Colors.White,
+              color=0,
               *({'fields': fields} if fields else {'description': lang('toggle_cmd.list.embed_description')})
           )
 
@@ -152,7 +152,7 @@ class CMD(Command):
                 'value': '\n'.join([f"{lang(f'toggleCmd.{k}')}: **{v}**" for k, v in v.items() if v]),
                 'inline': True
             } for k, v in count.items() if any(v.values())],
-            color=Colors.White
+            color=0
         )
 
         msg.client.db.set('GUILD_SETTINGS', f'{msg.guild.id}.command_settings.{command}.disabled', command_data)
@@ -170,7 +170,7 @@ class CMD(Command):
                 f'commands.{cmd.category.lower()}.{cmd.name}language.embed_description',
                 args=str(new_lang('global.language_name'))
             ),
-            color=Colors.Green
+            color=Color.green()
         )
 
         msg.client.db.set('GUILD_SETTINGS', f'{msg.guild.id}.config.lang', language)
