@@ -34,7 +34,7 @@ class CMD(Command):
       Option(name='remove', type='Subcommand', dm_permission=True)
   ]
 
-  def run(self, msg:Interaction, lang):
+  async def run(self, msg: Interaction, lang):
     target = msg.options.get_member('target')
     do_not_hide = msg.options.getBoolean('do_not_hide')
 
@@ -67,27 +67,27 @@ class CMD(Command):
         else:
           embed.title = lang('get_all.embed_title')
 
-          guild_members = 
           current_time = datetime.now()
           data = sorted(
               [
                   (k, *v['birthday'].split('/'))
-                  for k, v in msg.client.db.get('USER_SETTINGSS')
+                  for k, v in msg.client.db.get('USER_SETTINGS')
                   if 'birthday' in v and any(k == e.id for e in msg.guild.members)
               ],
-              key=lambda x:
-              datetime(current_year, int(x[2]), int(x[3])) if datetime(current_year, int(x[2]), int(x[3])) >= current_time
-              else datetime(current_year + 1, int(x[2]), int(x[3]))
+              key=lambda x: (
+                  datetime(current_year, int(x[2]), int(x[3])) if datetime(current_year, int(x[2]), int(x[3])) >= current_time
+                  else datetime(current_year + 1, int(x[2]), int(x[3]))
+              )
           )[:10]
 
-        embed.data.description = '' if data else lang('get_all.not_found')
+        embed.description = '' if data else lang('get_all.not_found')
 
         for id_, year, month, day in data:
           date = lang('get_all.date', month=lang(f'months.{month}'), day=day)
           age = get_age([year, month, day]) + 1
           message = f"> <@{id_}>{' (' + str(age) + ')' if age < current_year else ''}\n"
 
-          embed.data.description += message if date in embed.data.description else f'\n{date}{message}'
+          embed.description += message if date in embed.description else f'\n{date}{message}'
 
         if not do_not_hide: return msg.response.edit_message(embed=embed)
 

@@ -1,5 +1,5 @@
 # pylint: disable-next = no-name-in-module # false positive in git action
-from typing import TypeVar, Any, Callable, NotRequired, Iterable
+from typing import TypeVar, Callable, NotRequired, Iterable
 
 from discord import Interaction, Message
 
@@ -38,7 +38,7 @@ class Choice(dict):
     self.name_localizations = name_localizations
 
 ChoicesT = TypeVar('ChoicesT', Iterable[Choice | dict[str, str | int] | str | int], None)
-AutocompleteOptionsT = TypeVar('AutocompleteOptionsT', Iterable[str | int | dict[str, str | int]])
+AutocompleteOptionsT = TypeVar('AutocompleteOptionsT', Iterable[str | int | dict[str, str | int]], None)
 
 class Option(dict):  # pylint: disable=too-many-instance-attributes
   @property
